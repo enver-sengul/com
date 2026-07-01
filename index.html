@@ -618,7 +618,7 @@ footer { text-align:center; }
     <div id="pt-portfolyo">
       <div class="gallery-cats">
         <div class="gallery-cat-card" onclick="openInanclarGallery()">
-          <img id="cover-dunya-inanclar" src="portfolyom/dunya-inanclar/1.jpg" onerror="this.onerror=null;this.src='portfolyom/dunya-inanclar/1.webp';" alt="Dünya İnançları">
+          <img id="cover-dunya-inanclar" src="portfolyom/dunya-inanclar/1.jpg" data-fallback-step="0" onerror="inanclarCoverFallback(this)" alt="Dünya İnançları">
           <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Dünya İnançları</div>
@@ -1315,6 +1315,36 @@ async function loadAnasayfaImages() {
 // klasördeki gerçek dosya adını aşağıdaki listeye yazmanız yeterli.
 // Kapak görseli (1.jpg) otomatik olarak galerinin ilk fotoğrafıdır.
 const INANCLAR_BASE  = 'portfolyom/dunya-inanclar/';
+
+// Kapak görseli 1.jpg / 1.jpeg / 1.png / 1.webp sırasıyla denenir,
+// hiçbiri bulunamazsa eski p-dunya-inanclar.jpg dosyasına düşülür,
+// o da yoksa "görsel bulunamadı" uyarısı gösterilir.
+const INANCLAR_COVER_TRIES = [
+  'portfolyom/dunya-inanclar/1.jpg',
+  'portfolyom/dunya-inanclar/1.jpeg',
+  'portfolyom/dunya-inanclar/1.png',
+  'portfolyom/dunya-inanclar/1.webp',
+  'p-dunya-inanclar.jpg'
+];
+function inanclarCoverFallback(img){
+  let step = parseInt(img.dataset.fallbackStep || '0', 10) + 1;
+  img.dataset.fallbackStep = step;
+  if (step < INANCLAR_COVER_TRIES.length) {
+    img.src = INANCLAR_COVER_TRIES[step];
+  } else {
+    img.onerror = null;
+    img.style.display = 'none';
+    const card = img.closest('.gallery-cat-card');
+    if (card && !card.querySelector('.inanclar-missing-msg')) {
+      const msg = document.createElement('div');
+      msg.className = 'inanclar-missing-msg';
+      msg.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-size:11px;color:var(--muted);background:var(--dark3);';
+      msg.textContent = 'Kapak görseli bulunamadı: portfolyom/dunya-inanclar/1.jpg';
+      card.appendChild(msg);
+    }
+  }
+}
+
 const INANCLAR_FILES = [
   '1.jpg',
   // 'foto2.jpg',
@@ -1325,6 +1355,18 @@ const INANCLAR_FILES = [
 const INANCLAR_PER_PAGE = 6;
 let inanclarPageIdx = 0;
 let inanclarLbIndex = 0;
+
+function inanclarThumbMissing(img){
+  if (img.dataset.missingHandled) return;
+  img.dataset.missingHandled = '1';
+  img.style.display = 'none';
+  const wrap = img.closest('.photo-thumb');
+  if (!wrap) return;
+  const msg = document.createElement('div');
+  msg.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;font-size:10px;line-height:1.4;color:var(--muted);background:var(--dark3);';
+  msg.textContent = 'Bulunamadı: ' + img.getAttribute('src');
+  wrap.appendChild(msg);
+}
 
 function inanclarUrl(name){ return INANCLAR_BASE + name; }
 
@@ -1361,7 +1403,7 @@ function renderInanclarGrid(){
       const div = document.createElement('div');
       div.className = 'photo-thumb';
       div.innerHTML = `
-        <img src="${inanclarUrl(name)}" alt="Dünya İnançları" loading="lazy">
+        <img src="${inanclarUrl(name)}" alt="Dünya İnançları" loading="lazy" onerror="inanclarThumbMissing(this)">
         <div class="photo-thumb-overlay">
           <div class="photo-thumb-zoom">⊕</div>
         </div>`;
