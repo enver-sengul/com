@@ -975,13 +975,13 @@ footer { text-align:center; }
   </div>
 </footer>
 <div class="gallery-page" id="galleryPage">
-  <div class="gallery-page-header">
-    <button class="gallery-page-back" onclick="closeGallery()">← Geri</button>
-    <div class="gallery-page-title" id="galleryPageTitle"></div>
+  <div class="gallery-page-header inanclar-header">
     <div class="gallery-page-logo">Enver Şengül</div>
+    <div class="gallery-page-title" id="galleryPageTitle"></div>
+    <button class="gallery-page-x" onclick="closeGallery()" aria-label="Kapat">✕</button>
   </div>
   <div class="gallery-page-body">
-    <p class="gallery-page-desc" id="galleryPageDesc"></p>
+    <p class="gallery-page-desc inanclar-desc-centered" id="galleryPageDesc"></p>
     <div class="gallery-loading" id="galleryLoading">
       <div class="gallery-loading-spinner"></div>
       <span>Fotoğraflar yükleniyor…</span>
@@ -1203,6 +1203,9 @@ async function openGallery(catKey) {
 function closeGallery() {
   document.getElementById('galleryPage').classList.remove('open');
   document.body.style.overflow = '';
+  const target = document.getElementById('fotografcilik');
+  if (target) target.scrollIntoView({ behavior:'smooth' });
+  else window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 function openLightbox(idx) {
