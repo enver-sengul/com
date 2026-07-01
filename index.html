@@ -618,7 +618,7 @@ footer { text-align:center; }
     <div id="pt-portfolyo">
       <div class="gallery-cats">
         <div class="gallery-cat-card" onclick="openInanclarGallery()">
-          <img id="cover-dunya-inanclar" src="portfolyom/dunya-inanclar/1.jpg" data-fallback-step="0" onerror="inanclarCoverFallback(this)" alt="Dünya İnançları">
+          <img id="cover-dunya-inanclar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Dünya İnançları">
           <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Dünya İnançları</div>
@@ -1308,73 +1308,84 @@ async function loadAnasayfaImages() {
 }
 
 // ═══════════════════════════════════
-// DÜNYA İNANÇLARI GALERİSİ — Yerel klasör (portfolyom/dunya-inanclar/)
+// DÜNYA İNANÇLARI GALERİSİ — Google Drive (WEB/portfolyom/dunya-inanclar klasörü)
 // ═══════════════════════════════════
-// Kapak görseli: portfolyom/dunya-inanclar/1.jpg (veya 1.webp)
-// Diğer görselleri buraya EKLEYİN — dosya adı ne olursa olsun,
-// klasördeki gerçek dosya adını aşağıdaki listeye yazmanız yeterli.
-// Kapak görseli (1.jpg) otomatik olarak galerinin ilk fotoğrafıdır.
-const INANCLAR_BASE  = 'portfolyom/dunya-inanclar/';
+// Kapak görseli: Drive'daki "dunya-inanclar" klasöründe adı "1" olan dosya (1.jpg / 1.webp / 1.png)
+// Diğer tüm görseller aynı klasörden otomatik çekilir, dosya adları önemli değildir.
+const INANCLAR_PER_PAGE = 6;
+let inanclarPageIdx  = 0;
+let inanclarLbIndex  = 0;
+let inanclarPhotos   = [];
+let inanclarFolderIdCache = null;
 
-// Kapak görseli 1.jpg / 1.jpeg / 1.png / 1.webp sırasıyla denenir,
-// hiçbiri bulunamazsa eski p-dunya-inanclar.jpg dosyasına düşülür,
-// o da yoksa "görsel bulunamadı" uyarısı gösterilir.
-const INANCLAR_COVER_TRIES = [
-  'portfolyom/dunya-inanclar/1.jpg',
-  'portfolyom/dunya-inanclar/1.jpeg',
-  'portfolyom/dunya-inanclar/1.png',
-  'portfolyom/dunya-inanclar/1.webp',
-  'p-dunya-inanclar.jpg'
-];
-function inanclarCoverFallback(img){
-  let step = parseInt(img.dataset.fallbackStep || '0', 10) + 1;
-  img.dataset.fallbackStep = step;
-  if (step < INANCLAR_COVER_TRIES.length) {
-    img.src = INANCLAR_COVER_TRIES[step];
-  } else {
-    img.onerror = null;
-    img.style.display = 'none';
-    const card = img.closest('.gallery-cat-card');
-    if (card && !card.querySelector('.inanclar-missing-msg')) {
-      const msg = document.createElement('div');
-      msg.className = 'inanclar-missing-msg';
-      msg.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-size:11px;color:var(--muted);background:var(--dark3);';
-      msg.textContent = 'Kapak görseli bulunamadı: portfolyom/dunya-inanclar/1.jpg';
-      card.appendChild(msg);
-    }
+async function getInanclarFolderId(){
+  if (inanclarFolderIdCache) return inanclarFolderIdCache;
+  const portfolyomId = await getFolderIdByName(DRIVE_ROOT_ID, 'portfolyom');
+  if (!portfolyomId) return null;
+  inanclarFolderIdCache = await getFolderIdByName(portfolyomId, 'dunya-inanclar');
+  return inanclarFolderIdCache;
+}
+
+async function getInanclarPhotos(){
+  const folderId = await getInanclarFolderId();
+  if (!folderId) return [];
+  const photos = await getPhotosInFolder(folderId);
+  // "1" adlı kapak görseli her zaman listenin başına gelsin
+  return [...photos].sort((a, b) => {
+    const aCover = /^1\.(jpe?g|png|webp)$/i.test(a.name) ? 0 : 1;
+    const bCover = /^1\.(jpe?g|png|webp)$/i.test(b.name) ? 0 : 1;
+    if (aCover !== bCover) return aCover - bCover;
+    return a.name.localeCompare(b.name, 'tr');
+  });
+}
+
+function showInanclarCoverMissing(img, reason){
+  img.style.display = 'none';
+  const card = img.closest('.gallery-cat-card');
+  if (card && !card.querySelector('.inanclar-missing-msg')) {
+    const msg = document.createElement('div');
+    msg.className = 'inanclar-missing-msg';
+    msg.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-size:11px;color:var(--muted);background:var(--dark3);';
+    msg.textContent = reason || 'Google Drive\'da "portfolyom/dunya-inanclar" klasöründe "1" adlı kapak görseli bulunamadı.';
+    card.appendChild(msg);
   }
 }
 
-const INANCLAR_FILES = [
-  '1.jpg',
-  // 'foto2.jpg',
-  // 'cami-ici.webp',
-  // 'kilise-avlusu.jpg',
-  // ↑ Buraya klasördeki diğer görsellerin gerçek dosya adlarını ekleyin
-];
-const INANCLAR_PER_PAGE = 6;
-let inanclarPageIdx = 0;
-let inanclarLbIndex = 0;
-
-function inanclarThumbMissing(img){
-  if (img.dataset.missingHandled) return;
-  img.dataset.missingHandled = '1';
-  img.style.display = 'none';
-  const wrap = img.closest('.photo-thumb');
-  if (!wrap) return;
-  const msg = document.createElement('div');
-  msg.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;font-size:10px;line-height:1.4;color:var(--muted);background:var(--dark3);';
-  msg.textContent = 'Bulunamadı: ' + img.getAttribute('src');
-  wrap.appendChild(msg);
+async function loadInanclarCover(){
+  const img = document.getElementById('cover-dunya-inanclar');
+  if (!img) return;
+  if (DRIVE_API_KEY === 'BURAYA_API_KEY') return;
+  try {
+    const photos = await getInanclarPhotos();
+    inanclarPhotos = photos;
+    const countEl = document.getElementById('count-dunya-inanclar');
+    if (countEl) countEl.textContent = photos.length ? photos.length + ' Fotoğraf' : 'Fotoğrafları Keşfet';
+    if (photos.length === 0) {
+      showInanclarCoverMissing(img, 'Google Drive\'da "portfolyom/dunya-inanclar" klasörü bulunamadı ya da boş.');
+      return;
+    }
+    img.src = driveImgUrl(photos[0].id, 'w800');
+  } catch(e) {
+    showInanclarCoverMissing(img);
+  }
 }
 
-function inanclarUrl(name){ return INANCLAR_BASE + name; }
-
-function openInanclarGallery(){
+async function openInanclarGallery(){
   inanclarPageIdx = 0;
-  document.getElementById('inanclarPage').classList.add('open');
+  const page = document.getElementById('inanclarPage');
+  page.classList.add('open');
   document.body.style.overflow = 'hidden';
-  document.getElementById('inanclarPage').scrollTop = 0;
+  page.scrollTop = 0;
+  document.getElementById('inanclarGrid').innerHTML =
+    '<div class="gallery-loading"><div class="gallery-loading-spinner"></div><span>Fotoğraflar yükleniyor…</span></div>';
+  document.getElementById('inanclarPageIndicator').textContent = '';
+  document.getElementById('inanclarPrevBtn').disabled = true;
+  document.getElementById('inanclarNextBtn').disabled = true;
+  try {
+    inanclarPhotos = await getInanclarPhotos();
+  } catch(e) {
+    inanclarPhotos = [];
+  }
   renderInanclarGrid();
 }
 
@@ -1386,32 +1397,37 @@ function closeInanclarGallery(){
 
 function renderInanclarGrid(){
   const grid = document.getElementById('inanclarGrid');
-  const total = INANCLAR_FILES.length;
+  const total = inanclarPhotos.length;
+
+  if (total === 0) {
+    grid.innerHTML = '<p class="gallery-empty-msg">Google Drive\'da "portfolyom/dunya-inanclar" klasörü bulunamadı ya da boş. Klasör adını ve paylaşım ayarlarını kontrol edin.</p>';
+    document.getElementById('inanclarPageIndicator').textContent = '';
+    document.getElementById('inanclarPrevBtn').disabled = true;
+    document.getElementById('inanclarNextBtn').disabled = true;
+    return;
+  }
+
   const totalPages = Math.max(1, Math.ceil(total / INANCLAR_PER_PAGE));
   if (inanclarPageIdx < 0) inanclarPageIdx = totalPages - 1;
   if (inanclarPageIdx >= totalPages) inanclarPageIdx = 0;
 
   const start = inanclarPageIdx * INANCLAR_PER_PAGE;
-  const pageFiles = INANCLAR_FILES.slice(start, start + INANCLAR_PER_PAGE);
+  const pageItems = inanclarPhotos.slice(start, start + INANCLAR_PER_PAGE);
 
   grid.innerHTML = '';
-  if (pageFiles.length === 0) {
-    grid.innerHTML = '<p class="gallery-empty-msg">Bu klasörde henüz fotoğraf yok.</p>';
-  } else {
-    pageFiles.forEach((name, i) => {
-      const globalIdx = start + i;
-      const div = document.createElement('div');
-      div.className = 'photo-thumb';
-      div.innerHTML = `
-        <img src="${inanclarUrl(name)}" alt="Dünya İnançları" loading="lazy" onerror="inanclarThumbMissing(this)">
-        <div class="photo-thumb-overlay">
-          <div class="photo-thumb-zoom">⊕</div>
-        </div>`;
-      div.onclick = () => openInanclarLightbox(globalIdx);
-      div.oncontextmenu = e => e.preventDefault();
-      grid.appendChild(div);
-    });
-  }
+  pageItems.forEach((photo, i) => {
+    const globalIdx = start + i;
+    const div = document.createElement('div');
+    div.className = 'photo-thumb';
+    div.innerHTML = `
+      <img src="${driveImgUrl(photo.id)}" alt="Dünya İnançları" loading="lazy">
+      <div class="photo-thumb-overlay">
+        <div class="photo-thumb-zoom">⊕</div>
+      </div>`;
+    div.onclick = () => openInanclarLightbox(globalIdx);
+    div.oncontextmenu = e => e.preventDefault();
+    grid.appendChild(div);
+  });
 
   document.getElementById('inanclarPageIndicator').textContent = (inanclarPageIdx + 1) + ' / ' + totalPages;
   document.getElementById('inanclarPrevBtn').disabled = totalPages <= 1;
@@ -1426,9 +1442,9 @@ function inanclarNav(dir){
 
 function openInanclarLightbox(idx){
   inanclarLbIndex = idx;
-  const name = INANCLAR_FILES[idx];
-  document.getElementById('inanclarLbImg').src = inanclarUrl(name);
-  document.getElementById('inanclarLbCounter').textContent = (idx + 1) + ' / ' + INANCLAR_FILES.length;
+  const photo = inanclarPhotos[idx];
+  document.getElementById('inanclarLbImg').src = driveImgUrl(photo.id);
+  document.getElementById('inanclarLbCounter').textContent = (idx + 1) + ' / ' + inanclarPhotos.length;
   document.getElementById('inanclarLightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1439,7 +1455,7 @@ function closeInanclarLightbox(){
 }
 
 function inanclarLbNav(dir){
-  const total = INANCLAR_FILES.length;
+  const total = inanclarPhotos.length;
   inanclarLbIndex = (inanclarLbIndex + dir + total) % total;
   openInanclarLightbox(inanclarLbIndex);
 }
@@ -1458,6 +1474,7 @@ document.addEventListener('keydown', e => {
 
 window.addEventListener('load', preloadCounts);
 window.addEventListener('load', loadAnasayfaImages);
+window.addEventListener('load', loadInanclarCover);
 
 function switchTab(btn,id){
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
