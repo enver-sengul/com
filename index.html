@@ -415,11 +415,37 @@ footer { text-align:center; }
 }
 .btn-buy { display:inline-flex;align-items:center;gap:8px; margin-top:16px;padding:11px 22px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'Raleway',sans-serif; font-size:10px;font-weight:700;letter-spacing:2px; text-transform:uppercase;text-decoration:none; transition:all .3s; }
 .btn-buy:hover{background:var(--gold);color:var(--dark);}
+/* ═══════ YÖNETİM PANELİ ═══════ */
+.ek-overlay{position:fixed;inset:0;z-index:9999;background:rgba(13,11,8,.88);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px;}
+.ek-overlay.open{display:flex;}
+.ek-box{background:linear-gradient(150deg,#1A1710,#0D0B08);border:1px solid rgba(201,168,76,.35);border-radius:8px;width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6);}
+.ek-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid rgba(201,168,76,.2);}
+.ek-head h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:var(--gold);font-weight:600;}
+.ek-close{background:none;border:none;color:var(--cream2);font-size:22px;cursor:pointer;line-height:1;padding:4px 8px;}
+.ek-close:hover{color:var(--gold);}
+.ek-body{padding:20px 24px;overflow-y:auto;flex:1;}
+.ek-body input, .ek-body textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.25);border-radius:5px;color:var(--cream);font-family:'Raleway',sans-serif;font-size:14px;padding:11px 13px;margin-bottom:16px;}
+.ek-body input:focus, .ek-body textarea:focus{outline:none;border-color:var(--gold);}
+.ek-body textarea{resize:vertical;min-height:64px;text-align:left;}
+.ek-body p{margin:0 0 22px;font-size:13px;color:var(--muted);line-height:1.6;}
+.ek-group-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:22px 0 10px;padding-top:14px;border-top:1px solid rgba(201,168,76,.15);}
+.ek-group-title:first-child{margin-top:0;padding-top:0;border-top:none;}
+.ek-field-label{display:block;font-size:11px;color:var(--cream2);margin-bottom:6px;letter-spacing:.5px;}
+.ek-foot{display:flex;gap:12px;padding:18px 24px;border-top:1px solid rgba(201,168,76,.2);flex-wrap:wrap;}
+.ek-btn{flex:1;min-width:120px;text-align:center;padding:12px 18px;border-radius:5px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:opacity .2s;}
+.ek-btn:hover{opacity:.85;}
+.ek-btn-save{background:var(--gold);color:var(--dark);}
+.ek-btn-reset{background:transparent;color:#c96060;border:1px solid rgba(201,96,96,.4);}
+.ek-btn-cancel{background:transparent;color:var(--cream2);border:1px solid rgba(255,255,255,.15);}
+.ek-status{font-size:12px;color:var(--gold-light);padding:0 24px 14px;min-height:16px;}
+.ek-login-box{max-width:340px;}
+.ek-login-box .ek-body{text-align:center;}
+.ek-login-box input{text-align:center;margin-bottom:20px;}
 </style>
 </head>
 <body>
 <nav id="mainNav">
-  <a href="#" class="nav-logo">Enver Şengül</a>
+  <a href="#" class="nav-logo" id="ekTrigger">Enver Şengül</a>
   <ul class="nav-links">
     <li><a href="#hakkimda">Hakkımda</a></li>
     <li><a href="#fotografcilik">Fotoğrafçılığım</a></li>
@@ -457,12 +483,12 @@ footer { text-align:center; }
 <section class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow"><span>Edirne · Türkiye</span></div>
-    <h1 class="hero-name">ENVER<span>ŞENGÜL</span></h1>
-    <p class="hero-titles">Fotoğraf Sanatçısı &nbsp;·&nbsp; Yazar &nbsp;·&nbsp; Kültür Yöneticisi &nbsp;·&nbsp; Eğitimci &nbsp;·&nbsp; Gazeteci</p>
+    <h1 class="hero-name" data-ek="hero_name" data-ek-br="1" data-ek-label="Hero · İsim" data-ek-group="Hero">ENVER<span>ŞENGÜL</span></h1>
+    <p class="hero-titles" data-ek="hero_titles" data-ek-label="Hero · Unvanlar" data-ek-group="Hero">Fotoğraf Sanatçısı &nbsp;·&nbsp; Yazar &nbsp;·&nbsp; Kültür Yöneticisi &nbsp;·&nbsp; Eğitimci &nbsp;·&nbsp; Gazeteci</p>
     <span class="hero-quote-mark">"</span>
-    <blockquote class="hero-quote">Fotoğraf, kültür, tarih ve edebiyatla örülmüş bir yaşam yolculuğu.</blockquote>
-    <p class="hero-bio">Öğretmenlikten gazeteciliğe, fotoğraf sanatından yazarlığa; müzecilikten kütüphaneciliğe uzanan çok yönlü bir yaşamın birikimi… Her adımında öğrenmenin, üretmenin ve paylaşmanın izlerini taşıyan; haber peşinde koşulan günlerden roman sayfalarına, sergi salonlarından ödüllü müzelere uzanan uzun, anlamlı ve heyecan verici bir serüven…</p>
-    <p class="hero-bio">Bu sayfalarda yalnızca bir özgeçmiş değil; tutkuyla yaşanmış, emekle şekillenmiş ve ardında kalıcı izler bırakmış bir hayatın hikâyesini bulacaksınız.</p>
+    <blockquote class="hero-quote" data-ek="hero_quote" data-ek-label="Hero · Alıntı" data-ek-group="Hero">Fotoğraf, kültür, tarih ve edebiyatla örülmüş bir yaşam yolculuğu.</blockquote>
+    <p class="hero-bio" data-ek="hero_bio1" data-ek-label="Hero · Biyografi 1" data-ek-group="Hero">Öğretmenlikten gazeteciliğe, fotoğraf sanatından yazarlığa; müzecilikten kütüphaneciliğe uzanan çok yönlü bir yaşamın birikimi… Her adımında öğrenmenin, üretmenin ve paylaşmanın izlerini taşıyan; haber peşinde koşulan günlerden roman sayfalarına, sergi salonlarından ödüllü müzelere uzanan uzun, anlamlı ve heyecan verici bir serüven…</p>
+    <p class="hero-bio" data-ek="hero_bio2" data-ek-label="Hero · Biyografi 2" data-ek-group="Hero">Bu sayfalarda yalnızca bir özgeçmiş değil; tutkuyla yaşanmış, emekle şekillenmiş ve ardında kalıcı izler bırakmış bir hayatın hikâyesini bulacaksınız.</p>
     <div class="hero-cta">
       <a href="#hakkimda" class="btn-gold">Hikâyemi Keşfet →</a>
       <a href="#iletisim" class="btn-outline">İletişime Geç</a>
@@ -470,7 +496,7 @@ footer { text-align:center; }
   </div>
   <img class="hero-photo" src="hero.jpg" alt="Enver Şengül">
   <div class="hero-right-quote">
-    <p>Yaşamı gözlemlemek, karesiyle yazmak ve kelimelerle anlatmak…</p>
+    <p data-ek="hero_side_quote" data-ek-label="Hero · Yan Alıntı" data-ek-group="Hero">Yaşamı gözlemlemek, karesiyle yazmak ve kelimelerle anlatmak…</p>
     <span class="sig">Enver Şengül</span>
   </div>
 </section>
@@ -482,8 +508,8 @@ footer { text-align:center; }
     <div class="card-content">
       <div class="card-top">
         <span class="card-icon">📷</span>
-        <h3 class="card-title">Fotoğrafçılığım</h3>
-        <p class="card-desc">Portfolyolar, yurt içi ve yurt dışı fotoğraf çalışmaları, yazılar, sunumlar, atölyeler ve daha fazlası.</p>
+        <h3 class="card-title" data-ek="card1_title" data-ek-label="Kart 1 · Başlık" data-ek-group="Ana Kartlar">Fotoğrafçılığım</h3>
+        <p class="card-desc" data-ek="card1_desc" data-ek-label="Kart 1 · Açıklama" data-ek-group="Ana Kartlar">Portfolyolar, yurt içi ve yurt dışı fotoğraf çalışmaları, yazılar, sunumlar, atölyeler ve daha fazlası.</p>
       </div>
       <div class="card-bottom">
         <a href="#fotografcilik" class="card-link">Keşfet →</a>
@@ -497,8 +523,8 @@ footer { text-align:center; }
   <div class="card-content">
     <div class="card-top">
       <span class="card-icon">✍️</span>
-      <h3 class="card-title">Yazarlığım</h3>
-      <p class="card-desc">Romanlarım, imza günlerim, söyleşilerim ve yazdığım eserler.</p>
+      <h3 class="card-title" data-ek="card2_title" data-ek-label="Kart 2 · Başlık" data-ek-group="Ana Kartlar">Yazarlığım</h3>
+      <p class="card-desc" data-ek="card2_desc" data-ek-label="Kart 2 · Açıklama" data-ek-group="Ana Kartlar">Romanlarım, imza günlerim, söyleşilerim ve yazdığım eserler.</p>
     </div>
     <div class="card-bottom">
       <a href="#yazarlik" class="card-link">İncele →</a>
@@ -512,8 +538,8 @@ footer { text-align:center; }
     <div class="card-content">
       <div class="card-top">
         <span class="card-icon">🏛️</span>
-        <h3 class="card-title">Kültürel Miras</h3>
-        <p class="card-desc">Müze yöneticiliğim, Avrupa Müze Ödülü hikâyesi ve kültürel miras çalışmalarım.</p>
+        <h3 class="card-title" data-ek="card3_title" data-ek-label="Kart 3 · Başlık" data-ek-group="Ana Kartlar">Kültürel Miras</h3>
+        <p class="card-desc" data-ek="card3_desc" data-ek-label="Kart 3 · Açıklama" data-ek-group="Ana Kartlar">Müze yöneticiliğim, Avrupa Müze Ödülü hikâyesi ve kültürel miras çalışmalarım.</p>
       </div>
       <div class="card-bottom">
         <a href="#kulturel" class="card-link">Detaylar →</a>
@@ -527,8 +553,8 @@ footer { text-align:center; }
     <div class="card-content">
       <div class="card-top">
         <span class="card-icon">🎓</span>
-        <h3 class="card-title">Eğitim & Atölyeler</h3>
-        <p class="card-desc">Eğitmenliğim, atölyelerim, eğitici videolar ve fotoğraf paylaşımlarım.</p>
+        <h3 class="card-title" data-ek="card4_title" data-ek-label="Kart 4 · Başlık" data-ek-group="Ana Kartlar">Eğitim & Atölyeler</h3>
+        <p class="card-desc" data-ek="card4_desc" data-ek-label="Kart 4 · Açıklama" data-ek-group="Ana Kartlar">Eğitmenliğim, atölyelerim, eğitici videolar ve fotoğraf paylaşımlarım.</p>
       </div>
       <div class="card-bottom">
         <a href="#egitim" class="card-link">Görüntüle →</a>
@@ -542,8 +568,8 @@ footer { text-align:center; }
     <div class="card-content">
       <div class="card-top">
         <span class="card-icon">📰</span>
-        <h3 class="card-title">Gazetecilik & Yazılar</h3>
-        <p class="card-desc">Muhabirlik, köşe yazarlığı, yazılarım ve basında yer alan çalışmalarım.</p>
+        <h3 class="card-title" data-ek="card5_title" data-ek-label="Kart 5 · Başlık" data-ek-group="Ana Kartlar">Gazetecilik & Yazılar</h3>
+        <p class="card-desc" data-ek="card5_desc" data-ek-label="Kart 5 · Açıklama" data-ek-group="Ana Kartlar">Muhabirlik, köşe yazarlığı, yazılarım ve basında yer alan çalışmalarım.</p>
       </div>
       <div class="card-bottom">
         <a href="#gazetecilik" class="card-link">Oku →</a>
@@ -555,47 +581,47 @@ footer { text-align:center; }
   <div class="stat">
     <div class="stat-icon-wrap">🏆</div>
     <div class="stat-texts">
-      <span class="stat-main">Avrupa Müze Ödülü</span>
-      <span class="stat-sub">2004</span>
+      <span class="stat-main" data-ek="stat1_main" data-ek-label="İstatistik 1 · Ana" data-ek-group="İstatistik Barı">Avrupa Müze Ödülü</span>
+      <span class="stat-sub" data-ek="stat1_sub" data-ek-label="İstatistik 1 · Alt" data-ek-group="İstatistik Barı">2004</span>
     </div>
   </div>
   <div class="stat-sep"></div>
   <div class="stat">
     <div class="stat-icon-wrap">📷</div>
     <div class="stat-texts">
-      <span class="stat-main">40 Yıl Aşkın</span>
-      <span class="stat-sub">Fotoğraf Deneyimi</span>
+      <span class="stat-main" data-ek="stat2_main" data-ek-label="İstatistik 2 · Ana" data-ek-group="İstatistik Barı">40 Yıl Aşkın</span>
+      <span class="stat-sub" data-ek="stat2_sub" data-ek-label="İstatistik 2 · Alt" data-ek-group="İstatistik Barı">Fotoğraf Deneyimi</span>
     </div>
   </div>
   <div class="stat-sep"></div>
   <div class="stat">
     <div class="stat-icon-wrap">📖</div>
     <div class="stat-texts">
-      <span class="stat-main">3 Roman</span>
-      <span class="stat-sub">Ve Birçok Yayın</span>
+      <span class="stat-main" data-ek="stat3_main" data-ek-label="İstatistik 3 · Ana" data-ek-group="İstatistik Barı">3 Roman</span>
+      <span class="stat-sub" data-ek="stat3_sub" data-ek-label="İstatistik 3 · Alt" data-ek-group="İstatistik Barı">Ve Birçok Yayın</span>
     </div>
   </div>
   <div class="stat-sep"></div>
   <div class="stat">
     <div class="stat-icon-wrap">🎓</div>
     <div class="stat-texts">
-      <span class="stat-main">Yüzlerce</span>
-      <span class="stat-sub">Sunum & Eğitim</span>
+      <span class="stat-main" data-ek="stat4_main" data-ek-label="İstatistik 4 · Ana" data-ek-group="İstatistik Barı">Yüzlerce</span>
+      <span class="stat-sub" data-ek="stat4_sub" data-ek-label="İstatistik 4 · Alt" data-ek-group="İstatistik Barı">Sunum & Eğitim</span>
     </div>
   </div>
   <div class="stat-sep"></div>
   <div class="stat">
     <div class="stat-icon-wrap">🌍</div>
     <div class="stat-texts">
-      <span class="stat-main">Yurt İçi & Yurt Dışı</span>
-      <span class="stat-sub">Fotoğraf Çalışmaları</span>
+      <span class="stat-main" data-ek="stat5_main" data-ek-label="İstatistik 5 · Ana" data-ek-group="İstatistik Barı">Yurt İçi & Yurt Dışı</span>
+      <span class="stat-sub" data-ek="stat5_sub" data-ek-label="İstatistik 5 · Alt" data-ek-group="İstatistik Barı">Fotoğraf Çalışmaları</span>
     </div>
   </div>
 </div>
 <section class="section about-bg" id="hakkimda">
   <div class="section-inner">
     <div class="section-eyebrow aos"><span>Hakkımda</span></div>
-    <h2 class="section-title aos">Bitlis'ten Edirne'ye<br><em>Bir Ömrün Birikimi</em></h2>
+    <h2 class="section-title aos" data-ek="hakkimda_title" data-ek-br="1" data-ek-label="Hakkımda · Başlık" data-ek-group="Hakkımda">Bitlis'ten Edirne'ye<br><em>Bir Ömrün Birikimi</em></h2>
     <div class="about-grid">
       <div class="aos">
         <div class="about-photo-frame">
@@ -608,10 +634,10 @@ footer { text-align:center; }
         </div>
       </div>
       <div>
-        <p class="about-intro aos">"Bu sayfalarda yalnızca bir özgeçmiş değil; tutkuyla yaşanmış, emekle şekillenmiş ve ardında kalıcı izler bırakmış bir hayatın hikâyesini bulacaksınız."</p>
+        <p class="about-intro aos" data-ek="hakkimda_intro" data-ek-label="Hakkımda · Alıntı" data-ek-group="Hakkımda">"Bu sayfalarda yalnızca bir özgeçmiş değil; tutkuyla yaşanmış, emekle şekillenmiş ve ardında kalıcı izler bırakmış bir hayatın hikâyesini bulacaksınız."</p>
         <div class="about-body aos">
-          <p>Bitlis'ten Edirne'ye uzanan yaşam yolculuğunda öğretmenlikten gazeteciliğe, fotoğraf sanatından müzeciliğe, kültürel miras çalışmalarından roman yazarlığına uzanan çok yönlü bir üretim hikâyesi.</p>
-          <p>Her adımında öğrenmenin, üretmenin ve paylaşmanın izlerini taşıyan; haber peşinde koşulan günlerden roman sayfalarına, sergi salonlarından ödüllü müzelere uzanan uzun, anlamlı ve heyecan verici bir serüven…</p>
+          <p data-ek="hakkimda_body1" data-ek-label="Hakkımda · Metin 1" data-ek-group="Hakkımda">Bitlis'ten Edirne'ye uzanan yaşam yolculuğunda öğretmenlikten gazeteciliğe, fotoğraf sanatından müzeciliğe, kültürel miras çalışmalarından roman yazarlığına uzanan çok yönlü bir üretim hikâyesi.</p>
+          <p data-ek="hakkimda_body2" data-ek-label="Hakkımda · Metin 2" data-ek-group="Hakkımda">Her adımında öğrenmenin, üretmenin ve paylaşmanın izlerini taşıyan; haber peşinde koşulan günlerden roman sayfalarına, sergi salonlarından ödüllü müzelere uzanan uzun, anlamlı ve heyecan verici bir serüven…</p>
         </div>
         <div class="roles-grid aos">
           <div class="role-chip"><span>📷</span><span>Fotoğraf Sanatçısı</span></div>
@@ -823,7 +849,7 @@ footer { text-align:center; }
 <section class="section books-bg" id="yazarlik">
   <div class="section-inner">
     <div class="section-eyebrow aos"><span>Yazarlığım</span></div>
-    <h2 class="section-title aos">Kelimelerin <em>Evreni</em></h2>
+    <h2 class="section-title aos" data-ek="yazarlik_title" data-ek-br="1" data-ek-label="Yazarlık · Başlık" data-ek-group="Yazarlık">Kelimelerin <em>Evreni</em></h2>
     <div class="books-grid">
       <div class="book-card aos">
         <div class="book-cover bc-1">
@@ -835,8 +861,8 @@ footer { text-align:center; }
         </div>
         <div class="book-info">
           <span class="book-tag">Roman</span>
-          <h3 class="book-name">Darüşşifa<br>Delilik Mevsimi</h3>
-          <p class="book-desc">Osmanlı tıp tarihinin derinliklerine dalan, Edirne Darüşşifası'nın gizemleriyle örülü tarihi bir roman.</p>
+          <h3 class="book-name" data-ek="book1_title" data-ek-br="1" data-ek-label="Kitap 1 · Başlık" data-ek-group="Yazarlık">Darüşşifa<br>Delilik Mevsimi</h3>
+          <p class="book-desc" data-ek="book1_desc" data-ek-label="Kitap 1 · Açıklama" data-ek-group="Yazarlık">Osmanlı tıp tarihinin derinliklerine dalan, Edirne Darüşşifası'nın gizemleriyle örülü tarihi bir roman.</p>
           <a class="btn-buy" href="https://www.dr.com.tr/kitap/darussifa-delilik-mevsimi/enver-sengul/edebiyat/roman/turkiye-roman/urunno=0000000665997" target="_blank" rel="noopener">🛒 Satın Al</a>
         </div>
       </div>
@@ -850,8 +876,8 @@ footer { text-align:center; }
         </div>
         <div class="book-info">
           <span class="book-tag">Roman</span>
-          <h3 class="book-name">Kayıp Zamanın<br>Bekçisi</h3>
-          <p class="book-desc">Zamana karşı verilen sessiz bir savaşın, hafızanın ve kimliğin derinliklerini araştıran etkileyici bir anlatı.</p>
+          <h3 class="book-name" data-ek="book2_title" data-ek-br="1" data-ek-label="Kitap 2 · Başlık" data-ek-group="Yazarlık">Kayıp Zamanın<br>Bekçisi</h3>
+          <p class="book-desc" data-ek="book2_desc" data-ek-label="Kitap 2 · Açıklama" data-ek-group="Yazarlık">Zamana karşı verilen sessiz bir savaşın, hafızanın ve kimliğin derinliklerini araştıran etkileyici bir anlatı.</p>
           <a class="btn-buy" href="https://www.dr.com.tr/kitap/kayip-zamanin-bekcisi-bir-urartu-romani/enver-sengul/edebiyat/roman/turkiye-roman/urunno=0001909025001" target="_blank" rel="noopener">🛒 Satın Al</a>
         </div>
       </div>
@@ -865,8 +891,8 @@ footer { text-align:center; }
         </div>
         <div class="book-info">
           <span class="book-tag">Roman</span>
-          <h3 class="book-name">Kuşatma<br>Bir Balkan Savaşı Romanı</h3>
-          <p class="book-desc">Tarihin kanlı sayfalarından damıtılmış, insan ruhunun direncini ve aşkınlığını anlatan güçlü bir roman.</p>
+          <h3 class="book-name" data-ek="book3_title" data-ek-br="1" data-ek-label="Kitap 3 · Başlık" data-ek-group="Yazarlık">Kuşatma<br>Bir Balkan Savaşı Romanı</h3>
+          <p class="book-desc" data-ek="book3_desc" data-ek-label="Kitap 3 · Açıklama" data-ek-group="Yazarlık">Tarihin kanlı sayfalarından damıtılmış, insan ruhunun direncini ve aşkınlığını anlatan güçlü bir roman.</p>
           <a class="btn-buy" href="https://www.dr.com.tr/kitap/kusatma-bir-balkan-savasi-romani/enver-sengul/edebiyat/roman/turk-romani/urunno=0002081168001" target="_blank" rel="noopener">🛒 Satın Al</a>
         </div>
       </div>
@@ -881,13 +907,13 @@ footer { text-align:center; }
 <section class="section heritage-bg" id="kulturel">
   <div class="section-inner">
     <div class="section-eyebrow aos"><span>Kültürel Miras</span></div>
-    <h2 class="section-title aos">Müzecilik &amp; <em>Ödüller</em></h2>
+    <h2 class="section-title aos" data-ek="kulturel_title" data-ek-br="1" data-ek-label="Kültürel Miras · Başlık" data-ek-group="Kültürel Miras">Müzecilik &amp; <em>Ödüller</em></h2>
     <div class="heritage-grid">
       <div>
-        <p class="heritage-intro aos">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi'ni Avrupa'nın en iyi müzesi seçilen bir kurum hâline getiren yönetim ve vizyon hikâyesi.</p>
+        <p class="heritage-intro aos" data-ek="kulturel_intro" data-ek-label="Kültürel Miras · Alıntı" data-ek-group="Kültürel Miras">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi'ni Avrupa'nın en iyi müzesi seçilen bir kurum hâline getiren yönetim ve vizyon hikâyesi.</p>
         <div class="heritage-body aos">
-          <p>Müze yöneticisi olarak Sultan II. Bayezid Külliyesi Sağlık Müzesi'nde gerçekleştirdiği çalışmalar, 2004 yılında Avrupa Müze Ödülü ile taçlandı. Bu prestijli ödül, Türkiye'nin kültürel miras alanında dünya sahnesindeki yerini güçlendirdi.</p>
-          <p>Osmanlı sağlık kültürü, tıp tarihi ve müzecilik alanlarında ulusal ve uluslararası platformlarda sunumlar gerçekleştirdi; kültürel miras koruma projelerine öncülük etti.</p>
+          <p data-ek="kulturel_body1" data-ek-label="Kültürel Miras · Metin 1" data-ek-group="Kültürel Miras">Müze yöneticisi olarak Sultan II. Bayezid Külliyesi Sağlık Müzesi'nde gerçekleştirdiği çalışmalar, 2004 yılında Avrupa Müze Ödülü ile taçlandı. Bu prestijli ödül, Türkiye'nin kültürel miras alanında dünya sahnesindeki yerini güçlendirdi.</p>
+          <p data-ek="kulturel_body2" data-ek-label="Kültürel Miras · Metin 2" data-ek-group="Kültürel Miras">Osmanlı sağlık kültürü, tıp tarihi ve müzecilik alanlarında ulusal ve uluslararası platformlarda sunumlar gerçekleştirdi; kültürel miras koruma projelerine öncülük etti.</p>
         </div>
         <ul class="awards-list aos">
           <li>Avrupa Müze Ödülü 2004 — Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi</li>
@@ -901,7 +927,7 @@ footer { text-align:center; }
         <div class="award-feature-box">
           <div class="af-year">2004</div>
           <div class="af-name">Avrupa Müze Ödülü</div>
-          <p class="af-desc">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi, bu prestijli ödüle layık görülerek Avrupa'nın en iyi müzesi unvanını kazandı. Türkiye müzeciliği tarihinde bir ilk olan bu başarı, kültürel mirasın korunması ve yaşatılması yolundaki kararlı çabanın meyvesidir.</p>
+          <p class="af-desc" data-ek="kulturel_award_desc" data-ek-label="Kültürel Miras · Ödül Kutusu Açıklaması" data-ek-group="Kültürel Miras">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi, bu prestijli ödüle layık görülerek Avrupa'nın en iyi müzesi unvanını kazandı. Türkiye müzeciliği tarihinde bir ilk olan bu başarı, kültürel mirasın korunması ve yaşatılması yolundaki kararlı çabanın meyvesidir.</p>
         </div>
       </div>
     </div>
@@ -911,31 +937,31 @@ footer { text-align:center; }
 <section class="section edu-bg" id="egitim">
   <div class="section-inner">
     <div class="section-eyebrow aos"><span>Eğitim & Atölyeler</span></div>
-    <h2 class="section-title aos">Bilgiyi <em>Paylaşmak</em></h2>
+    <h2 class="section-title aos" data-ek="egitim_title" data-ek-br="1" data-ek-label="Eğitim · Başlık" data-ek-group="Eğitim & Atölyeler">Bilgiyi <em>Paylaşmak</em></h2>
     <div class="edu-grid">
       <div class="edu-card aos" style="background-image:url('edu-ogretmen.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">01</div>
         <div class="edu-icon">🎓</div>
-        <h3 class="edu-title">Öğretmenlik</h3>
-        <p class="edu-desc">Kariyer yolculuğunun ilk durağı olan öğretmenlik deneyimi, insanlara öğretme ve bilgi aktarma tutkusunun temelini oluşturdu. Bu köklü birikim, tüm çalışmalarına yansıyan pedagojik bir bakış açısı kazandırdı.</p>
+        <h3 class="edu-title" data-ek="edu1_title" data-ek-label="Eğitim Kartı 1 · Başlık" data-ek-group="Eğitim & Atölyeler">Öğretmenlik</h3>
+        <p class="edu-desc" data-ek="edu1_desc" data-ek-label="Eğitim Kartı 1 · Açıklama" data-ek-group="Eğitim & Atölyeler">Kariyer yolculuğunun ilk durağı olan öğretmenlik deneyimi, insanlara öğretme ve bilgi aktarma tutkusunun temelini oluşturdu. Bu köklü birikim, tüm çalışmalarına yansıyan pedagojik bir bakış açısı kazandırdı.</p>
       </div>
       <div class="edu-card aos d1" style="background-image:url('edu-atolye.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">02</div>
         <div class="edu-icon">📷</div>
-        <h3 class="edu-title">Fotoğraf Atölyeleri</h3>
-        <p class="edu-desc">Yurt içi ve yurt dışında düzenlenen fotoğraf atölyeleri ve seminerlerle binlerce fotoğraf meraklısına rehberlik etti. Kompozisyon, ışık kullanımı ve sanatsal anlatım üzerine kapsamlı eğitimler.</p>
+        <h3 class="edu-title" data-ek="edu2_title" data-ek-label="Eğitim Kartı 2 · Başlık" data-ek-group="Eğitim & Atölyeler">Fotoğraf Atölyeleri</h3>
+        <p class="edu-desc" data-ek="edu2_desc" data-ek-label="Eğitim Kartı 2 · Açıklama" data-ek-group="Eğitim & Atölyeler">Yurt içi ve yurt dışında düzenlenen fotoğraf atölyeleri ve seminerlerle binlerce fotoğraf meraklısına rehberlik etti. Kompozisyon, ışık kullanımı ve sanatsal anlatım üzerine kapsamlı eğitimler.</p>
       </div>
       <div class="edu-card aos d2" style="background-image:url('edu-video.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">03</div>
         <div class="edu-icon">🎬</div>
-        <h3 class="edu-title">Eğitici Videolar</h3>
-        <p class="edu-desc">Dijital platformlarda yayınlanan fotoğrafçılık eğitim videoları, geniş bir kitleye ulaşarak fotoğraf sanatının yaygınlaşmasına katkı sağladı. Teknik ve sanatsal içerikleri buluşturan özgün bir format.</p>
+        <h3 class="edu-title" data-ek="edu3_title" data-ek-label="Eğitim Kartı 3 · Başlık" data-ek-group="Eğitim & Atölyeler">Eğitici Videolar</h3>
+        <p class="edu-desc" data-ek="edu3_desc" data-ek-label="Eğitim Kartı 3 · Açıklama" data-ek-group="Eğitim & Atölyeler">Dijital platformlarda yayınlanan fotoğrafçılık eğitim videoları, geniş bir kitleye ulaşarak fotoğraf sanatının yaygınlaşmasına katkı sağladı. Teknik ve sanatsal içerikleri buluşturan özgün bir format.</p>
       </div>
       <div class="edu-card aos d3" style="background-image:url('edu-muzeci.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">04</div>
         <div class="edu-icon">🏛️</div>
-        <h3 class="edu-title">Müzecilik Eğitimi</h3>
-        <p class="edu-desc">Müzecilik, kültürel miras koruma ve sergi tasarımı konularında uzmanlaşmış eğitimler ve sunumlar. Osmanlı dönemi sağlık tarihi ve kültürel miras alanında özgün bir perspektif.</p>
+        <h3 class="edu-title" data-ek="edu4_title" data-ek-label="Eğitim Kartı 4 · Başlık" data-ek-group="Eğitim & Atölyeler">Müzecilik Eğitimi</h3>
+        <p class="edu-desc" data-ek="edu4_desc" data-ek-label="Eğitim Kartı 4 · Açıklama" data-ek-group="Eğitim & Atölyeler">Müzecilik, kültürel miras koruma ve sergi tasarımı konularında uzmanlaşmış eğitimler ve sunumlar. Osmanlı dönemi sağlık tarihi ve kültürel miras alanında özgün bir perspektif.</p>
       </div>
     </div>
   </div>
@@ -944,16 +970,16 @@ footer { text-align:center; }
 <section class="section press-bg" id="gazetecilik">
   <div class="section-inner">
     <div class="section-eyebrow aos"><span>Gazetecilik & Yazılar</span></div>
-    <h2 class="section-title aos">Basın &amp; <em>Kalem</em></h2>
+    <h2 class="section-title aos" data-ek="gazetecilik_title" data-ek-br="1" data-ek-label="Gazetecilik · Başlık" data-ek-group="Gazetecilik">Basın &amp; <em>Kalem</em></h2>
     <div class="press-grid aos">
-      <div class="press-item" style="position:relative;background:url('basin-trt.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📡</div><div class="press-name">TRT</div><div class="press-role">Muhabirlik</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-hurriyet.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📰</div><div class="press-name">Hürriyet Haber Ajansı</div><div class="press-role">Muhabirlik</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-trakya.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📺</div><div class="press-name">Trakya Televizyonu</div><div class="press-role">Muhabirlik</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-edirne.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">🗞️</div><div class="press-name">Edirne Gazetesi</div><div class="press-role">Köşe Yazarlığı</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-vatandas.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📋</div><div class="press-name">Vatandaş Gazetesi</div><div class="press-role">Yazarlık</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-edirnehaber.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📄</div><div class="press-name">Edirne Haber Gazetesi</div><div class="press-role">Yazarlık</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-bitlissesi.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📣</div><div class="press-name">Bitlis Sesi</div><div class="press-role">Muhabirlik</div></div>
-      <div class="press-item" style="position:relative;background:url('basin-foto.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">✏️</div><div class="press-name">Fotoğraf Yazıları</div><div class="press-role">Yayınlar & Yorumlar</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-trt.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📡</div><div class="press-name" data-ek="press1_name" data-ek-label="Basın 1 · İsim" data-ek-group="Gazetecilik">TRT</div><div class="press-role" data-ek="press1_role" data-ek-label="Basın 1 · Rol" data-ek-group="Gazetecilik">Muhabirlik</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-hurriyet.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📰</div><div class="press-name" data-ek="press2_name" data-ek-label="Basın 2 · İsim" data-ek-group="Gazetecilik">Hürriyet Haber Ajansı</div><div class="press-role" data-ek="press2_role" data-ek-label="Basın 2 · Rol" data-ek-group="Gazetecilik">Muhabirlik</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-trakya.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📺</div><div class="press-name" data-ek="press3_name" data-ek-label="Basın 3 · İsim" data-ek-group="Gazetecilik">Trakya Televizyonu</div><div class="press-role" data-ek="press3_role" data-ek-label="Basın 3 · Rol" data-ek-group="Gazetecilik">Muhabirlik</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-edirne.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">🗞️</div><div class="press-name" data-ek="press4_name" data-ek-label="Basın 4 · İsim" data-ek-group="Gazetecilik">Edirne Gazetesi</div><div class="press-role" data-ek="press4_role" data-ek-label="Basın 4 · Rol" data-ek-group="Gazetecilik">Köşe Yazarlığı</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-vatandas.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📋</div><div class="press-name" data-ek="press5_name" data-ek-label="Basın 5 · İsim" data-ek-group="Gazetecilik">Vatandaş Gazetesi</div><div class="press-role" data-ek="press5_role" data-ek-label="Basın 5 · Rol" data-ek-group="Gazetecilik">Yazarlık</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-edirnehaber.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📄</div><div class="press-name" data-ek="press6_name" data-ek-label="Basın 6 · İsim" data-ek-group="Gazetecilik">Edirne Haber Gazetesi</div><div class="press-role" data-ek="press6_role" data-ek-label="Basın 6 · Rol" data-ek-group="Gazetecilik">Yazarlık</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-bitlissesi.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">📣</div><div class="press-name" data-ek="press7_name" data-ek-label="Basın 7 · İsim" data-ek-group="Gazetecilik">Bitlis Sesi</div><div class="press-role" data-ek="press7_role" data-ek-label="Basın 7 · Rol" data-ek-group="Gazetecilik">Muhabirlik</div></div>
+      <div class="press-item" style="position:relative;background:url('basin-foto.jpg') center/cover no-repeat;"><div class="press-overlay" style="position:absolute;inset:0;background:rgba(13,11,8,.75);"></div><div class="press-icon" style="position:relative;z-index:1;">✏️</div><div class="press-name" data-ek="press8_name" data-ek-label="Basın 8 · İsim" data-ek-group="Gazetecilik">Fotoğraf Yazıları</div><div class="press-role" data-ek="press8_role" data-ek-label="Basın 8 · Rol" data-ek-group="Gazetecilik">Yayınlar & Yorumlar</div></div>
     </div>
   </div>
 </section>
@@ -961,10 +987,10 @@ footer { text-align:center; }
 <section class="section contact-bg" id="iletisim">
   <div class="section-inner">
     <div class="section-eyebrow aos"><span>İletişim</span></div>
-    <h2 class="section-title aos">Bir <em>Mesaj</em> Gönderin</h2>
+    <h2 class="section-title aos" data-ek="iletisim_title" data-ek-br="1" data-ek-label="İletişim · Başlık" data-ek-group="İletişim">Bir <em>Mesaj</em> Gönderin</h2>
     <div class="contact-grid">
       <div>
-        <p class="contact-intro aos">Fotoğrafçılık, yazarlık, kültürel miras veya eğitim konularında iş birliği, söyleşi ve etkinlik talepleriniz için benimle iletişime geçebilirsiniz.</p>
+        <p class="contact-intro aos" data-ek="iletisim_intro" data-ek-label="İletişim · Açıklama" data-ek-group="İletişim">Fotoğrafçılık, yazarlık, kültürel miras veya eğitim konularında iş birliği, söyleşi ve etkinlik talepleriniz için benimle iletişime geçebilirsiniz.</p>
         <ul class="cinfo-list aos">
           <li>
             <div class="cinfo-icon">📍</div>
@@ -1095,6 +1121,30 @@ footer { text-align:center; }
     <button class="lb-btn lb-next" onclick="inanclarLbNav(1)">&#8250;</button>
   </div>
   <div class="lb-counter" id="inanclarLbCounter"></div>
+</div>
+<!-- ═══════ YÖNETİM PANELİ ═══════ -->
+<div class="ek-overlay" id="ekLoginOverlay">
+  <div class="ek-box ek-login-box">
+    <div class="ek-head"><h3>Yönetim Girişi</h3><button class="ek-close" onclick="ekCloseLogin()">✕</button></div>
+    <div class="ek-body">
+      <p>Devam etmek için yönetici şifresini girin.</p>
+      <input type="password" id="ekPasswordInput" placeholder="Şifre" onkeydown="if(event.key==='Enter')ekTryLogin()">
+      <div id="ekLoginError" style="color:#c96060;font-size:12px;margin:-10px 0 14px;display:none;">Şifre hatalı, tekrar deneyin.</div>
+      <button class="ek-btn ek-btn-save" style="width:100%;" onclick="ekTryLogin()">Giriş Yap</button>
+    </div>
+  </div>
+</div>
+<div class="ek-overlay" id="ekPanelOverlay">
+  <div class="ek-box">
+    <div class="ek-head"><h3>Yönetim Paneli — İçerik</h3><button class="ek-close" onclick="ekClosePanel()">✕</button></div>
+    <div class="ek-body" id="ekFieldsContainer"></div>
+    <div class="ek-status" id="ekStatus"></div>
+    <div class="ek-foot">
+      <button class="ek-btn ek-btn-save" onclick="ekSaveAll()">💾 Kaydet</button>
+      <button class="ek-btn ek-btn-reset" onclick="ekResetAll()">↺ Orijinale Dön</button>
+      <button class="ek-btn ek-btn-cancel" onclick="ekClosePanel()">Kapat</button>
+    </div>
+  </div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -1881,6 +1931,179 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
   });
 });
+
+// ═══════════════════════════════════
+// YÖNETİM PANELİ — Başlık/İçerik Düzenleme
+// ═══════════════════════════════════
+// !! ŞİFREYİ BURADAN DEĞİŞTİREBİLİRSİNİZ !!
+const EK_PASSWORD = 'enver2026';
+const EK_LONGPRESS_MS = 3000; // logoya basılı tutma süresi (ms)
+
+let ekFieldsMeta = [];
+let ekPendingValues = {};
+
+function ekScanFields(){
+  ekFieldsMeta = [];
+  document.querySelectorAll('[data-ek]').forEach(el=>{
+    ekFieldsMeta.push({
+      key: el.getAttribute('data-ek'),
+      label: el.getAttribute('data-ek-label') || el.getAttribute('data-ek'),
+      group: el.getAttribute('data-ek-group') || 'Diğer',
+      br: el.getAttribute('data-ek-br') === '1',
+      el
+    });
+  });
+}
+
+function ekReadCurrentText(field){
+  return field.el.innerText.replace(/\u00A0/g,' ').trim();
+}
+
+function ekEscapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function ekApplyValue(field, value){
+  if(field.br){
+    field.el.innerHTML = ekEscapeHtml(value).replace(/\n/g,'<br>');
+  } else {
+    field.el.textContent = value;
+  }
+}
+
+// Gizli tetikleyici: nav logosuna 3 saniye basılı tutma
+(function(){
+  const trigger = document.getElementById('ekTrigger');
+  if(!trigger) return;
+  let timer = null;
+  let firedLongPress = false;
+  function start(){
+    firedLongPress = false;
+    timer = setTimeout(()=>{ firedLongPress = true; ekOpenLogin(); }, EK_LONGPRESS_MS);
+  }
+  function cancel(){ if(timer) clearTimeout(timer); }
+  trigger.addEventListener('mousedown', start);
+  trigger.addEventListener('touchstart', start, {passive:true});
+  ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>trigger.addEventListener(ev, cancel));
+  trigger.addEventListener('click', function(e){
+    if(firedLongPress){ e.preventDefault(); firedLongPress = false; }
+  });
+})();
+
+// Masaüstü kısayolu: Ctrl+Alt+Y
+document.addEventListener('keydown', function(e){
+  if(e.ctrlKey && e.altKey && (e.key === 'y' || e.key === 'Y')) ekOpenLogin();
+});
+
+function ekOpenLogin(){
+  document.getElementById('ekPasswordInput').value = '';
+  document.getElementById('ekLoginError').style.display = 'none';
+  document.getElementById('ekLoginOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('ekPasswordInput').focus(), 100);
+}
+function ekCloseLogin(){
+  document.getElementById('ekLoginOverlay').classList.remove('open');
+}
+function ekTryLogin(){
+  const val = document.getElementById('ekPasswordInput').value;
+  if(val === EK_PASSWORD){
+    ekCloseLogin();
+    ekOpenPanel();
+  } else {
+    document.getElementById('ekLoginError').style.display = 'block';
+  }
+}
+
+function ekOpenPanel(){
+  ekScanFields();
+  ekPendingValues = {};
+  const container = document.getElementById('ekFieldsContainer');
+  container.innerHTML = '';
+  let lastGroup = null;
+  ekFieldsMeta.forEach(field=>{
+    if(field.group !== lastGroup){
+      const gt = document.createElement('div');
+      gt.className = 'ek-group-title';
+      gt.textContent = field.group;
+      container.appendChild(gt);
+      lastGroup = field.group;
+    }
+    const labelEl = document.createElement('label');
+    labelEl.className = 'ek-field-label';
+    labelEl.textContent = field.label;
+    container.appendChild(labelEl);
+
+    const currentText = ekReadCurrentText(field);
+    let input;
+    if(field.br || currentText.length > 70){
+      input = document.createElement('textarea');
+      input.rows = field.br ? 2 : 3;
+    } else {
+      input = document.createElement('input');
+      input.type = 'text';
+    }
+    input.value = currentText;
+    input.dataset.ekKey = field.key;
+    input.addEventListener('input', function(){ ekPendingValues[field.key] = input.value; });
+    container.appendChild(input);
+  });
+  document.getElementById('ekStatus').textContent = '';
+  document.getElementById('ekPanelOverlay').classList.add('open');
+}
+function ekClosePanel(){
+  document.getElementById('ekPanelOverlay').classList.remove('open');
+}
+
+function ekSaveAll(){
+  const status = document.getElementById('ekStatus');
+  if(Object.keys(ekPendingValues).length === 0){
+    status.textContent = 'Değişiklik yapılmadı.';
+    setTimeout(()=>{ status.textContent=''; }, 2000);
+    return;
+  }
+  if(!firebaseDb){
+    status.textContent = 'Firebase bağlantısı yok, kaydedilemedi.';
+    return;
+  }
+  ekFieldsMeta.forEach(field=>{
+    if(ekPendingValues.hasOwnProperty(field.key)) ekApplyValue(field, ekPendingValues[field.key]);
+  });
+  status.textContent = 'Kaydediliyor…';
+  firebaseDb.ref('siteContent').update(ekPendingValues)
+    .then(()=>{
+      status.textContent = '✓ Kaydedildi.';
+      ekPendingValues = {};
+      setTimeout(()=>{ status.textContent=''; }, 2500);
+    })
+    .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
+}
+
+function ekResetAll(){
+  if(!confirm('Tüm düzenlemeler silinip orijinal metinlere dönülecek. Emin misiniz?')) return;
+  const status = document.getElementById('ekStatus');
+  if(!firebaseDb){ status.textContent = 'Firebase bağlantısı yok.'; return; }
+  status.textContent = 'Sıfırlanıyor…';
+  firebaseDb.ref('siteContent').remove()
+    .then(()=>{ location.reload(); })
+    .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
+}
+
+function ekApplyStoredContent(){
+  if(!firebaseDb) return;
+  ekScanFields();
+  firebaseDb.ref('siteContent').once('value').then(snap=>{
+    const data = snap.val();
+    if(!data) return;
+    ekFieldsMeta.forEach(field=>{
+      if(data.hasOwnProperty(field.key) && data[field.key] !== ''){
+        ekApplyValue(field, data[field.key]);
+      }
+    });
+  }).catch(err=>console.warn('Yönetim paneli içeriği yüklenemedi:', err));
+}
+window.addEventListener('load', ekApplyStoredContent);
 </script>
 </body>
 </html>
