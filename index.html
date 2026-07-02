@@ -353,6 +353,12 @@ footer { text-align:center; }
 .shutter-curtain.closed { transform:scaleY(1); }
 .lightbox-img { max-width:92vw; max-height:88vh; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); position:relative; }
 .lightbox-watermark { position:absolute; bottom:24px; right:28px; z-index:5; font-family:'Cormorant Garamond',serif; font-size:13px; font-style:italic; line-height:1.5; color:rgba(255,255,255,.5); text-shadow:0 2px 8px rgba(0,0,0,1); text-align:right; pointer-events:none; }
+.lightbox-stats { position:absolute; bottom:24px; left:24px; z-index:6; display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
+.ls-stars { display:flex; gap:3px; }
+.ls-star { font-size:17px; line-height:1; color:rgba(255,255,255,.28); cursor:pointer; transition:color .15s, transform .15s; text-shadow:0 1px 4px rgba(0,0,0,.9); user-select:none; }
+.ls-star:hover { transform:scale(1.15); }
+.ls-star.filled { color:var(--gold); }
+.ls-info { font-family:'Raleway',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:1px; color:rgba(255,255,255,.7); text-shadow:0 1px 4px rgba(0,0,0,.9); white-space:nowrap; }
 .lightbox-frame { position:absolute; inset:0; pointer-events:none; border:2px solid rgba(201,168,76,.4); box-shadow: inset 0 0 0 6px rgba(13,11,8,.8), inset 0 0 0 8px rgba(201,168,76,.15), 0 0 40px rgba(201,168,76,.15); }
 .lightbox-frame::before,.lightbox-frame::after { content:'';position:absolute; width:32px; height:32px; border-color:var(--gold); border-style:solid; }
 .lightbox-frame::before { top:-2px; left:-2px; border-width:3px 0 0 3px; }
@@ -1042,6 +1048,10 @@ footer { text-align:center; }
         <div class="lb-corner-bl"></div>
       </div>
       <div class="lightbox-watermark">Enver ŞENGÜL<br>© Tüm Hakları Saklıdır</div>
+      <div class="lightbox-stats">
+        <div class="ls-stars" id="lbRatingStars"></div>
+        <div class="ls-info" id="lbInfo"></div>
+      </div>
     </div>
     <button class="lb-btn lb-next" onclick="lbNav(1)">&#8250;</button>
   </div>
@@ -1077,11 +1087,17 @@ footer { text-align:center; }
         <div class="lb-corner-bl"></div>
       </div>
       <div class="lightbox-watermark">Enver ŞENGÜL<br>© Tüm Hakları Saklıdır</div>
+      <div class="lightbox-stats">
+        <div class="ls-stars" id="inanclarLbRatingStars"></div>
+        <div class="ls-info" id="inanclarLbInfo"></div>
+      </div>
     </div>
     <button class="lb-btn lb-next" onclick="inanclarLbNav(1)">&#8250;</button>
   </div>
   <div class="lb-counter" id="inanclarLbCounter"></div>
 </div>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <script>
 // ═══════════════════════════════════
 // DEKLANŞÖR SESİ — tıklamalarda kamera deklanşörü efekti
@@ -1249,6 +1265,101 @@ document.querySelectorAll('.aos').forEach(el=>obs.observe(el));
 // WEB klasörü altında hem "ANASAYFA" hem de "portfolyom" klasörleri bulunmalı.
 const DRIVE_API_KEY    = 'AIzaSyB7qdkmXaAxl4C66DGp_oGcpaCivbfmfaI';
 const DRIVE_ROOT_ID    = '16BQMeFeWdlWHYmoLDW0b76B1TH_az1-j'; // Drive'daki "WEB" klasörünün ID'si
+
+// ═══════════════════════════════════
+// FİREBASE — Fotoğraf görüntülenme sayısı & yıldız puanlama
+// ═══════════════════════════════════
+// !! BURAYA KENDİ FIREBASE PROJENİZİN BİLGİLERİNİ GİRİN !!
+// Firebase Console > Proje Ayarları > Web Uygulaması bölümünden alınır.
+const FIREBASE_CONFIG = {
+  apiKey:      'AIzaSyA6hzc-n6DIdJ-hKIbKh07xR2XLuzUHKcs',
+  authDomain:  'enver-sengul-web.firebaseapp.com',
+  databaseURL: 'https://enver-sengul-web-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId:   'enver-sengul-web',
+};
+
+let firebaseDb = null;
+function initFirebase(){
+  if (FIREBASE_CONFIG.apiKey === 'BURAYA_FIREBASE_API_KEY') {
+    console.warn('Firebase yapılandırılmadı — görüntülenme/puan sistemi pasif.');
+    return;
+  }
+  try {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    firebaseDb = firebase.database();
+  } catch(e) { console.warn('Firebase başlatılamadı:', e); }
+}
+window.addEventListener('load', initFirebase);
+
+// Fotoğrafın Drive dosya ID'sine bağlı puan/izlenme kaydı — dosya değişirse (yeni ID) otomatik sıfırdan başlar
+const photoStatRefs = {};
+
+function loadPhotoStats(fileId, prefix){
+  const starsEl = document.getElementById(prefix + 'RatingStars');
+  const infoEl  = document.getElementById(prefix + 'Info');
+
+  if (photoStatRefs[prefix]) { photoStatRefs[prefix].off(); photoStatRefs[prefix] = null; }
+
+  if (!firebaseDb) {
+    if (starsEl) starsEl.innerHTML = '';
+    if (infoEl) infoEl.textContent = '';
+    return;
+  }
+
+  const statRef = firebaseDb.ref('photoStats/' + fileId);
+  photoStatRefs[prefix] = statRef;
+
+  // Görüntülenme sayısını güvenli şekilde 1 artır
+  statRef.child('views').transaction(v => (v || 0) + 1);
+
+  // Canlı güncelleme: puan ortalaması ve izlenme sayısı
+  statRef.on('value', snapshot => {
+    const data = snapshot.val() || {};
+    const views       = data.views || 0;
+    const ratingSum    = data.ratingSum || 0;
+    const ratingCount  = data.ratingCount || 0;
+    const avg = ratingCount > 0 ? (ratingSum / ratingCount) : 0;
+
+    renderRatingStars(starsEl, avg, fileId);
+    if (infoEl) {
+      infoEl.textContent = (ratingCount > 0
+        ? avg.toFixed(1) + ' (' + ratingCount + ' oy)'
+        : 'Henüz oy yok') + ' · 👁 ' + views;
+    }
+  });
+}
+
+function getMyPhotoVote(fileId){
+  try { return parseInt(localStorage.getItem('photoVote_' + fileId) || '0', 10) || 0; }
+  catch(e) { return 0; }
+}
+
+function renderRatingStars(container, avgValue, fileId){
+  if (!container) return;
+  container.innerHTML = '';
+  const myVote = getMyPhotoVote(fileId);
+  for (let i = 1; i <= 5; i++){
+    const star = document.createElement('span');
+    star.className = 'ls-star';
+    star.textContent = '★';
+    const filled = myVote ? i <= myVote : i <= Math.round(avgValue);
+    if (filled) star.classList.add('filled');
+    star.title = i + ' yıldız';
+    star.onclick = (e) => { e.stopPropagation(); submitPhotoVote(fileId, i); };
+    container.appendChild(star);
+  }
+}
+
+function submitPhotoVote(fileId, value){
+  if (!firebaseDb) return;
+  const prevVote = getMyPhotoVote(fileId);
+  const statRef = firebaseDb.ref('photoStats/' + fileId);
+  statRef.child('ratingSum').transaction(sum => (sum || 0) - prevVote + value);
+  if (!prevVote) {
+    statRef.child('ratingCount').transaction(c => (c || 0) + 1);
+  }
+  try { localStorage.setItem('photoVote_' + fileId, String(value)); } catch(e) {}
+}
 
 const GALLERY_CATS = {
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
@@ -1444,6 +1555,7 @@ function openLightbox(idx) {
   document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + currentPhotos.length;
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
+  loadPhotoStats(photo.id, 'lb');
 }
 
 function closeLightbox() {
@@ -1698,6 +1810,7 @@ function openInanclarLightbox(idx){
   document.getElementById('inanclarLbCounter').textContent = (idx + 1) + ' / ' + inanclarPhotos.length;
   document.getElementById('inanclarLightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
+  loadPhotoStats(photo.id, 'inanclarLb');
 }
 
 function closeInanclarLightbox(){
