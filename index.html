@@ -385,7 +385,7 @@ footer { text-align:center; }
 .shutter-curtain-top { top:0; transform-origin:top; }
 .shutter-curtain-bottom { bottom:0; transform-origin:bottom; }
 .shutter-curtain.closed { transform:scaleY(1); }
-.lightbox-img { max-width:94vw; max-height:92vh; width:auto; height:auto; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); position:relative; }
+.lightbox-img { max-width:92vw; max-height:88vh; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); position:relative; }
 .lightbox-watermark { position:absolute; bottom:24px; right:28px; z-index:5; font-family:'Cormorant Garamond',serif; font-size:13px; font-style:italic; line-height:1.5; color:rgba(255,255,255,.5); text-shadow:0 2px 8px rgba(0,0,0,1); text-align:right; pointer-events:none; }
 .lightbox-stats { position:absolute; bottom:24px; left:24px; z-index:6; display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
 .ls-stars { display:flex; gap:3px; }
@@ -1957,7 +1957,7 @@ function closeGallery() {
 function openLightbox(idx) {
   currentIndex = idx;
   const photo = currentPhotos[idx];
-  const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1920-h1280';
+  const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1200';
   document.getElementById('lbImg').src = driveImgUrl(photo.id, lbSize);
   document.getElementById('lbTitle').textContent = GALLERY_CATS[currentCatKey]?.title || '';
   document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + currentPhotos.length;
