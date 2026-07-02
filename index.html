@@ -334,6 +334,8 @@ footer { text-align:center; }
 .gallery-page-body { padding:48px; max-width:1400px; margin:0 auto; }
 .gallery-page-desc { font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; font-weight:300; line-height:1.7; color:var(--cream2); margin-bottom:48px; text-align:justify; padding-bottom:32px; border-bottom:1px solid rgba(201,168,76,.15); }
 .photo-masonry { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
+.photo-masonry.large-thumbs { grid-template-columns:repeat(2,1fr); gap:16px; }
+.photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
 .photo-thumb { position:relative; aspect-ratio:3/2; overflow:hidden; cursor:pointer; background:var(--dark3); }
 .photo-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s, filter .4s; pointer-events:none; user-select:none; -webkit-user-drag:none; }
 .photo-thumb:hover img { transform:scale(1.05); filter:brightness(.8); }
@@ -387,10 +389,12 @@ footer { text-align:center; }
   .gallery-cats.two-col { grid-template-columns:1fr; }
   .gallery-page-header { padding:14px 16px; }
   .gallery-page-body { padding:16px; }
-  .gallery-page-title { font-size:16px; }
-  .gallery-page-logo { display:none; }
+  .gallery-page-title { font-size:14px; }
+  .gallery-page-logo { font-size:15px; }
   .gallery-page-desc { font-size:16px; margin-bottom:24px; }
   .photo-masonry { grid-template-columns:repeat(2,1fr); gap:2px; }
+  .photo-masonry.large-thumbs { grid-template-columns:1fr; gap:10px; }
+  .photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
   .inanclar-grid { grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,1fr); gap:2px; }
   .gallery-pagination { gap:14px; margin-top:24px; }
   .gallery-page-btn { padding:10px 16px; }
@@ -1218,6 +1222,9 @@ function renderGalleryPage(){
   const masonry = document.getElementById('photoMasonry');
   const pagination = document.getElementById('galleryPagePagination');
   const total = currentPhotos.length;
+  const isLargeThumbs = currentCatKey === 'fotograf-yazilari';
+  masonry.classList.toggle('large-thumbs', isLargeThumbs);
+  const thumbSize = isLargeThumbs ? 'w1600' : 'w1200';
 
   if (total === 0) {
     masonry.innerHTML = '<p style="text-align:center;padding:60px;color:var(--muted);font-family:Cormorant Garamond,serif;font-size:20px;font-style:italic;">Bu klasörde henüz fotoğraf yok.</p>';
@@ -1238,7 +1245,7 @@ function renderGalleryPage(){
     const div = document.createElement('div');
     div.className = 'photo-thumb';
     div.innerHTML = `
-      <img src="${driveImgUrl(photo.id)}" alt="${photo.name}" loading="lazy">
+      <img src="${driveImgUrl(photo.id, thumbSize)}" alt="${photo.name}" loading="lazy">
       <div class="photo-thumb-overlay">
         <div class="photo-thumb-zoom">⊕</div>
       </div>`;
@@ -1270,7 +1277,8 @@ function closeGallery() {
 function openLightbox(idx) {
   currentIndex = idx;
   const photo = currentPhotos[idx];
-  document.getElementById('lbImg').src = driveImgUrl(photo.id);
+  const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1200';
+  document.getElementById('lbImg').src = driveImgUrl(photo.id, lbSize);
   document.getElementById('lbTitle').textContent = GALLERY_CATS[currentCatKey]?.title || '';
   document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + currentPhotos.length;
   document.getElementById('lightbox').classList.add('open');
