@@ -954,7 +954,11 @@ footer { text-align:center; }
           </li>
           <li>
             <div class="cinfo-icon">✉</div>
-            <div><div class="cinfo-label">E-posta</div><div class="cinfo-val">iletisim@enversengul.com</div></div>
+            <div><div class="cinfo-label">E-posta</div><div class="cinfo-val">enversengulweb@gmail.com</div></div>
+          </li>
+          <li>
+            <div class="cinfo-icon">💬</div>
+            <div><div class="cinfo-label">WhatsApp</div><div class="cinfo-val"><a href="https://wa.me/905325923545" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">+90 532 592 35 45</a></div></div>
           </li>
           <li>
             <div class="cinfo-icon">📷</div>
@@ -968,11 +972,14 @@ footer { text-align:center; }
       </div>
       <div class="aos d1">
         <div class="cform">
-          <input type="text" placeholder="Adınız Soyadınız">
-          <input type="email" placeholder="E-posta Adresiniz">
-          <input type="text" placeholder="Konu">
-          <textarea placeholder="Mesajınız…"></textarea>
-          <button class="btn-gold" onclick="alert('Mesajınız alındı. Teşekkürler!')">Mesaj Gönder →</button>
+          <input type="text" id="cformName" placeholder="Adınız Soyadınız">
+          <input type="email" id="cformEmail" placeholder="E-posta Adresiniz">
+          <input type="text" id="cformSubject" placeholder="Konu">
+          <textarea id="cformMessage" placeholder="Mesajınız…"></textarea>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;">
+            <a href="#" onclick="sendViaWhatsApp();return false;" class="btn-gold" style="flex:1;justify-content:center;min-width:150px;">💬 WhatsApp'tan Gönder</a>
+            <a href="#" onclick="sendViaEmail();return false;" class="btn-outline" style="flex:1;justify-content:center;min-width:150px;">✉ Mail Gönder</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1060,6 +1067,54 @@ footer { text-align:center; }
   <div class="lb-counter" id="inanclarLbCounter"></div>
 </div>
 <script>
+const CONTACT_WHATSAPP = '905325923545';
+const CONTACT_EMAIL    = 'enversengulweb@gmail.com';
+
+function getContactFormData(){
+  const name    = document.getElementById('cformName').value.trim();
+  const email   = document.getElementById('cformEmail').value.trim();
+  const subject = document.getElementById('cformSubject').value.trim();
+  const message = document.getElementById('cformMessage').value.trim();
+
+  if (!name || !message) {
+    alert('Lütfen adınızı ve mesajınızı girin.');
+    return null;
+  }
+  return { name, email, subject: subject || 'Web Sitesi İletişim Formu', message };
+}
+
+function sendViaWhatsApp(){
+  const data = getContactFormData();
+  if (!data) return;
+
+  let waText =
+    'Merhaba, ben ' + data.name + '.\n' +
+    'Konu: ' + data.subject + '\n';
+  if (data.email) waText += 'E-posta: ' + data.email + '\n';
+  waText += '\n' + data.message;
+
+  const waLink = 'https://wa.me/' + CONTACT_WHATSAPP +
+    '?text=' + encodeURIComponent(waText);
+
+  window.open(waLink, '_blank');
+}
+
+function sendViaEmail(){
+  const data = getContactFormData();
+  if (!data) return;
+
+  const mailBody =
+    'Ad Soyad: ' + data.name + '\n' +
+    (data.email ? 'E-posta: ' + data.email + '\n' : '') +
+    '\n' + data.message;
+
+  const mailtoLink = 'mailto:' + CONTACT_EMAIL +
+    '?subject=' + encodeURIComponent(data.subject) +
+    '&body=' + encodeURIComponent(mailBody);
+
+  window.location.href = mailtoLink;
+}
+
 window.addEventListener('scroll',()=>{
   const n=document.getElementById('mainNav');
   n.style.background = window.scrollY > 30 ? 'rgba(13,11,8,0.97)' : 'rgba(13,11,8,0.92)';
