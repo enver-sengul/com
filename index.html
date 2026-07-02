@@ -385,7 +385,7 @@ footer { text-align:center; }
 .shutter-curtain-top { top:0; transform-origin:top; }
 .shutter-curtain-bottom { bottom:0; transform-origin:bottom; }
 .shutter-curtain.closed { transform:scaleY(1); }
-.lightbox-img { max-width:92vw; max-height:88vh; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); position:relative; }
+.lightbox-img { height:86vh; width:auto; max-width:92vw; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); position:relative; }
 .lightbox-watermark { position:absolute; bottom:24px; right:28px; z-index:5; font-family:'Cormorant Garamond',serif; font-size:13px; font-style:italic; line-height:1.5; color:rgba(255,255,255,.5); text-shadow:0 2px 8px rgba(0,0,0,1); text-align:right; pointer-events:none; }
 .lightbox-stats { position:absolute; bottom:24px; left:24px; z-index:6; display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
 .ls-stars { display:flex; gap:3px; }
@@ -444,7 +444,7 @@ footer { text-align:center; }
   .gallery-page-btn { padding:10px 16px; }
   .lb-btn { width:40px; height:40px; font-size:16px; }
   .lb-prev { left:8px; } .lb-next { right:8px; }
-  .lightbox-img { max-width:98vw; max-height:80vh; }
+  .lightbox-img { height:76vh; width:auto; max-width:96vw; }
   .gallery-cat-title { font-size:16px; }
 }
 .btn-buy { display:inline-flex;align-items:center;gap:8px; margin-top:16px;padding:11px 22px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'Raleway',sans-serif; font-size:10px;font-weight:700;letter-spacing:2px; text-transform:uppercase;text-decoration:none; transition:all .3s; }
@@ -1957,7 +1957,7 @@ function closeGallery() {
 function openLightbox(idx) {
   currentIndex = idx;
   const photo = currentPhotos[idx];
-  const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1200';
+  const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1920-h1280';
   document.getElementById('lbImg').src = driveImgUrl(photo.id, lbSize);
   document.getElementById('lbTitle').textContent = GALLERY_CATS[currentCatKey]?.title || '';
   document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + currentPhotos.length;
@@ -2214,7 +2214,7 @@ function inanclarNav(dir){
 function openInanclarLightbox(idx){
   inanclarLbIndex = idx;
   const photo = inanclarPhotos[idx];
-  document.getElementById('inanclarLbImg').src = driveImgUrl(photo.id);
+  document.getElementById('inanclarLbImg').src = driveImgUrl(photo.id, 'w1920-h1280');
   document.getElementById('inanclarLbCounter').textContent = (idx + 1) + ' / ' + inanclarPhotos.length;
   document.getElementById('inanclarLightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
