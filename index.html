@@ -179,6 +179,20 @@ nav{
 .press-icon{font-size:26px;color:rgba(201,168,76,.35);margin-bottom:10px;}
 .press-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:var(--cream2);margin-bottom:6px;}
 .press-role{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.exhibitions-bg{background:var(--dark2);}
+.exhibitions-intro{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;line-height:1.6;color:var(--cream);max-width:820px;margin-bottom:52px;}
+.exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.exhibition-card{background:var(--dark3);overflow:hidden;position:relative;transition:transform .3s;}
+.exhibition-photo{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(160deg,#1C1A10,#2A2210,#1A1808);}
+.exhibition-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78) sepia(10%);transition:transform .5s ease,filter .4s;}
+.exhibition-card:hover .exhibition-photo img{transform:scale(1.08);filter:brightness(.58) sepia(18%);}
+.exhibition-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(13,11,8,.55) 0%,transparent 55%);pointer-events:none;}
+.exhibition-year-badge{position:absolute;top:12px;right:12px;z-index:2;background:rgba(13,11,8,.85);border:1px solid rgba(201,168,76,.4);color:var(--gold-light);font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:700;padding:4px 13px;letter-spacing:.5px;}
+.exhibition-info{padding:20px 22px 24px;}
+.exhibition-title{font-family:'Playfair Display',serif;font-size:16.5px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.32;}
+.exhibition-loc{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);}
+.exhibition-loc .pin{font-size:12px;color:var(--gold);}
+.exhibition-country{display:block;margin-top:4px;font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:none;color:var(--muted);}
 .contact-bg{background:linear-gradient(to bottom,var(--dark2),var(--dark));}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
 .contact-intro{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;font-weight:300;line-height:1.6;color:var(--cream);margin-bottom:36px;}
@@ -225,6 +239,7 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .stats-bar{padding:20px 24px;}
   .press-grid{grid-template-columns:repeat(2,1fr);}
   .edu-grid{grid-template-columns:1fr;}
+  .exhibitions-grid{grid-template-columns:repeat(2,1fr);}
   footer{flex-direction:column;text-align:center;padding:32px 24px;}
 }
 @media(max-width:768px){
@@ -283,6 +298,8 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .press-grid{grid-template-columns:1fr 1fr;gap:2px;}
   .press-item{padding:24px 16px;}
   .press-name{font-size:15px;}
+  .exhibitions-grid{grid-template-columns:1fr 1fr;gap:2px;}
+  .exhibitions-intro{font-size:18px;}
   .contact-grid{grid-template-columns:1fr;gap:40px;}
   .contact-intro{font-size:17px;}
   .cform input,.cform textarea{font-size:16px;}
@@ -928,6 +945,126 @@ footer { text-align:center; }
           <div class="af-year">2004</div>
           <div class="af-name">Avrupa Müze Ödülü</div>
           <p class="af-desc" data-ek="kulturel_award_desc" data-ek-label="Kültürel Miras · Ödül Kutusu Açıklaması" data-ek-group="Kültürel Miras">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi, bu prestijli ödüle layık görülerek Avrupa'nın en iyi müzesi unvanını kazandı. Türkiye müzeciliği tarihinde bir ilk olan bu başarı, kültürel mirasın korunması ve yaşatılması yolundaki kararlı çabanın meyvesidir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="gold-line"></div>
+<section class="section exhibitions-bg" id="sergiler">
+  <div class="section-inner">
+    <div class="section-eyebrow aos"><span>Ulusal ve Uluslararası Sergiler</span></div>
+    <h2 class="section-title aos" data-ek="sergiler_title" data-ek-br="1" data-ek-label="Sergiler · Başlık" data-ek-group="Sergiler">Karelerin <em>Yolculuğu</em></h2>
+    <p class="exhibitions-intro aos" data-ek="sergiler_intro" data-ek-label="Sergiler · Alıntı" data-ek-group="Sergiler">Yurt içinde ve yurt dışında açılan kişisel ve karma fotoğraf sergilerinden bir seçki.</p>
+    <div class="exhibitions-grid aos">
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi1_yil" data-ek-label="Sergi 1 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-istanbul-1.jpg" alt="İstanbul Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi1_ad" data-ek-label="Sergi 1 · Ad" data-ek-group="Sergiler">İstanbul Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi1_sehir" data-ek-label="Sergi 1 · Şehir" data-ek-group="Sergiler">İstanbul</span></div>
+          <span class="exhibition-country" data-ek="sergi1_ulke" data-ek-label="Sergi 1 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi2_yil" data-ek-label="Sergi 2 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-ankara-1.jpg" alt="Ankara Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi2_ad" data-ek-label="Sergi 2 · Ad" data-ek-group="Sergiler">Ankara Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi2_sehir" data-ek-label="Sergi 2 · Şehir" data-ek-group="Sergiler">Ankara</span></div>
+          <span class="exhibition-country" data-ek="sergi2_ulke" data-ek-label="Sergi 2 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi3_yil" data-ek-label="Sergi 3 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-antalya-1.jpg" alt="Antalya Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi3_ad" data-ek-label="Sergi 3 · Ad" data-ek-group="Sergiler">Antalya Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi3_sehir" data-ek-label="Sergi 3 · Şehir" data-ek-group="Sergiler">Antalya</span></div>
+          <span class="exhibition-country" data-ek="sergi3_ulke" data-ek-label="Sergi 3 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi4_yil" data-ek-label="Sergi 4 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-gaziantep-1.jpg" alt="Gaziantep Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi4_ad" data-ek-label="Sergi 4 · Ad" data-ek-group="Sergiler">Gaziantep Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi4_sehir" data-ek-label="Sergi 4 · Şehir" data-ek-group="Sergiler">Gaziantep</span></div>
+          <span class="exhibition-country" data-ek="sergi4_ulke" data-ek-label="Sergi 4 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi5_yil" data-ek-label="Sergi 5 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-bitlis-1.jpg" alt="Bitlis Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi5_ad" data-ek-label="Sergi 5 · Ad" data-ek-group="Sergiler">Bitlis Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi5_sehir" data-ek-label="Sergi 5 · Şehir" data-ek-group="Sergiler">Bitlis</span></div>
+          <span class="exhibition-country" data-ek="sergi5_ulke" data-ek-label="Sergi 5 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi6_yil" data-ek-label="Sergi 6 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-antalya-2.jpg" alt="Antalya Karma Sergi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi6_ad" data-ek-label="Sergi 6 · Ad" data-ek-group="Sergiler">Antalya Karma Sergi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi6_sehir" data-ek-label="Sergi 6 · Şehir" data-ek-group="Sergiler">Antalya</span></div>
+          <span class="exhibition-country" data-ek="sergi6_ulke" data-ek-label="Sergi 6 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi7_yil" data-ek-label="Sergi 7 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-istanbul-2.jpg" alt="İstanbul Karma Sergi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi7_ad" data-ek-label="Sergi 7 · Ad" data-ek-group="Sergiler">İstanbul Karma Sergi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi7_sehir" data-ek-label="Sergi 7 · Şehir" data-ek-group="Sergiler">İstanbul</span></div>
+          <span class="exhibition-country" data-ek="sergi7_ulke" data-ek-label="Sergi 7 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi8_yil" data-ek-label="Sergi 8 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-ankara-2.jpg" alt="Ankara Karma Sergi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi8_ad" data-ek-label="Sergi 8 · Ad" data-ek-group="Sergiler">Ankara Karma Sergi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi8_sehir" data-ek-label="Sergi 8 · Şehir" data-ek-group="Sergiler">Ankara</span></div>
+          <span class="exhibition-country" data-ek="sergi8_ulke" data-ek-label="Sergi 8 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi9_yil" data-ek-label="Sergi 9 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-newyork.jpg" alt="New York Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi9_ad" data-ek-label="Sergi 9 · Ad" data-ek-group="Sergiler">New York Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi9_sehir" data-ek-label="Sergi 9 · Şehir" data-ek-group="Sergiler">New York</span></div>
+          <span class="exhibition-country" data-ek="sergi9_ulke" data-ek-label="Sergi 9 · Ülke" data-ek-group="Sergiler">Amerika</span>
+        </div>
+      </div>
+      <div class="exhibition-card">
+        <div class="exhibition-photo">
+          <div class="exhibition-year-badge" data-ek="sergi10_yil" data-ek-label="Sergi 10 · Yıl" data-ek-group="Sergiler">—</div>
+          <img src="sergi-zambiya.jpg" alt="Zambiya Fotoğraf Sergisi">
+        </div>
+        <div class="exhibition-info">
+          <h3 class="exhibition-title" data-ek="sergi10_ad" data-ek-label="Sergi 10 · Ad" data-ek-group="Sergiler">Zambiya Fotoğraf Sergisi</h3>
+          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi10_sehir" data-ek-label="Sergi 10 · Şehir" data-ek-group="Sergiler">Lusaka</span></div>
+          <span class="exhibition-country" data-ek="sergi10_ulke" data-ek-label="Sergi 10 · Ülke" data-ek-group="Sergiler">Zambiya</span>
         </div>
       </div>
     </div>
