@@ -1470,6 +1470,14 @@ async function getPhotosInFolder(folderId) {
       pageToken = d.nextPageToken || null;
     } catch(e) { break; }
   } while (pageToken);
+  // "1.jpg/webp/png" adlı dosya her zaman kapak olarak başta gelir,
+  // geri kalan tüm görseller dosya adına göre alfabetik (Türkçe, doğal sayı sıralı) dizilir.
+  all.sort((a, b) => {
+    const aCover = /^1\.(jpe?g|png|webp)$/i.test(a.name) ? 0 : 1;
+    const bCover = /^1\.(jpe?g|png|webp)$/i.test(b.name) ? 0 : 1;
+    if (aCover !== bCover) return aCover - bCover;
+    return a.name.localeCompare(b.name, 'tr', { numeric: true, sensitivity: 'base' });
+  });
   photosCache[folderId] = all;
   return all;
 }
