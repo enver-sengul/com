@@ -180,19 +180,33 @@ nav{
 .press-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:var(--cream2);margin-bottom:6px;}
 .press-role{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
 .exhibitions-bg{background:var(--dark2);}
-.exhibitions-intro{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;line-height:1.6;color:var(--cream);max-width:820px;margin-bottom:52px;}
-.exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
-.exhibition-card{background:var(--dark3);overflow:hidden;position:relative;transition:transform .3s;}
-.exhibition-photo{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(160deg,#1C1A10,#2A2210,#1A1808);}
-.exhibition-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78) sepia(10%);transition:transform .5s ease,filter .4s;}
-.exhibition-card:hover .exhibition-photo img{transform:scale(1.08);filter:brightness(.58) sepia(18%);}
-.exhibition-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(13,11,8,.55) 0%,transparent 55%);pointer-events:none;}
-.exhibition-year-badge{position:absolute;top:12px;right:12px;z-index:2;background:rgba(13,11,8,.85);border:1px solid rgba(201,168,76,.4);color:var(--gold-light);font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:700;padding:4px 13px;letter-spacing:.5px;}
-.exhibition-info{padding:20px 22px 24px;}
-.exhibition-title{font-family:'Playfair Display',serif;font-size:16.5px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.32;}
-.exhibition-loc{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);}
-.exhibition-loc .pin{font-size:12px;color:var(--gold);}
-.exhibition-country{display:block;margin-top:4px;font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:none;color:var(--muted);}
+.exhibitions-intro{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;line-height:1.6;color:var(--cream);max-width:820px;margin-bottom:38px;}
+/* Sekmeler (Ulusal / Uluslararası) */
+.exhibitions-tabs{display:inline-flex;gap:4px;margin-bottom:38px;padding:5px;border:1px solid rgba(201,168,76,.22);background:rgba(13,11,8,.4);border-radius:2px;}
+.exhibition-tab{appearance:none;border:none;background:transparent;cursor:pointer;font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);padding:11px 26px;transition:all .3s;white-space:nowrap;}
+.exhibition-tab:hover{color:var(--gold-light);}
+.exhibition-tab.active{background:var(--gold);color:var(--dark);}
+.exhibitions-panel{display:none;}
+.exhibitions-panel.active{display:block;animation:exFade .4s ease;}
+@keyframes exFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+/* Küçük bilgi kartları */
+.exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.exhibition-card{background:var(--dark3);border:1px solid rgba(201,168,76,.14);border-radius:2px;padding:22px 22px 20px;position:relative;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column;}
+.exhibition-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height .35s ease;}
+.exhibition-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 14px 34px rgba(0,0,0,.45);}
+.exhibition-card:hover::before{height:100%;}
+.ex-field{margin-bottom:15px;}
+.ex-label{display:block;font-family:'Raleway',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;opacity:.85;}
+.exhibition-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white);line-height:1.28;}
+.exhibition-topic{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--cream);line-height:1.4;min-height:21px;}
+.ex-year{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--gold-light);letter-spacing:1px;}
+.exhibition-loc{display:flex;align-items:baseline;gap:6px;font-size:12.5px;font-weight:700;letter-spacing:.5px;color:var(--white);}
+.exhibition-loc .pin{font-size:11px;color:var(--gold);}
+.exhibition-country{font-size:12.5px;font-weight:500;color:var(--muted);}
+.exhibition-country::before{content:'/';margin-right:6px;color:var(--gold);font-weight:400;}
+.ex-divider{height:1px;background:rgba(201,168,76,.14);margin:2px 0 15px;}
+.exhibition-explore-btn{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding:10px 0;justify-content:center;border:1px solid rgba(201,168,76,.4);font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:transparent;cursor:pointer;transition:all .3s;font-family:'Raleway',sans-serif;width:100%;border-radius:1px;}
+.exhibition-explore-btn:hover{background:var(--gold);color:var(--dark);}
 .contact-bg{background:linear-gradient(to bottom,var(--dark2),var(--dark));}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
 .contact-intro{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;font-weight:300;line-height:1.6;color:var(--cream);margin-bottom:36px;}
@@ -298,8 +312,11 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .press-grid{grid-template-columns:1fr 1fr;gap:2px;}
   .press-item{padding:24px 16px;}
   .press-name{font-size:15px;}
-  .exhibitions-grid{grid-template-columns:1fr 1fr;gap:2px;}
+  .exhibitions-grid{grid-template-columns:1fr 1fr;gap:10px;}
   .exhibitions-intro{font-size:18px;}
+  .exhibition-tab{padding:10px 16px;font-size:10px;letter-spacing:1.2px;}
+  .exhibitions-tabs{width:100%;}
+  .exhibition-tab{flex:1;}
   .contact-grid{grid-template-columns:1fr;gap:40px;}
   .contact-intro{font-size:17px;}
   .cform input,.cform textarea{font-size:16px;}
@@ -956,115 +973,275 @@ footer { text-align:center; }
     <div class="section-eyebrow aos"><span>Ulusal ve Uluslararası Sergiler</span></div>
     <h2 class="section-title aos" data-ek="sergiler_title" data-ek-br="1" data-ek-label="Sergiler · Başlık" data-ek-group="Sergiler">Karelerin <em>Yolculuğu</em></h2>
     <p class="exhibitions-intro aos" data-ek="sergiler_intro" data-ek-label="Sergiler · Alıntı" data-ek-group="Sergiler">Yurt içinde ve yurt dışında açılan kişisel ve karma fotoğraf sergilerinden bir seçki.</p>
-    <div class="exhibitions-grid aos">
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi1_yil" data-ek-label="Sergi 1 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-istanbul-1.jpg" alt="İstanbul Fotoğraf Sergisi">
+    <div class="exhibitions-tabs aos" role="tablist">
+      <button class="exhibition-tab active" data-extab="ulusal" role="tab" aria-selected="true" onclick="switchExTab('ulusal')">Ulusal Sergiler</button>
+      <button class="exhibition-tab" data-extab="uluslararasi" role="tab" aria-selected="false" onclick="switchExTab('uluslararasi')">Uluslararası Sergiler</button>
+    </div>
+    <div class="exhibitions-panel active" id="extab-ulusal" role="tabpanel">
+      <div class="exhibitions-grid">
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi1_ad" data-ek-label="Sergi 1 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi1_konu" data-ek-label="Sergi 1 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi1_yil" data-ek-label="Sergi 1 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi1_sehir" data-ek-label="Sergi 1 · Şehir" data-ek-group="Sergiler">İstanbul</span><span class="exhibition-country" data-ek="sergi1_ulke" data-ek-label="Sergi 1 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-1')">İncele →</button>
         </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi1_ad" data-ek-label="Sergi 1 · Ad" data-ek-group="Sergiler">İstanbul Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi1_sehir" data-ek-label="Sergi 1 · Şehir" data-ek-group="Sergiler">İstanbul</span></div>
-          <span class="exhibition-country" data-ek="sergi1_ulke" data-ek-label="Sergi 1 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi2_ad" data-ek-label="Sergi 2 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi2_konu" data-ek-label="Sergi 2 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi2_yil" data-ek-label="Sergi 2 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi2_sehir" data-ek-label="Sergi 2 · Şehir" data-ek-group="Sergiler">Ankara</span><span class="exhibition-country" data-ek="sergi2_ulke" data-ek-label="Sergi 2 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-2')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi3_ad" data-ek-label="Sergi 3 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi3_konu" data-ek-label="Sergi 3 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi3_yil" data-ek-label="Sergi 3 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi3_sehir" data-ek-label="Sergi 3 · Şehir" data-ek-group="Sergiler">Antalya</span><span class="exhibition-country" data-ek="sergi3_ulke" data-ek-label="Sergi 3 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-3')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi4_ad" data-ek-label="Sergi 4 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi4_konu" data-ek-label="Sergi 4 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi4_yil" data-ek-label="Sergi 4 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi4_sehir" data-ek-label="Sergi 4 · Şehir" data-ek-group="Sergiler">Gaziantep</span><span class="exhibition-country" data-ek="sergi4_ulke" data-ek-label="Sergi 4 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-4')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi5_ad" data-ek-label="Sergi 5 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi5_konu" data-ek-label="Sergi 5 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi5_yil" data-ek-label="Sergi 5 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi5_sehir" data-ek-label="Sergi 5 · Şehir" data-ek-group="Sergiler">Bitlis</span><span class="exhibition-country" data-ek="sergi5_ulke" data-ek-label="Sergi 5 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-5')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi6_ad" data-ek-label="Sergi 6 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi6_konu" data-ek-label="Sergi 6 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi6_yil" data-ek-label="Sergi 6 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi6_sehir" data-ek-label="Sergi 6 · Şehir" data-ek-group="Sergiler">Antalya</span><span class="exhibition-country" data-ek="sergi6_ulke" data-ek-label="Sergi 6 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-6')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi7_ad" data-ek-label="Sergi 7 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi7_konu" data-ek-label="Sergi 7 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi7_yil" data-ek-label="Sergi 7 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi7_sehir" data-ek-label="Sergi 7 · Şehir" data-ek-group="Sergiler">İstanbul</span><span class="exhibition-country" data-ek="sergi7_ulke" data-ek-label="Sergi 7 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-7')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi8_ad" data-ek-label="Sergi 8 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi8_konu" data-ek-label="Sergi 8 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi8_yil" data-ek-label="Sergi 8 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi8_sehir" data-ek-label="Sergi 8 · Şehir" data-ek-group="Sergiler">Ankara</span><span class="exhibition-country" data-ek="sergi8_ulke" data-ek-label="Sergi 8 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-8')">İncele →</button>
         </div>
       </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi2_yil" data-ek-label="Sergi 2 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-ankara-1.jpg" alt="Ankara Fotoğraf Sergisi">
+    </div>
+    <div class="exhibitions-panel" id="extab-uluslararasi" role="tabpanel">
+      <div class="exhibitions-grid">
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi9_ad" data-ek-label="Sergi 9 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi9_konu" data-ek-label="Sergi 9 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi9_yil" data-ek-label="Sergi 9 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi9_sehir" data-ek-label="Sergi 9 · Şehir" data-ek-group="Sergiler">New York</span><span class="exhibition-country" data-ek="sergi9_ulke" data-ek-label="Sergi 9 · Ülke" data-ek-group="Sergiler">Amerika</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-1')">İncele →</button>
         </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi2_ad" data-ek-label="Sergi 2 · Ad" data-ek-group="Sergiler">Ankara Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi2_sehir" data-ek-label="Sergi 2 · Şehir" data-ek-group="Sergiler">Ankara</span></div>
-          <span class="exhibition-country" data-ek="sergi2_ulke" data-ek-label="Sergi 2 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi10_ad" data-ek-label="Sergi 10 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi10_konu" data-ek-label="Sergi 10 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi10_yil" data-ek-label="Sergi 10 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi10_sehir" data-ek-label="Sergi 10 · Şehir" data-ek-group="Sergiler">Lusaka</span><span class="exhibition-country" data-ek="sergi10_ulke" data-ek-label="Sergi 10 · Ülke" data-ek-group="Sergiler">Zambiya</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-2')">İncele →</button>
         </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi3_yil" data-ek-label="Sergi 3 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-antalya-1.jpg" alt="Antalya Fotoğraf Sergisi">
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi11_ad" data-ek-label="Sergi 11 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi11_konu" data-ek-label="Sergi 11 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi11_yil" data-ek-label="Sergi 11 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi11_sehir" data-ek-label="Sergi 11 · Şehir" data-ek-group="Sergiler">Strasburg</span><span class="exhibition-country" data-ek="sergi11_ulke" data-ek-label="Sergi 11 · Ülke" data-ek-group="Sergiler">Fransa</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-3')">İncele →</button>
         </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi3_ad" data-ek-label="Sergi 3 · Ad" data-ek-group="Sergiler">Antalya Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi3_sehir" data-ek-label="Sergi 3 · Şehir" data-ek-group="Sergiler">Antalya</span></div>
-          <span class="exhibition-country" data-ek="sergi3_ulke" data-ek-label="Sergi 3 · Ülke" data-ek-group="Sergiler">Türkiye</span>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi12_ad" data-ek-label="Sergi 12 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi12_konu" data-ek-label="Sergi 12 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi12_yil" data-ek-label="Sergi 12 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi12_sehir" data-ek-label="Sergi 12 · Şehir" data-ek-group="Sergiler">Haskova</span><span class="exhibition-country" data-ek="sergi12_ulke" data-ek-label="Sergi 12 · Ülke" data-ek-group="Sergiler">Bulgaristan</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-4')">İncele →</button>
         </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi4_yil" data-ek-label="Sergi 4 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-gaziantep-1.jpg" alt="Gaziantep Fotoğraf Sergisi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi4_ad" data-ek-label="Sergi 4 · Ad" data-ek-group="Sergiler">Gaziantep Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi4_sehir" data-ek-label="Sergi 4 · Şehir" data-ek-group="Sergiler">Gaziantep</span></div>
-          <span class="exhibition-country" data-ek="sergi4_ulke" data-ek-label="Sergi 4 · Ülke" data-ek-group="Sergiler">Türkiye</span>
-        </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi5_yil" data-ek-label="Sergi 5 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-bitlis-1.jpg" alt="Bitlis Fotoğraf Sergisi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi5_ad" data-ek-label="Sergi 5 · Ad" data-ek-group="Sergiler">Bitlis Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi5_sehir" data-ek-label="Sergi 5 · Şehir" data-ek-group="Sergiler">Bitlis</span></div>
-          <span class="exhibition-country" data-ek="sergi5_ulke" data-ek-label="Sergi 5 · Ülke" data-ek-group="Sergiler">Türkiye</span>
-        </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi6_yil" data-ek-label="Sergi 6 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-antalya-2.jpg" alt="Antalya Karma Sergi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi6_ad" data-ek-label="Sergi 6 · Ad" data-ek-group="Sergiler">Antalya Karma Sergi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi6_sehir" data-ek-label="Sergi 6 · Şehir" data-ek-group="Sergiler">Antalya</span></div>
-          <span class="exhibition-country" data-ek="sergi6_ulke" data-ek-label="Sergi 6 · Ülke" data-ek-group="Sergiler">Türkiye</span>
-        </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi7_yil" data-ek-label="Sergi 7 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-istanbul-2.jpg" alt="İstanbul Karma Sergi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi7_ad" data-ek-label="Sergi 7 · Ad" data-ek-group="Sergiler">İstanbul Karma Sergi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi7_sehir" data-ek-label="Sergi 7 · Şehir" data-ek-group="Sergiler">İstanbul</span></div>
-          <span class="exhibition-country" data-ek="sergi7_ulke" data-ek-label="Sergi 7 · Ülke" data-ek-group="Sergiler">Türkiye</span>
-        </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi8_yil" data-ek-label="Sergi 8 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-ankara-2.jpg" alt="Ankara Karma Sergi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi8_ad" data-ek-label="Sergi 8 · Ad" data-ek-group="Sergiler">Ankara Karma Sergi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi8_sehir" data-ek-label="Sergi 8 · Şehir" data-ek-group="Sergiler">Ankara</span></div>
-          <span class="exhibition-country" data-ek="sergi8_ulke" data-ek-label="Sergi 8 · Ülke" data-ek-group="Sergiler">Türkiye</span>
-        </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi9_yil" data-ek-label="Sergi 9 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-newyork.jpg" alt="New York Fotoğraf Sergisi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi9_ad" data-ek-label="Sergi 9 · Ad" data-ek-group="Sergiler">New York Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi9_sehir" data-ek-label="Sergi 9 · Şehir" data-ek-group="Sergiler">New York</span></div>
-          <span class="exhibition-country" data-ek="sergi9_ulke" data-ek-label="Sergi 9 · Ülke" data-ek-group="Sergiler">Amerika</span>
-        </div>
-      </div>
-      <div class="exhibition-card">
-        <div class="exhibition-photo">
-          <div class="exhibition-year-badge" data-ek="sergi10_yil" data-ek-label="Sergi 10 · Yıl" data-ek-group="Sergiler">—</div>
-          <img src="sergi-zambiya.jpg" alt="Zambiya Fotoğraf Sergisi">
-        </div>
-        <div class="exhibition-info">
-          <h3 class="exhibition-title" data-ek="sergi10_ad" data-ek-label="Sergi 10 · Ad" data-ek-group="Sergiler">Zambiya Fotoğraf Sergisi</h3>
-          <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi10_sehir" data-ek-label="Sergi 10 · Şehir" data-ek-group="Sergiler">Lusaka</span></div>
-          <span class="exhibition-country" data-ek="sergi10_ulke" data-ek-label="Sergi 10 · Ülke" data-ek-group="Sergiler">Zambiya</span>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi13_ad" data-ek-label="Sergi 13 · Ad" data-ek-group="Sergiler">—</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi13_konu" data-ek-label="Sergi 13 · Konu" data-ek-group="Sergiler">—</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi13_yil" data-ek-label="Sergi 13 · Yıl" data-ek-group="Sergiler">—</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi13_sehir" data-ek-label="Sergi 13 · Şehir" data-ek-group="Sergiler">Kırcaali</span><span class="exhibition-country" data-ek="sergi13_ulke" data-ek-label="Sergi 13 · Ülke" data-ek-group="Sergiler">Bulgaristan</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-5')">İncele →</button>
         </div>
       </div>
     </div>
@@ -1569,6 +1746,19 @@ const GALLERY_CATS = {
   'dunya-halep':    { title:'Halep',      desc:'Tarihin acisini ve direncini tasıyan Halepten belgesel kareler.', folder:'dunya-halep' },
   'dunya-balkanlar':{ title:'Balkanlar',  desc:'Osmanlı mirasının ve Balkan ruhunun yaşadığı coğrafyadan kareler.', folder:'dunya-balkanlar' },
   'fotograf-yazilari': { title:'Fotoğraf Yazılarım', desc:'Fotoğraf üzerine kaleme alınmış yazılar, yorumlar ve düşüncelerden görsel kareler.', folder:'FOTOGRAF-YAZILARIM', root:true },
+  'sergi-ulusal-1':        { title:'İstanbul Sergisi',   desc:'İstanbul\'da açılan sergiden kareler.', folder:'sergi-ulusal-1' },
+  'sergi-ulusal-2':        { title:'Ankara Sergisi',     desc:'Ankara\'da açılan sergiden kareler.', folder:'sergi-ulusal-2' },
+  'sergi-ulusal-3':        { title:'Antalya Sergisi',    desc:'Antalya\'da açılan sergiden kareler.', folder:'sergi-ulusal-3' },
+  'sergi-ulusal-4':        { title:'Gaziantep Sergisi',  desc:'Gaziantep\'te açılan sergiden kareler.', folder:'sergi-ulusal-4' },
+  'sergi-ulusal-5':        { title:'Bitlis Sergisi',     desc:'Bitlis\'te açılan sergiden kareler.', folder:'sergi-ulusal-5' },
+  'sergi-ulusal-6':        { title:'Antalya Karma Sergi',desc:'Antalya\'da açılan karma sergiden kareler.', folder:'sergi-ulusal-6' },
+  'sergi-ulusal-7':        { title:'İstanbul Karma Sergi',desc:'İstanbul\'da açılan karma sergiden kareler.', folder:'sergi-ulusal-7' },
+  'sergi-ulusal-8':        { title:'Ankara Karma Sergi', desc:'Ankara\'da açılan karma sergiden kareler.', folder:'sergi-ulusal-8' },
+  'sergi-uluslararasi-1':  { title:'New York Sergisi',   desc:'New York, Amerika\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-1' },
+  'sergi-uluslararasi-2':  { title:'Zambiya Sergisi',    desc:'Lusaka, Zambiya\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-2' },
+  'sergi-uluslararasi-3':  { title:'Strasburg Sergisi',  desc:'Strasburg, Fransa\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-3' },
+  'sergi-uluslararasi-4':  { title:'Haskova Sergisi',    desc:'Haskova, Bulgaristan\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-4' },
+  'sergi-uluslararasi-5':  { title:'Kırcaali Sergisi',   desc:'Kırcaali, Bulgaristan\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-5' },
 };
 
 let currentPhotos  = [];
@@ -1639,6 +1829,18 @@ async function resolveCatFolderId(cat) {
         if (cat.folder.startsWith('dunya-') && cat.folder !== 'dunya-inanclar') {
           const dunyaId = await getFolderIdByName(portfolyomId, 'Dünyadan Fotoğraflarım');
           if (dunyaId) folderId = await getFolderIdByName(dunyaId, cat.folder.replace('dunya-',''));
+        } else if (cat.folder.startsWith('sergi-ulusal-')) {
+          const sergilerId = await getFolderIdByName(portfolyomId, 'Sergiler');
+          if (sergilerId) {
+            const ulusalId = await getFolderIdByName(sergilerId, 'Ulusal');
+            if (ulusalId) folderId = await getFolderIdByName(ulusalId, cat.folder.replace('sergi-ulusal-',''));
+          }
+        } else if (cat.folder.startsWith('sergi-uluslararasi-')) {
+          const sergilerId = await getFolderIdByName(portfolyomId, 'Sergiler');
+          if (sergilerId) {
+            const uluslararasiId = await getFolderIdByName(sergilerId, 'Uluslararası');
+            if (uluslararasiId) folderId = await getFolderIdByName(uluslararasiId, cat.folder.replace('sergi-uluslararasi-',''));
+          }
         } else {
           folderId = await getFolderIdByName(portfolyomId, cat.folder);
         }
@@ -1646,6 +1848,17 @@ async function resolveCatFolderId(cat) {
     }
   } catch(e) {}
   return folderId;
+}
+
+function switchExTab(key){
+  document.querySelectorAll('.exhibition-tab').forEach(b=>{
+    const on = b.dataset.extab === key;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  document.querySelectorAll('.exhibitions-panel').forEach(p=>{
+    p.classList.toggle('active', p.id === 'extab-' + key);
+  });
 }
 
 async function openGallery(catKey) {
@@ -2200,6 +2413,7 @@ function ekOpenPanel(){
 function ekClosePanel(){
   document.getElementById('ekPanelOverlay').classList.remove('open');
 }
+
 function ekSaveAll(){
   const status = document.getElementById('ekStatus');
   if(Object.keys(ekPendingValues).length === 0){
