@@ -1078,12 +1078,12 @@ function playShutterSound(){
     const ctx = shutterAudioCtx;
     const now = ctx.currentTime;
 
-    function noiseClick(startTime, duration, freq, q, peakGain){
+    function noiseBurst(startTime, duration, freq, q, peakGain, curve){
       const bufferSize = Math.floor(ctx.sampleRate * duration);
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++){
-        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 3);
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, curve || 2.5);
       }
       const src = ctx.createBufferSource();
       src.buffer = buffer;
@@ -1099,10 +1099,33 @@ function playShutterSound(){
       src.stop(startTime + duration);
     }
 
-    // Deklanşörün açılış "tık" sesi
-    noiseClick(now, 0.045, 3200, 0.9, 0.65);
-    // Aynanın/deklanşörün kapanış "tak" sesi (hafif gecikmeli, daha pes)
-    noiseClick(now + 0.07, 0.035, 1600, 1.1, 0.4);
+    function metallicSnap(startTime, freqStart, freqEnd, duration, peakGain){
+      const osc = ctx.createOscillator();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(freqStart, startTime);
+      osc.frequency.exponentialRampToValueAtTime(freqEnd, startTime + duration);
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(peakGain, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    // 1) Ayna kalkışı — hafif, alçak "tık"
+    noiseBurst(now, 0.018, 950, 2.0, 0.28, 2);
+    metallicSnap(now, 1100, 280, 0.016, 0.12);
+
+    // 2) Perde açılışı — keskin, metalik ana "klik" sesi
+    noiseBurst(now + 0.032, 0.028, 4400, 1.1, 0.6, 2.8);
+    metallicSnap(now + 0.032, 3800, 950, 0.022, 0.32);
+
+    // 3) Perde kapanışı — biraz daha pes, kısa gecikmeli "tak"
+    noiseBurst(now + 0.095, 0.024, 2100, 1.3, 0.42, 3);
+    metallicSnap(now + 0.095, 1900, 550, 0.018, 0.2);
+
+    // 4) Ayna inişi — hafif alçak "thud"
+    noiseBurst(now + 0.14, 0.03, 650, 1.6, 0.3, 2.2);
   } catch(e) { /* Web Audio desteklenmiyorsa sessizce geç */ }
 }
 
