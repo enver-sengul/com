@@ -686,6 +686,14 @@ footer { text-align:center; }
             <div class="gallery-cat-count" id="count-minimal">Fotoğrafları Keşfet</div>
           </div>
         </div>
+        <div class="gallery-cat-card" onclick="openGallery('nostalji')">
+          <img id="cover-nostalji" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Nostalji">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Nostalji</div>
+            <div class="gallery-cat-count" id="count-nostalji">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="pt-turkiye" style="display:none;">
@@ -1228,6 +1236,7 @@ const GALLERY_CATS = {
   'dans':               { title:'Dans',               desc:'Hareketin şiiri. Sahne ışıklarında, sokak köşelerinde, doğanın içinde dans eden insanlar.', folder:'dans' },
   'muzisyenler':        { title:'Müzisyenler',        desc:'Notaların görüntüye dönüştüğü anlar. Sahne arkası ve sahnede müziğin insanları.', folder:'muzisyenler' },
   'minimal':            { title:'Minimal',            desc:'Az ile çok söylemek. Sadeliğin içindeki derinliği arayan minimal fotoğraf çalışmaları.', folder:'minimal' },
+  'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'nostalji' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
   'dunya-zambiya':  { title:'Zambiya',    desc:'Afrikadan yasam, renk ve insanlik uzerine kareler.', folder:'dunya-zambiya' },
