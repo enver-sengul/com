@@ -1067,6 +1067,57 @@ footer { text-align:center; }
   <div class="lb-counter" id="inanclarLbCounter"></div>
 </div>
 <script>
+// ═══════════════════════════════════
+// DEKLANŞÖR SESİ — tıklamalarda kamera deklanşörü efekti
+// ═══════════════════════════════════
+let shutterAudioCtx = null;
+function playShutterSound(){
+  try {
+    if (!shutterAudioCtx) shutterAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (shutterAudioCtx.state === 'suspended') shutterAudioCtx.resume();
+    const ctx = shutterAudioCtx;
+    const now = ctx.currentTime;
+
+    function noiseClick(startTime, duration, freq, q, peakGain){
+      const bufferSize = Math.floor(ctx.sampleRate * duration);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++){
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 3);
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      const bandpass = ctx.createBiquadFilter();
+      bandpass.type = 'bandpass';
+      bandpass.frequency.value = freq;
+      bandpass.Q.value = q;
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(peakGain, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      src.connect(bandpass).connect(gain).connect(ctx.destination);
+      src.start(startTime);
+      src.stop(startTime + duration);
+    }
+
+    // Deklanşörün açılış "tık" sesi
+    noiseClick(now, 0.045, 3200, 0.9, 0.65);
+    // Aynanın/deklanşörün kapanış "tak" sesi (hafif gecikmeli, daha pes)
+    noiseClick(now + 0.07, 0.035, 1600, 1.1, 0.4);
+  } catch(e) { /* Web Audio desteklenmiyorsa sessizce geç */ }
+}
+
+const SHUTTER_CLICK_SELECTOR = [
+  'a', 'button', '.card', '.gallery-cat-card', '.photo-thumb',
+  '.tab', '.role-chip', '.lb-btn', '.lb-close', '.gallery-page-x',
+  '.gallery-page-back', '.hamburger', '.book-card', '.press-item',
+  '.w-item', '.p-item', '.award-badge', '.stat'
+].join(', ');
+
+document.addEventListener('click', function(e){
+  const target = e.target.closest(SHUTTER_CLICK_SELECTOR);
+  if (target) playShutterSound();
+}, true);
+
 const CONTACT_WHATSAPP = '905325923545';
 const CONTACT_EMAIL    = 'enversengulweb@gmail.com';
 
