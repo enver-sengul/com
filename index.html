@@ -418,7 +418,9 @@ footer { text-align:center; }
 .video-lightbox { display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.97); flex-direction:column; align-items:center; justify-content:center; }
 .video-lightbox.open { display:flex; }
 .video-lightbox-wrap { position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
-.video-lightbox iframe { width:90vw; max-width:1280px; aspect-ratio:16/9; max-height:86vh; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); background:#000; }
+.video-frame-box { position:relative; width:90vw; max-width:1280px; aspect-ratio:16/9; max-height:86vh; }
+.video-frame-box iframe { display:block; width:100%; height:100%; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); background:#000; }
+.video-mask-tr { position:absolute; top:1px; right:1px; width:60px; height:48px; background:#000; z-index:2; pointer-events:auto; }
 .video-lightbox-loading { color:var(--muted); font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; text-align:center; }
 .gallery-loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 0; gap:16px; color:var(--muted); }
 .gallery-loading-spinner { width:40px; height:40px; border-radius:50%; border:2px solid rgba(201,168,76,.2); border-top-color:var(--gold); animation:spin .8s linear infinite; }
@@ -453,7 +455,8 @@ footer { text-align:center; }
   .photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
   .inanclar-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:auto; gap:2px; }
   .photo-masonry.portrait-mode, .inanclar-grid.portrait-mode { grid-template-columns:repeat(2,1fr); }
-  .video-lightbox iframe { width:96vw; max-height:76vh; }
+  .video-frame-box { width:96vw; max-height:76vh; }
+  .video-mask-tr { width:48px; height:38px; }
   .lb-music-toggle { right:66px; width:40px; height:40px; }
   .gallery-pagination { gap:14px; margin-top:24px; }
   .gallery-page-btn { padding:10px 16px; }
@@ -1406,7 +1409,10 @@ footer { text-align:center; }
   <button class="lb-close" onclick="closeKirkpinarVideo()">✕</button>
   <div class="video-lightbox-wrap">
     <div class="video-lightbox-loading" id="kirkpinarVideoLoading">Video yükleniyor…</div>
-    <iframe id="kirkpinarVideoPlayer" src="" allow="autoplay; fullscreen" allowfullscreen frameborder="0" style="display:none;"></iframe>
+    <div class="video-frame-box" id="kirkpinarVideoFrameBox" style="display:none;">
+      <iframe id="kirkpinarVideoPlayer" src="" allow="autoplay; fullscreen" allowfullscreen frameborder="0"></iframe>
+      <div class="video-mask-tr"></div>
+    </div>
   </div>
 </div>
 <div class="lightbox" id="lightbox">
@@ -1773,7 +1779,7 @@ const GALLERY_CATS = {
   'edirne':             { title:'Şehirlerin Sultanı: Edirne', desc:'Tarihin ve mimarinin ic ice gectigi Edirne sokaklarindan, camilerinden ve yasamından kareler.', folder:'Şehirlerin Sultanı: Edirne' },
   'dans':               { title:'Dans',               desc:'Hareketin şiiri. Sahne ışıklarında, sokak köşelerinde, doğanın içinde dans eden insanlar.', folder:'Dans' },
   'muzisyenler':        { title:'Müzisyenler',        desc:'Notaların görüntüye dönüştüğü anlar. Sahne arkası ve sahnede müziğin insanları.', folder:'Müzisyenler' },
-  'kirkpinar':          { title:'Kırkpınar',          desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
+  'kirkpinar':          { title:'Kırkpınar',          desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinap' },
   'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
@@ -1909,17 +1915,17 @@ function driveVideoEmbedUrl(fileId) {
 let kirkpinarVideoFileId = null;
 
 async function openKirkpinarVideo() {
-  const modal   = document.getElementById('kirkpinarVideoLightbox');
-  const frame   = document.getElementById('kirkpinarVideoPlayer');
-  const loading = document.getElementById('kirkpinarVideoLoading');
+  const modal     = document.getElementById('kirkpinarVideoLightbox');
+  const frameBox  = document.getElementById('kirkpinarVideoFrameBox');
+  const frame     = document.getElementById('kirkpinarVideoPlayer');
+  const loading   = document.getElementById('kirkpinarVideoLoading');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  frame.style.display = 'none';
+  frameBox.style.display = 'none';
   frame.src = '';
   loading.style.display = 'block';
   loading.textContent = 'Video yükleniyor…';
 
-  
   try {
     if (!kirkpinarVideoFileId) {
       const cat = GALLERY_CATS['kirkpinar'];
@@ -1930,12 +1936,12 @@ async function openKirkpinarVideo() {
       }
     }
     if (!kirkpinarVideoFileId) {
-      loading.textContent = 'Video bulunamadı. Lütfen Drive\'daki "Kirkpinar" klasörünü kontrol edin.';
+      loading.textContent = 'Video bulunamadı. Lütfen Drive\'daki "Kirkpinap" klasörünü kontrol edin.';
       return;
     }
     frame.onload = () => {
       loading.style.display = 'none';
-      frame.style.display = 'block';
+      frameBox.style.display = 'block';
     };
     // Google Drive'ın kendi gömme (embed) oynatıcısı; ilerletme ve ses/sessiz
     // çubuğu oynatıcının kendi arayüzünde otomatik olarak gelir.
@@ -1946,9 +1952,11 @@ async function openKirkpinarVideo() {
 }
 
 function closeKirkpinarVideo() {
-  const modal = document.getElementById('kirkpinarVideoLightbox');
-  const frame = document.getElementById('kirkpinarVideoPlayer');
+  const modal    = document.getElementById('kirkpinarVideoLightbox');
+  const frame    = document.getElementById('kirkpinarVideoPlayer');
+  const frameBox = document.getElementById('kirkpinarVideoFrameBox');
   frame.src = '';
+  frameBox.style.display = 'none';
   modal.classList.remove('open');
   document.body.style.overflow = '';
 }
