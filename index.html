@@ -26,7 +26,6 @@ nav{
   border-bottom:1px solid rgba(201,168,76,.15);
   backdrop-filter:blur(12px);
 }
-  
 .nav-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-style:italic;color:var(--gold);text-decoration:none;}
 .nav-links{display:flex;gap:32px;list-style:none;}
 .nav-links a{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream2);text-decoration:none;transition:color .3s;}
@@ -373,6 +372,7 @@ footer { text-align:center; }
 .photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
 .photo-thumb { position:relative; aspect-ratio:3/2; overflow:hidden; cursor:pointer; background:var(--dark3); align-self:start; }
 .photo-thumb.portrait { aspect-ratio:2/3; }
+.photo-masonry.portrait-mode, .inanclar-grid.portrait-mode { gap:10px; }
 .photo-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s, filter .4s; pointer-events:none; user-select:none; -webkit-user-drag:none; }
 .photo-thumb:hover img { transform:scale(1.05); filter:brightness(.8); }
 .photo-thumb-overlay { position:absolute; inset:0; background:rgba(13,11,8,0); transition:background .3s; display:flex; align-items:center; justify-content:center; }
@@ -432,7 +432,7 @@ footer { text-align:center; }
 .inanclar-header .gallery-page-title { justify-self:center; }
 .inanclar-header .gallery-page-x { justify-self:end; }
 .photo-thumb, .lightbox-img, .gallery-cat-card img { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
-.inanclar-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:4px; }
+.inanclar-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:auto; gap:4px; }
 @media(max-width:768px){
   .gallery-cats { grid-template-columns:1fr 1fr; }
   .gallery-cats.two-col { grid-template-columns:1fr; }
@@ -444,7 +444,7 @@ footer { text-align:center; }
   .photo-masonry { grid-template-columns:repeat(2,1fr); gap:2px; }
   .photo-masonry.large-thumbs { grid-template-columns:1fr; gap:10px; }
   .photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
-  .inanclar-grid { grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,1fr); gap:2px; }
+  .inanclar-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:auto; gap:2px; }
   .gallery-pagination { gap:14px; margin-top:24px; }
   .gallery-page-btn { padding:10px 16px; }
   .lb-btn { width:40px; height:40px; font-size:16px; }
@@ -1811,7 +1811,7 @@ async function getPhotosInFolder(folderId) {
   let all = [], pageToken = null;
   do {
     const q = encodeURIComponent(`'${folderId}' in parents and (mimeType contains 'image/jpeg' or mimeType contains 'image/webp' or mimeType contains 'image/png') and trashed=false`);
-    let url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=nextPageToken,files(id,name,mimeType)&pageSize=100&key=${DRIVE_API_KEY}`;
+    let url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=nextPageToken,files(id,name,mimeType,imageMediaMetadata(width,height))&pageSize=100&key=${DRIVE_API_KEY}`;
     if (pageToken) url += '&pageToken=' + pageToken;
     try {
       const r = await fetch(url);
@@ -1906,8 +1906,24 @@ function toggleBgMusic() {
   }
 }
 
-const GALLERY_PER_PAGE = 6;
+const GALLERY_PER_PAGE_LANDSCAPE = 6;
+const GALLERY_PER_PAGE_PORTRAIT  = 3;
 let galleryPageIdx = 0;
+
+function isPortraitPhoto(photo) {
+  const m = photo.imageMediaMetadata;
+  return !!(m && m.width && m.height && m.height > m.width);
+}
+
+function computePerPage(photos, landscapeCount, portraitCount) {
+  landscapeCount = landscapeCount || GALLERY_PER_PAGE_LANDSCAPE;
+  portraitCount  = portraitCount  || GALLERY_PER_PAGE_PORTRAIT;
+  if (!photos || !photos.length) return landscapeCount;
+  const withMeta = photos.filter(p => p.imageMediaMetadata && p.imageMediaMetadata.width && p.imageMediaMetadata.height);
+  if (!withMeta.length) return landscapeCount;
+  const portraitPhotoCount = withMeta.filter(isPortraitPhoto).length;
+  return (portraitPhotoCount / withMeta.length) > 0.5 ? portraitCount : landscapeCount;
+}
 
 async function resolveCatFolderId(cat) {
   let folderId = null;
@@ -1998,6 +2014,8 @@ function renderGalleryPage(){
   const total = currentPhotos.length;
   masonry.classList.remove('large-thumbs');
   const thumbSize = 'w1200';
+  const perPage = computePerPage(currentPhotos);
+  masonry.classList.toggle('portrait-mode', perPage === GALLERY_PER_PAGE_PORTRAIT);
 
   if (total === 0) {
     masonry.innerHTML = '<p style="text-align:center;padding:60px;color:var(--muted);font-family:Cormorant Garamond,serif;font-size:20px;font-style:italic;">Bu klasörde henüz fotoğraf yok.</p>';
@@ -2005,27 +2023,30 @@ function renderGalleryPage(){
     return;
   }
 
-  const totalPages = Math.max(1, Math.ceil(total / GALLERY_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
   if (galleryPageIdx < 0) galleryPageIdx = totalPages - 1;
   if (galleryPageIdx >= totalPages) galleryPageIdx = 0;
 
-  const start = galleryPageIdx * GALLERY_PER_PAGE;
-  const pageItems = currentPhotos.slice(start, start + GALLERY_PER_PAGE);
+  const start = galleryPageIdx * perPage;
+  const pageItems = currentPhotos.slice(start, start + perPage);
 
   masonry.innerHTML = '';
   pageItems.forEach((photo, i) => {
     const globalIdx = start + i;
     const div = document.createElement('div');
     div.className = 'photo-thumb';
+    if (isPortraitPhoto(photo)) div.classList.add('portrait');
     div.innerHTML = `
       <img src="${driveImgUrl(photo.id, thumbSize)}" alt="${photo.name}" loading="lazy">
       <div class="photo-thumb-overlay">
         <div class="photo-thumb-zoom">⊕</div>
       </div>`;
-    const thumbImg = div.querySelector('img');
-    thumbImg.onload = () => {
-      if (thumbImg.naturalHeight > thumbImg.naturalWidth) div.classList.add('portrait');
-    };
+    if (!photo.imageMediaMetadata) {
+      const thumbImg = div.querySelector('img');
+      thumbImg.onload = () => {
+        if (thumbImg.naturalHeight > thumbImg.naturalWidth) div.classList.add('portrait');
+      };
+    }
     div.onclick = () => openLightbox(globalIdx);
     div.oncontextmenu = e => e.preventDefault();
     masonry.appendChild(div);
@@ -2037,7 +2058,7 @@ function renderGalleryPage(){
   document.getElementById('galleryNextBtn').disabled = totalPages <= 1;
 }
 
-const NAV_COOLDOWN_MS = 700;
+const NAV_COOLDOWN_MS = 1200;
 let galleryNavLocked = false;
 function galleryNav(dir){
   if (galleryNavLocked) return;
@@ -2179,7 +2200,8 @@ async function loadAnasayfaImages() {
 // ═══════════════════════════════════
 // Kapak görseli: Drive'daki "dunya-inanclar" klasöründe adı "1" olan dosya (1.jpg / 1.webp / 1.png)
 // Diğer tüm görseller aynı klasörden otomatik çekilir, dosya adları önemli değildir.
-const INANCLAR_PER_PAGE = 6;
+const INANCLAR_PER_PAGE_LANDSCAPE = 6;
+const INANCLAR_PER_PAGE_PORTRAIT  = 3;
 let inanclarPageIdx  = 0;
 let inanclarLbIndex  = 0;
 let inanclarPhotos   = [];
@@ -2278,6 +2300,8 @@ function closeInanclarGallery(){
 function renderInanclarGrid(){
   const grid = document.getElementById('inanclarGrid');
   const total = inanclarPhotos.length;
+  const perPage = computePerPage(inanclarPhotos, INANCLAR_PER_PAGE_LANDSCAPE, INANCLAR_PER_PAGE_PORTRAIT);
+  grid.classList.toggle('portrait-mode', perPage === INANCLAR_PER_PAGE_PORTRAIT);
 
   if (total === 0) {
     grid.innerHTML = '<p class="gallery-empty-msg">Google Drive\'da "portfolyom/dunya-inanclar" klasörü bulunamadı ya da boş. Klasör adını ve paylaşım ayarlarını kontrol edin.</p>';
@@ -2287,27 +2311,30 @@ function renderInanclarGrid(){
     return;
   }
 
-  const totalPages = Math.max(1, Math.ceil(total / INANCLAR_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
   if (inanclarPageIdx < 0) inanclarPageIdx = totalPages - 1;
   if (inanclarPageIdx >= totalPages) inanclarPageIdx = 0;
 
-  const start = inanclarPageIdx * INANCLAR_PER_PAGE;
-  const pageItems = inanclarPhotos.slice(start, start + INANCLAR_PER_PAGE);
+  const start = inanclarPageIdx * perPage;
+  const pageItems = inanclarPhotos.slice(start, start + perPage);
 
   grid.innerHTML = '';
   pageItems.forEach((photo, i) => {
     const globalIdx = start + i;
     const div = document.createElement('div');
     div.className = 'photo-thumb';
+    if (isPortraitPhoto(photo)) div.classList.add('portrait');
     div.innerHTML = `
       <img src="${driveImgUrl(photo.id)}" alt="Dünya İnançları" loading="lazy">
       <div class="photo-thumb-overlay">
         <div class="photo-thumb-zoom">⊕</div>
       </div>`;
-    const thumbImg = div.querySelector('img');
-    thumbImg.onload = () => {
-      if (thumbImg.naturalHeight > thumbImg.naturalWidth) div.classList.add('portrait');
-    };
+    if (!photo.imageMediaMetadata) {
+      const thumbImg = div.querySelector('img');
+      thumbImg.onload = () => {
+        if (thumbImg.naturalHeight > thumbImg.naturalWidth) div.classList.add('portrait');
+      };
+    }
     div.onclick = () => openInanclarLightbox(globalIdx);
     div.oncontextmenu = e => e.preventDefault();
     grid.appendChild(div);
