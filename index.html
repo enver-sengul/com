@@ -1615,6 +1615,8 @@ function getContactFormData(){
   return { name, email, subject: subject || 'Web Sitesi İletişim Formu', message };
 }
 
+
+  
 function sendViaWhatsApp(){
   const data = getContactFormData();
   if (!data) return;
