@@ -709,11 +709,19 @@ footer { text-align:center; }
           </div>
         </div>
         <div class="gallery-cat-card" onclick="openGallery('portreler')">
-          <img id="cover-portreler" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Yüzler">
+          <img id="cover-portreler" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Portreler">
           <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
-            <div class="gallery-cat-title">Yüzler</div>
+            <div class="gallery-cat-title">Portreler</div>
             <div class="gallery-cat-count" id="count-portreler">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openGallery('edirnenin-taninmis-yuzleri')">
+          <img id="cover-edirnenin-taninmis-yuzleri" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Edirnenin Tanınmış Yüzleri">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Edirnenin Tanınmış Yüzleri</div>
+            <div class="gallery-cat-count" id="count-edirnenin-taninmis-yuzleri">Fotoğrafları Keşfet</div>
           </div>
         </div>
         <div class="gallery-cat-card" onclick="openGallery('kurgusal')">
@@ -1727,7 +1735,8 @@ function submitPhotoVote(fileId, value){
 
 const GALLERY_CATS = {
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
-  'portreler':          { title:'Yüzler',             desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
+  'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
+  'edirnenin-taninmis-yuzleri': { title:'Edirnenin Tanınmış Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
   'kurgusal':           { title:'Kurgusal Kadraj',    desc:'Gerçeklikle hayal arasında. Sahnelenen anlar, kurulan dünyalar ve görsel anlatı denemeleri.', folder:'Kurgusal Kadraj' },
   'edirne':             { title:'Şehirlerin Sultanı: Edirne', desc:'Tarihin ve mimarinin ic ice gectigi Edirne sokaklarindan, camilerinden ve yasamından kareler.', folder:'Şehirlerin Sultanı: Edirne' },
   'dans':               { title:'Dans',               desc:'Hareketin şiiri. Sahne ışıklarında, sokak köşelerinde, doğanın içinde dans eden insanlar.', folder:'Dans' },
