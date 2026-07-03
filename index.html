@@ -351,6 +351,8 @@ footer { text-align:center; }
 .gallery-cat-card { position:relative; aspect-ratio:3/2; overflow:hidden; cursor:pointer; background:var(--dark3); z-index:1; isolation:isolate; }
 .gallery-cat-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease, filter .4s; filter:brightness(.75) sepia(10%); pointer-events:none; user-select:none; -webkit-user-drag:none; }
 .gallery-cat-card:hover img { transform:scale(1.06); filter:brightness(.55) sepia(20%); }
+.gallery-cat-card img.portrait-cover { object-fit:contain; background:var(--dark); }
+.gallery-cat-card .video-play-badge { position:absolute; top:14px; left:14px; z-index:2; display:flex; align-items:center; gap:6px; padding:6px 12px; background:rgba(13,11,8,.75); border:1px solid rgba(201,168,76,.4); color:var(--gold-light); font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
 .gallery-cat-card::after { content:'';position:absolute;inset:0; background:linear-gradient(to top, rgba(13,11,8,.9) 0%, rgba(13,11,8,.3) 50%, transparent 100%); transition:background .4s; }
 .gallery-cat-card:hover::after { background:linear-gradient(to top, rgba(13,11,8,.97) 0%, rgba(13,11,8,.5) 60%, rgba(13,11,8,.1) 100%); }
 .gallery-cat-info { position:absolute; bottom:0; left:0; right:0; z-index:2; padding:24px 28px 22px; }
@@ -372,7 +374,7 @@ footer { text-align:center; }
 .photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
 .photo-thumb { position:relative; aspect-ratio:3/2; overflow:hidden; cursor:pointer; background:var(--dark3); align-self:start; }
 .photo-thumb.portrait { aspect-ratio:2/3; }
-.photo-masonry.portrait-mode, .inanclar-grid.portrait-mode { gap:10px; }
+.photo-masonry.portrait-mode, .inanclar-grid.portrait-mode { gap:10px; grid-template-columns:repeat(4,1fr); }
 .photo-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s, filter .4s; pointer-events:none; user-select:none; -webkit-user-drag:none; }
 .photo-thumb:hover img { transform:scale(1.05); filter:brightness(.8); }
 .photo-thumb-overlay { position:absolute; inset:0; background:rgba(13,11,8,0); transition:background .3s; display:flex; align-items:center; justify-content:center; }
@@ -408,11 +410,16 @@ footer { text-align:center; }
 .lb-next { right:20px; }
 .lb-close { position:absolute; top:20px; right:20px; z-index:10; width:44px; height:44px; background:rgba(13,11,8,.8); border:1px solid rgba(201,168,76,.3); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--cream2); transition:all .3s; }
 .lb-close:hover { border-color:var(--gold); color:var(--gold); }
-.lb-music-toggle { position:absolute; top:20px; left:20px; z-index:10; width:44px; height:44px; background:rgba(13,11,8,.8); border:1px solid rgba(201,168,76,.3); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--cream2); transition:all .3s; }
+.lb-music-toggle { position:absolute; top:20px; right:76px; z-index:10; width:44px; height:44px; background:rgba(13,11,8,.8); border:1px solid rgba(201,168,76,.3); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--cream2); transition:all .3s; }
 .lb-music-toggle:hover { border-color:var(--gold); color:var(--gold); }
 .gallery-page-actions { display:flex; align-items:center; gap:10px; justify-self:end; }
 .lb-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:600; letter-spacing:2px; color:var(--gold); text-transform:uppercase; }
 .lb-title { position:absolute; top:20px; left:50%; transform:translateX(-50%); font-family:'Cormorant Garamond',serif; font-size:16px; font-style:italic; color:var(--cream2); white-space:nowrap; }
+.video-lightbox { display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.97); flex-direction:column; align-items:center; justify-content:center; }
+.video-lightbox.open { display:flex; }
+.video-lightbox-wrap { position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.video-lightbox video { max-height:86vh; max-width:92vw; width:auto; height:auto; outline:none; border:1px solid rgba(201,168,76,.2); box-shadow:0 0 0 1px rgba(201,168,76,.1), 0 0 60px rgba(0,0,0,.8); background:#000; }
+.video-lightbox-loading { color:var(--muted); font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; text-align:center; }
 .gallery-loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 0; gap:16px; color:var(--muted); }
 .gallery-loading-spinner { width:40px; height:40px; border-radius:50%; border:2px solid rgba(201,168,76,.2); border-top-color:var(--gold); animation:spin .8s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
@@ -445,6 +452,9 @@ footer { text-align:center; }
   .photo-masonry.large-thumbs { grid-template-columns:1fr; gap:10px; }
   .photo-masonry.large-thumbs .photo-thumb { aspect-ratio:4/3; }
   .inanclar-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:auto; gap:2px; }
+  .photo-masonry.portrait-mode, .inanclar-grid.portrait-mode { grid-template-columns:repeat(2,1fr); }
+  .video-lightbox video { max-height:76vh; max-width:96vw; }
+  .lb-music-toggle { right:66px; width:40px; height:40px; }
   .gallery-pagination { gap:14px; margin-top:24px; }
   .gallery-page-btn { padding:10px 16px; }
   .lb-btn { width:40px; height:40px; font-size:16px; }
@@ -761,12 +771,13 @@ footer { text-align:center; }
             <div class="gallery-cat-count" id="count-muzisyenler">Fotoğrafları Keşfet</div>
           </div>
         </div>
-        <div class="gallery-cat-card" onclick="openGallery('kirkpinar')">
+        <div class="gallery-cat-card" onclick="openKirkpinarVideo()">
           <img id="cover-kirkpinar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Kırkpınar">
-          <div class="gallery-cat-arrow">→</div>
+          <div class="video-play-badge">▶ Video</div>
+          <div class="gallery-cat-arrow">▶</div>
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Kırkpınar</div>
-            <div class="gallery-cat-count" id="count-kirkpinar">Fotoğrafları Keşfet</div>
+            <div class="gallery-cat-count" id="count-kirkpinar">Videoyu İzle</div>
           </div>
         </div>
         <div class="gallery-cat-card" onclick="openGallery('nostalji')">
@@ -1391,6 +1402,13 @@ footer { text-align:center; }
   </div>
 </div>
 <audio id="bgMusic" preload="none"></audio>
+<div class="video-lightbox" id="kirkpinarVideoLightbox">
+  <button class="lb-close" onclick="closeKirkpinarVideo()">✕</button>
+  <div class="video-lightbox-wrap">
+    <div class="video-lightbox-loading" id="kirkpinarVideoLoading">Video yükleniyor…</div>
+    <video id="kirkpinarVideoPlayer" controls playsinline style="display:none;"></video>
+  </div>
+</div>
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
   <button class="lb-music-toggle music-toggle-btn" onclick="toggleBgMusic()" aria-label="Müzik" title="Müziği aç/kapat">🔊</button>
@@ -1864,6 +1882,86 @@ function driveAudioUrl(fileId) {
   return `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${DRIVE_API_KEY}`;
 }
 
+// ══════ Kırkpınar kapak videosu (klasördeki ilk video dosyası) ══════
+let videoFileCache = {};
+
+async function getVideoInFolder(folderId) {
+  if (!folderId) return null;
+  if (videoFileCache[folderId] !== undefined) return videoFileCache[folderId];
+  try {
+    const q = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'video/' and trashed=false`);
+    const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType)&pageSize=5&key=${DRIVE_API_KEY}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    const file = (d.files && d.files[0]) || null;
+    videoFileCache[folderId] = file;
+    return file;
+  } catch(e) {
+    videoFileCache[folderId] = null;
+    return null;
+  }
+}
+
+function driveVideoUrl(fileId) {
+  return `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${DRIVE_API_KEY}`;
+}
+
+let kirkpinarVideoFileId = null;
+
+async function openKirkpinarVideo() {
+  const modal   = document.getElementById('kirkpinarVideoLightbox');
+  const video   = document.getElementById('kirkpinarVideoPlayer');
+  const loading = document.getElementById('kirkpinarVideoLoading');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  video.style.display = 'none';
+  video.pause();
+  video.removeAttribute('src');
+  loading.style.display = 'block';
+  loading.textContent = 'Video yükleniyor…';
+
+  try {
+    if (!kirkpinarVideoFileId) {
+      const cat = GALLERY_CATS['kirkpinar'];
+      const folderId = await resolveCatFolderId(cat);
+      if (folderId) {
+        const vid = await getVideoInFolder(folderId);
+        if (vid) kirkpinarVideoFileId = vid.id;
+      }
+    }
+    if (!kirkpinarVideoFileId) {
+      loading.textContent = 'Video bulunamadı. Lütfen Drive\'daki "Kirkpinap" klasörünü kontrol edin.';
+      return;
+    }
+    video.src = driveVideoUrl(kirkpinarVideoFileId);
+    video.load();
+    loading.style.display = 'none';
+    video.style.display = 'block';
+    video.muted = false;
+    video.play().catch(() => {
+      // Otomatik oynatma engellenmiş olabilir; kullanıcı kontrol çubuğundan başlatabilir.
+    });
+  } catch(e) {
+    loading.textContent = 'Video yüklenirken bir hata oluştu.';
+  }
+}
+
+function closeKirkpinarVideo() {
+  const modal = document.getElementById('kirkpinarVideoLightbox');
+  const video = document.getElementById('kirkpinarVideoPlayer');
+  video.pause();
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('kirkpinarVideoLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeKirkpinarVideo();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('kirkpinarVideoLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeKirkpinarVideo();
+});
+
 function updateMusicBtns(playing, blocked) {
   document.querySelectorAll('.music-toggle-btn').forEach(btn => {
     btn.textContent = playing ? '🔊' : '🔇';
@@ -1907,7 +2005,7 @@ function toggleBgMusic() {
 }
 
 const GALLERY_PER_PAGE_LANDSCAPE = 6;
-const GALLERY_PER_PAGE_PORTRAIT  = 3;
+const GALLERY_PER_PAGE_PORTRAIT  = 4;
 let galleryPageIdx = 0;
 
 function isPortraitPhoto(photo) {
@@ -2201,7 +2299,7 @@ async function loadAnasayfaImages() {
 // Kapak görseli: Drive'daki "dunya-inanclar" klasöründe adı "1" olan dosya (1.jpg / 1.webp / 1.png)
 // Diğer tüm görseller aynı klasörden otomatik çekilir, dosya adları önemli değildir.
 const INANCLAR_PER_PAGE_LANDSCAPE = 6;
-const INANCLAR_PER_PAGE_PORTRAIT  = 3;
+const INANCLAR_PER_PAGE_PORTRAIT  = 4;
 let inanclarPageIdx  = 0;
 let inanclarLbIndex  = 0;
 let inanclarPhotos   = [];
@@ -2241,6 +2339,18 @@ function showCoverMissing(img, reason){
 }
 
 // Tüm kategoriler için: Drive klasöründeki "1" adlı dosyayı kapak olarak yükler.
+function markCoverOrientation(img, cover) {
+  // Önce Drive meta verisinden (varsa), yoksa görsel yüklendikten sonra gerçek boyutundan dikey olup olmadığını anla.
+  if (cover && isPortraitPhoto(cover)) {
+    img.classList.add('portrait-cover');
+  } else {
+    img.classList.remove('portrait-cover');
+    img.onload = () => {
+      if (img.naturalHeight > img.naturalWidth) img.classList.add('portrait-cover');
+    };
+  }
+}
+
 async function loadAllGalleryCovers(){
   if (DRIVE_API_KEY === 'BURAYA_API_KEY') return;
   for (const catKey of Object.keys(GALLERY_CATS)) {
@@ -2253,8 +2363,23 @@ async function loadAllGalleryCovers(){
         showCoverMissing(img, `"${cat.folder}" klasörü Drive'da bulunamadı.`);
         continue;
       }
-      const photos = await getPhotosInFolder(folderId);
       const countEl = document.getElementById('count-' + catKey);
+
+      // Kırkpınar özel durumu: kapak, klasördeki fotoğraf değil videodur.
+      if (catKey === 'kirkpinar') {
+        const video = await getVideoInFolder(folderId);
+        if (!video) {
+          showCoverMissing(img, `"${cat.folder}" klasöründe video bulunamadı.`);
+          continue;
+        }
+        kirkpinarVideoFileId = video.id;
+        if (countEl) countEl.textContent = 'Videoyu İzle';
+        img.src = driveImgUrl(video.id, 'w800');
+        markCoverOrientation(img, null);
+        continue;
+      }
+
+      const photos = await getPhotosInFolder(folderId);
       if (countEl) countEl.textContent = photos.length ? photos.length + ' Fotoğraf' : 'Fotoğrafları Keşfet';
       const cover = photos.find(p => /^1\.(jpe?g|png|webp)$/i.test(p.name)) || photos[0];
       if (!cover) {
@@ -2262,6 +2387,7 @@ async function loadAllGalleryCovers(){
         continue;
       }
       img.src = driveImgUrl(cover.id, 'w800');
+      markCoverOrientation(img, cover);
     } catch(e) {
       showCoverMissing(img);
     }
@@ -2596,6 +2722,7 @@ function ekResetAll(){
     .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
 }
 
+  
 function ekApplyStoredContent(){
   if(!firebaseDb) return;
   ekScanFields();
