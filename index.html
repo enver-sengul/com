@@ -1783,7 +1783,7 @@ const GALLERY_CATS = {
   'edirne':             { title:'Şehirlerin Sultanı: Edirne', desc:'Tarihin ve mimarinin ic ice gectigi Edirne sokaklarindan, camilerinden ve yasamından kareler.', folder:'Şehirlerin Sultanı: Edirne' },
   'dans':               { title:'Dans',               desc:'Hareketin şiiri. Sahne ışıklarında, sokak köşelerinde, doğanın içinde dans eden insanlar.', folder:'Dans' },
   'muzisyenler':        { title:'Müzisyenler',        desc:'Notaların görüntüye dönüştüğü anlar. Sahne arkası ve sahnede müziğin insanları.', folder:'Müzisyenler' },
-  'kirkpinar':          { title:'Kırkpınar',          desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinap' },
+  'kirkpinar':          { title:'Kırkpınar',          desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
   'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
@@ -1940,7 +1940,7 @@ async function openKirkpinarVideo() {
       }
     }
     if (!kirkpinarVideoFileId) {
-      loading.textContent = 'Video bulunamadı. Lütfen Drive\'daki "Kirkpinap" klasörünü kontrol edin.';
+      loading.textContent = 'Video bulunamadı. Lütfen Drive\'daki "Kirkpinar" klasörünü kontrol edin.';
       return;
     }
     frame.onload = () => {
