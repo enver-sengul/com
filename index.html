@@ -407,6 +407,9 @@ footer { text-align:center; }
 .lb-next { right:20px; }
 .lb-close { position:absolute; top:20px; right:20px; z-index:10; width:44px; height:44px; background:rgba(13,11,8,.8); border:1px solid rgba(201,168,76,.3); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--cream2); transition:all .3s; }
 .lb-close:hover { border-color:var(--gold); color:var(--gold); }
+.lb-music-toggle { position:absolute; top:20px; left:20px; z-index:10; width:44px; height:44px; background:rgba(13,11,8,.8); border:1px solid rgba(201,168,76,.3); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--cream2); transition:all .3s; }
+.lb-music-toggle:hover { border-color:var(--gold); color:var(--gold); }
+.gallery-page-actions { display:flex; align-items:center; gap:10px; justify-self:end; }
 .lb-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:600; letter-spacing:2px; color:var(--gold); text-transform:uppercase; }
 .lb-title { position:absolute; top:20px; left:50%; transform:translateX(-50%); font-family:'Cormorant Garamond',serif; font-size:16px; font-style:italic; color:var(--cream2); white-space:nowrap; }
 .gallery-loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 0; gap:16px; color:var(--muted); }
@@ -1367,7 +1370,10 @@ footer { text-align:center; }
   <div class="gallery-page-header inanclar-header">
     <div class="gallery-page-logo">Enver Şengül</div>
     <div class="gallery-page-title" id="galleryPageTitle"></div>
-    <button class="gallery-page-x" onclick="closeGallery()" aria-label="Kapat">✕</button>
+    <div class="gallery-page-actions">
+      <button class="gallery-page-x music-toggle-btn" onclick="toggleBgMusic()" aria-label="Müzik" title="Müziği aç/kapat">🔊</button>
+      <button class="gallery-page-x" onclick="closeGallery()" aria-label="Kapat">✕</button>
+    </div>
   </div>
   <div class="gallery-page-body">
     <p class="gallery-page-desc inanclar-desc-centered" id="galleryPageDesc"></p>
@@ -1383,8 +1389,10 @@ footer { text-align:center; }
     </div>
   </div>
 </div>
+<audio id="bgMusic" preload="none"></audio>
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-music-toggle music-toggle-btn" onclick="toggleBgMusic()" aria-label="Müzik" title="Müziği aç/kapat">🔊</button>
   <div class="lb-title" id="lbTitle"></div>
   <div class="lightbox-img-wrap">
     <div class="shutter-curtain shutter-curtain-top" id="lbCurtainTop"></div>
@@ -1410,7 +1418,10 @@ footer { text-align:center; }
   <div class="gallery-page-header inanclar-header">
     <div class="gallery-page-logo">Enver Şengül</div>
     <div class="gallery-page-title">Dünya İnançları</div>
-    <button class="gallery-page-x" onclick="closeInanclarGallery()" aria-label="Kapat">✕</button>
+    <div class="gallery-page-actions">
+      <button class="gallery-page-x music-toggle-btn" onclick="toggleBgMusic()" aria-label="Müzik" title="Müziği aç/kapat">🔊</button>
+      <button class="gallery-page-x" onclick="closeInanclarGallery()" aria-label="Kapat">✕</button>
+    </div>
   </div>
   <div class="gallery-page-body">
     <p class="gallery-page-desc inanclar-desc-centered">İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.</p>
@@ -1424,6 +1435,7 @@ footer { text-align:center; }
 </div>
 <div class="lightbox" id="inanclarLightbox">
   <button class="lb-close" onclick="closeInanclarLightbox()">✕</button>
+  <button class="lb-music-toggle music-toggle-btn" onclick="toggleBgMusic()" aria-label="Müzik" title="Müziği aç/kapat">🔊</button>
   <div class="lb-title">Dünya İnançları</div>
   <div class="lightbox-img-wrap">
     <div class="shutter-curtain shutter-curtain-top" id="inanclarLbCurtainTop"></div>
@@ -1824,6 +1836,75 @@ function driveImgUrl(fileId, size) {
   return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
 }
 
+// ══════ Galeri arka fon müziği (klasördeki ilk mp3/ses dosyası) ══════
+let audioFileCache = {};
+let currentAudioFolderId = null;
+const bgMusic = document.getElementById('bgMusic');
+if (bgMusic) { bgMusic.loop = true; bgMusic.volume = 0.45; }
+
+async function getAudioInFolder(folderId) {
+  if (!folderId) return null;
+  if (audioFileCache[folderId] !== undefined) return audioFileCache[folderId];
+  try {
+    const q = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'audio/' and trashed=false`);
+    const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType)&pageSize=5&key=${DRIVE_API_KEY}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    const file = (d.files && d.files[0]) || null;
+    audioFileCache[folderId] = file;
+    return file;
+  } catch(e) {
+    audioFileCache[folderId] = null;
+    return null;
+  }
+}
+
+function driveAudioUrl(fileId) {
+  return `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${DRIVE_API_KEY}`;
+}
+
+function updateMusicBtns(playing, blocked) {
+  document.querySelectorAll('.music-toggle-btn').forEach(btn => {
+    btn.textContent = playing ? '🔊' : '🔇';
+    btn.title = playing ? 'Müziği durdur' : (blocked ? 'Otomatik oynatma engellendi — başlatmak için tıklayın' : 'Müziği aç');
+  });
+}
+
+async function playBgMusicForFolder(folderId) {
+  if (!bgMusic || !folderId) return;
+  if (folderId === currentAudioFolderId && !bgMusic.paused) return;
+  const audioFile = await getAudioInFolder(folderId);
+  if (!audioFile) { stopBgMusic(); return; }
+  currentAudioFolderId = folderId;
+  bgMusic.src = driveAudioUrl(audioFile.id);
+  try {
+    await bgMusic.play();
+    updateMusicBtns(true);
+  } catch(e) {
+    // Tarayıcı otomatik oynatmayı engellemiş olabilir; kullanıcı butona basarak başlatabilir.
+    updateMusicBtns(false, true);
+  }
+}
+
+function stopBgMusic() {
+  if (!bgMusic) return;
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+  bgMusic.removeAttribute('src');
+  currentAudioFolderId = null;
+  updateMusicBtns(false);
+}
+
+function toggleBgMusic() {
+  if (!bgMusic || !bgMusic.src) return;
+  if (bgMusic.paused) {
+    bgMusic.play().then(() => updateMusicBtns(true)).catch(() => updateMusicBtns(false, true));
+  } else {
+    bgMusic.pause();
+    updateMusicBtns(false);
+  }
+}
+
 const GALLERY_PER_PAGE = 6;
 let galleryPageIdx = 0;
 
@@ -1888,6 +1969,7 @@ async function openGallery(catKey) {
   page.scrollTop = 0;
 
   const folderId = await resolveCatFolderId(cat);
+  playBgMusicForFolder(folderId);
 
   document.getElementById('galleryLoading').style.display = 'none';
 
@@ -1966,6 +2048,7 @@ function galleryNav(dir){
 }
 
 function closeGallery() {
+  stopBgMusic();
   document.getElementById('galleryPage').classList.remove('open');
   document.body.style.overflow = '';
   const target = document.getElementById('fotografcilik');
@@ -2179,9 +2262,11 @@ async function openInanclarGallery(){
     inanclarPhotos = [];
   }
   renderInanclarGrid();
+  getInanclarFolderId().then(playBgMusicForFolder);
 }
 
 function closeInanclarGallery(){
+  stopBgMusic();
   document.getElementById('inanclarPage').classList.remove('open');
   document.body.style.overflow = '';
   const target = document.getElementById('fotografcilik');
