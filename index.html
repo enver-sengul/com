@@ -159,8 +159,10 @@ nav{
 .awards-list{list-style:none;}
 .awards-list li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(201,168,76,.1);font-size:13.5px;color:var(--cream2);}
 .awards-list li::before{content:'◆';color:var(--gold);font-size:7px;flex-shrink:0;}
-.award-feature-box{background:var(--dark3);border:1px solid rgba(201,168,76,.28);padding:44px 40px;position:relative;}
-.award-feature-box::before{content:'★';position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:28px;height:28px;background:var(--gold);color:var(--dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:28px;text-align:center;}
+.award-feature-box{background:var(--dark3);border:1px solid rgba(201,168,76,.28);padding:44px 40px;position:relative;background-size:cover;background-position:center;overflow:hidden;}
+.award-feature-box::before{content:'★';position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:28px;height:28px;background:var(--gold);color:var(--dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:28px;text-align:center;z-index:3;}
+.award-feature-box::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(13,11,8,.55) 0%, rgba(13,11,8,.8) 60%, rgba(13,11,8,.92) 100%);z-index:1;pointer-events:none;}
+.award-feature-box .af-year, .award-feature-box .af-name, .award-feature-box .af-desc{position:relative;z-index:2;}
 .af-year{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:rgba(201,168,76,.1);line-height:1;margin-bottom:-14px;}
 .af-name{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:700;color:var(--gold-light);margin-bottom:10px;}
 .af-desc{font-size:13.5px;line-height:1.75;color:var(--muted);}
@@ -201,6 +203,15 @@ nav{
 @keyframes exFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 /* Küçük bilgi kartları */
 .exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;}
+.exhibitions-summary-card{max-width:640px;margin:0 auto;background:var(--dark3);border:1px solid rgba(201,168,76,.22);border-radius:2px;padding:48px 44px;text-align:center;cursor:pointer;position:relative;transition:border-color .3s,transform .3s,box-shadow .3s;}
+.exhibitions-summary-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.5);box-shadow:0 18px 40px rgba(0,0,0,.45);}
+.exhibitions-summary-icon{font-size:40px;color:var(--gold);margin-bottom:18px;opacity:.9;}
+.exhibitions-summary-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:14px;}
+.exhibitions-summary-body{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.65;color:var(--cream2);margin-bottom:26px;}
+.exhibitions-summary-cta{display:inline-flex;align-items:center;gap:8px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.exhibitions-summary-card:hover .exhibitions-summary-cta{color:var(--gold-light);}
+.exhibitions-back-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;padding:0;}
+.exhibitions-back-btn:hover{color:var(--gold-light);}
 .exhibition-card{background:var(--dark3);border:1px solid rgba(201,168,76,.14);border-radius:2px;padding:17px 17px 15px;position:relative;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column;}
 .exhibition-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height .35s ease;}
 .exhibition-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 14px 34px rgba(0,0,0,.45);}
@@ -1117,7 +1128,17 @@ footer { text-align:center; }
       <button class="exhibition-tab" data-extab="uluslararasi" role="tab" aria-selected="false" onclick="switchExTab('uluslararasi')">Uluslararası Sergiler</button>
     </div>
     <div class="exhibitions-panel active" id="extab-ulusal" role="tabpanel">
-      <div class="exhibitions-grid">
+      <div class="exhibitions-intro-wrap" id="ulusal-intro">
+        <div class="exhibitions-summary-card" onclick="showExhibitionDetail('ulusal')">
+          <div class="exhibitions-summary-icon">🏛️</div>
+          <h3 class="exhibitions-summary-title">Ulusal Sergiler</h3>
+          <p class="exhibitions-summary-body" data-ek="sergiler_ulusal_ozet" data-ek-label="Sergiler · Ulusal Özet" data-ek-group="Sergiler">1991'den 2011'e uzanan süreçte Bitlis'ten Edirne'ye, Kayseri'den Gaziantep'e Türkiye'nin dört bir yanında açılmış 20 kişisel sergi ve onlarca karma sergi.</p>
+          <span class="exhibitions-summary-cta">Sergileri İncele →</span>
+        </div>
+      </div>
+      <div class="exhibitions-detail-wrap" id="ulusal-detail" style="display:none;">
+        <button class="exhibitions-back-btn" onclick="showExhibitionIntro('ulusal')">← Geri Dön</button>
+        <div class="exhibitions-grid">
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
@@ -1520,9 +1541,20 @@ footer { text-align:center; }
         </div>
       </div>
       <p class="exhibitions-note" style="margin-top:1.5rem;opacity:.75;font-style:italic;">(Ve onlarca karma sergi)</p>
+      </div>
     </div>
     <div class="exhibitions-panel" id="extab-uluslararasi" role="tabpanel">
-      <div class="exhibitions-grid">
+      <div class="exhibitions-intro-wrap" id="uluslararasi-intro">
+        <div class="exhibitions-summary-card" onclick="showExhibitionDetail('uluslararasi')">
+          <div class="exhibitions-summary-icon">🌍</div>
+          <h3 class="exhibitions-summary-title">Uluslararası Sergiler</h3>
+          <p class="exhibitions-summary-body" data-ek="sergiler_uluslararasi_ozet" data-ek-label="Sergiler · Uluslararası Özet" data-ek-group="Sergiler">Fransa'dan Bulgaristan'a, Zambiya'dan Amerika Birleşik Devletleri'ne dört kıtaya yayılan, çoğunlukla "Şehirlerin Sultanı Edirne" temalı 5 uluslararası sergi.</p>
+          <span class="exhibitions-summary-cta">Sergileri İncele →</span>
+        </div>
+      </div>
+      <div class="exhibitions-detail-wrap" id="uluslararasi-detail" style="display:none;">
+        <button class="exhibitions-back-btn" onclick="showExhibitionIntro('uluslararasi')">← Geri Dön</button>
+        <div class="exhibitions-grid">
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
@@ -1623,6 +1655,7 @@ footer { text-align:center; }
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-5')">İncele →</button>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -2592,6 +2625,21 @@ function switchExTab(key){
   document.querySelectorAll('.exhibitions-panel').forEach(p=>{
     p.classList.toggle('active', p.id === 'extab-' + key);
   });
+  showExhibitionIntro(key);
+}
+
+function showExhibitionDetail(key){
+  const intro  = document.getElementById(key + '-intro');
+  const detail = document.getElementById(key + '-detail');
+  if (intro)  intro.style.display  = 'none';
+  if (detail) detail.style.display = 'block';
+}
+
+function showExhibitionIntro(key){
+  const intro  = document.getElementById(key + '-intro');
+  const detail = document.getElementById(key + '-detail');
+  if (intro)  intro.style.display  = 'block';
+  if (detail) detail.style.display = 'none';
 }
 
 async function openGallery(catKey) {
@@ -2772,6 +2820,7 @@ const ANASAYFA_IMAGES = {
   'kitap-daruessifa':  { selector:'.bc-1',                   type:'bg',  filename:'kitap-daruessifa.webp' },
   'kitap-kayipzaman':  { selector:'.bc-2',                   type:'bg',  filename:'kitap-kayipzaman.webp' },
   'kitap-kusatma':     { selector:'.bc-3',                   type:'bg',  filename:'kitap-kusatma.webp' },
+  'odul':              { selector:'.award-feature-box',      type:'bg',  filename:'Odul.webp' },
 };
 
 // WEB > ANASAYFA klasöründeki tüm görselleri çeker ve ilgili elemanlara uygular
