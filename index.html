@@ -188,6 +188,16 @@ nav{
 .exhibition-tab.active{background:var(--gold);color:var(--dark);}
 .exhibitions-panel{display:none;}
 .exhibitions-panel.active{display:block;animation:exFade .4s ease;}
+/* Fotoğraf Videolarım — YouTube kart ızgarası */
+.youtube-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.youtube-card{background:var(--dark3);border:1px solid rgba(201,168,76,.14);cursor:pointer;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;}
+.youtube-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 14px 34px rgba(0,0,0,.4);}
+.youtube-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--dark2);}
+.youtube-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease,filter .4s;}
+.youtube-card:hover .youtube-thumb img{transform:scale(1.07);filter:brightness(.65);}
+.youtube-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(13,11,8,.72);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gold);transition:all .3s;}
+.youtube-card:hover .youtube-play{background:var(--gold);color:var(--dark);}
+.youtube-title{padding:14px 16px 18px;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--cream2);line-height:1.35;}
 @keyframes exFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 /* Küçük bilgi kartları */
 .exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;}
@@ -254,6 +264,7 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .press-grid{grid-template-columns:repeat(2,1fr);}
   .edu-grid{grid-template-columns:1fr;}
   .exhibitions-grid{grid-template-columns:repeat(2,1fr);}
+  .youtube-grid{grid-template-columns:repeat(3,1fr);}
   .world-grid{grid-template-columns:repeat(3,1fr);}
   .portfolio-grid{grid-template-columns:repeat(3,1fr);}
   .p-item.big{grid-column:span 1;grid-row:span 1;}
@@ -318,6 +329,7 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .press-item{padding:24px 16px;}
   .press-name{font-size:15px;}
   .exhibitions-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .youtube-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
   .exhibition-card{padding:14px 14px 13px;}
   .exhibitions-intro{font-size:18px;}
   .exhibition-tab{padding:10px 16px;font-size:10px;letter-spacing:1.2px;}
@@ -347,6 +359,7 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .edu-card{padding:26px 18px;}
   .edu-num{font-size:48px;}
   .exhibitions-grid{grid-template-columns:1fr;gap:10px;}
+  .youtube-grid{grid-template-columns:1fr;gap:14px;}
   .exhibition-card{padding:18px 18px 16px;}
   .exhibitions-tabs{flex-direction:column;padding:4px;gap:4px;}
   .exhibition-tab{width:100%;}
@@ -770,6 +783,7 @@ footer { text-align:center; }
       <button class="tab active" id="tab-portfolyo">Portfolyolarım</button>
       <button class="tab" id="tab-turkiye">Türkiye'nin Güzellikleri</button>
       <button class="tab" id="tab-dunya">Dünyadan Fotoğraflar</button>
+      <button class="tab" id="tab-video">Fotoğraf Videolarım</button>
       <button class="tab" id="tab-tfsf">TFSF Yöneticiliğim</button>
       <button class="tab" id="tab-yazi">Fotoğraf Yazılarım</button>
     </div>
@@ -944,6 +958,17 @@ footer { text-align:center; }
             <div class="gallery-cat-count" id="count-dunya-balkanlar">Fotoğrafları Keşfet</div>
           </div>
         </div>
+      </div>
+    </div>
+    <div id="pt-video" style="display:none;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--cream2);margin-bottom:32px;text-align:center;">YouTube kanalımdaki fotoğraf ve sunum videolarından bir seçki. Kart üzerine tıklayarak izleyebilirsiniz.</p>
+      <div class="gallery-loading" id="ytLoading">
+        <div class="gallery-loading-spinner"></div>
+        <span>Videolar yükleniyor…</span>
+      </div>
+      <div class="youtube-grid" id="youtubeGrid"></div>
+      <div style="text-align:center;margin-top:36px;">
+        <a href="https://www.youtube.com/@enversengul3013/videos" target="_blank" rel="noopener" class="btn-outline">Tüm Videolar İçin Kanalıma Gidin →</a>
       </div>
     </div>
     <div id="pt-tfsf" style="display:none;">
@@ -1976,12 +2001,14 @@ async function openKirkpinarVideo() {
   const frameBox  = document.getElementById('kirkpinarVideoFrameBox');
   const frame     = document.getElementById('kirkpinarVideoPlayer');
   const loading   = document.getElementById('kirkpinarVideoLoading');
+  const mask      = document.querySelector('.video-mask-tr');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
   frameBox.style.display = 'none';
   frame.src = '';
   loading.style.display = 'block';
   loading.textContent = 'Video yükleniyor…';
+  if (mask) mask.style.display = ''; // Drive gömme oynatıcısındaki köşe rozetini gizlemek için
 
   try {
     if (!kirkpinarVideoFileId) {
@@ -2008,6 +2035,29 @@ async function openKirkpinarVideo() {
   }
 }
 
+// Fotoğraf Videolarım (YouTube) sekmesindeki bir karta tıklanınca aynı video
+// penceresi (modal) YouTube'un kendi gömme oynatıcısıyla açılır.
+function openYouTubeVideo(videoId) {
+  const modal    = document.getElementById('kirkpinarVideoLightbox');
+  const frameBox = document.getElementById('kirkpinarVideoFrameBox');
+  const frame    = document.getElementById('kirkpinarVideoPlayer');
+  const loading  = document.getElementById('kirkpinarVideoLoading');
+  const mask     = document.querySelector('.video-mask-tr');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  frameBox.style.display = 'none';
+  frame.src = '';
+  loading.style.display = 'block';
+  loading.textContent = 'Video yükleniyor…';
+  if (mask) mask.style.display = 'none'; // YouTube'un kendi arayüzünde böyle bir sorun yok
+
+  frame.onload = () => {
+    loading.style.display = 'none';
+    frameBox.style.display = 'block';
+  };
+  frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+}
+
 function closeKirkpinarVideo() {
   const modal    = document.getElementById('kirkpinarVideoLightbox');
   const frame    = document.getElementById('kirkpinarVideoPlayer');
@@ -2025,6 +2075,58 @@ document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('kirkpinarVideoLightbox');
   if (modal.classList.contains('open') && e.key === 'Escape') closeKirkpinarVideo();
 });
+
+// ══════ Fotoğraf Videolarım — YouTube kanal videoları ══════
+// Not: Google Cloud Console'daki aynı API anahtarı (DRIVE_API_KEY) için
+// "YouTube Data API v3" servisinin de etkinleştirilmiş olması gerekir.
+const YOUTUBE_CHANNEL_ID = 'UC1jqwIWvk9Y4BkLZQItL-HQ';
+const YOUTUBE_UPLOADS_PLAYLIST_ID = 'UU' + YOUTUBE_CHANNEL_ID.slice(2);
+const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@enversengul3013/videos';
+let youtubeVideosLoaded = false;
+
+function ytEscapeHtmlText(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+async function loadYouTubeVideos(){
+  if (youtubeVideosLoaded) return;
+  youtubeVideosLoaded = true;
+  const grid = document.getElementById('youtubeGrid');
+  const loading = document.getElementById('ytLoading');
+  if (!grid || !loading) return;
+  try {
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${YOUTUBE_UPLOADS_PLAYLIST_ID}&maxResults=24&key=${DRIVE_API_KEY}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    if (!d.items || !d.items.length) throw new Error('Video bulunamadı');
+
+    grid.innerHTML = '';
+    d.items.forEach(item => {
+      const sn = item.snippet;
+      if (!sn) return;
+      const videoId = sn.resourceId && sn.resourceId.videoId;
+      if (!videoId) return;
+      const thumbs = sn.thumbnails || {};
+      const thumb = thumbs.high || thumbs.medium || thumbs.default || {};
+      const card = document.createElement('div');
+      card.className = 'youtube-card';
+      card.innerHTML = `
+        <div class="youtube-thumb">
+          <img src="${thumb.url || ''}" alt="${ytEscapeHtmlText(sn.title)}" loading="lazy">
+          <div class="youtube-play">▶</div>
+        </div>
+        <div class="youtube-title">${ytEscapeHtmlText(sn.title)}</div>`;
+      card.onclick = () => openYouTubeVideo(videoId);
+      grid.appendChild(card);
+    });
+    loading.style.display = 'none';
+  } catch(e) {
+    loading.innerHTML = `<p style="text-align:center;padding:20px 0;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;">Videolar şu anda yüklenemedi.<br>Kanalımı doğrudan <a href="${YOUTUBE_CHANNEL_URL}" target="_blank" rel="noopener" style="color:var(--gold);">YouTube'da</a> izleyebilirsiniz.</p>`;
+  }
+}
+window.addEventListener('load', loadYouTubeVideos);
 
 function updateMusicBtns(playing, blocked) {
   document.querySelectorAll('.music-toggle-btn').forEach(btn => {
@@ -2591,7 +2693,7 @@ window.addEventListener('load', loadAllGalleryCovers);
 function switchTab(btn,id){
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  ['pt-portfolyo','pt-turkiye','pt-dunya','pt-tfsf','pt-yazi'].forEach(t=>{
+  ['pt-portfolyo','pt-turkiye','pt-dunya','pt-video','pt-tfsf','pt-yazi'].forEach(t=>{
     const el=document.getElementById(t);
     if(el) el.style.display=(t===id)?'block':'none';
   });
@@ -2602,6 +2704,7 @@ document.addEventListener('DOMContentLoaded', function(){
     'tab-portfolyo': 'pt-portfolyo',
     'tab-turkiye':   'pt-turkiye',
     'tab-dunya':     'pt-dunya',
+    'tab-video':     'pt-video',
     'tab-tfsf':      'pt-tfsf',
     'tab-yazi':      'pt-yazi'
   };
@@ -2613,7 +2716,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const targetId = tabMap[tabId];
       document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      ['pt-portfolyo','pt-turkiye','pt-dunya','pt-tfsf','pt-yazi'].forEach(function(t){
+      ['pt-portfolyo','pt-turkiye','pt-dunya','pt-video','pt-tfsf','pt-yazi'].forEach(function(t){
         const el = document.getElementById(t);
         if(el) el.style.display = (t===targetId) ? 'block' : 'none';
       });
