@@ -463,6 +463,20 @@ footer { text-align:center; }
 .gallery-page-actions { display:flex; align-items:center; gap:10px; justify-self:end; }
 .lb-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:600; letter-spacing:2px; color:var(--gold); text-transform:uppercase; }
 .lb-title { position:absolute; top:20px; left:50%; transform:translateX(-50%); font-family:'Cormorant Garamond',serif; font-size:16px; font-style:italic; color:var(--cream2); white-space:nowrap; }
+.text-lightbox { display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.92); align-items:center; justify-content:center; padding:40px 20px; }
+.text-lightbox.open { display:flex; }
+.text-lightbox-panel { position:relative; max-width:760px; width:100%; max-height:86vh; overflow-y:auto; background:var(--dark3); border:1px solid rgba(201,168,76,.3); box-shadow:0 0 0 1px rgba(201,168,76,.08), 0 30px 80px rgba(0,0,0,.7); padding:56px 48px 48px; }
+.text-lightbox-eyebrow { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; text-align:center; }
+.text-lightbox-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--white); text-align:center; margin-bottom:30px; line-height:1.35; }
+.text-lightbox-body p { font-family:'Cormorant Garamond',serif; font-size:19px; line-height:1.75; color:var(--cream2); margin-bottom:16px; }
+.text-lightbox-body p.tl-quote { font-style:italic; font-size:22px; color:var(--gold-light); text-align:center; margin:26px 0; }
+.text-lightbox-signature { text-align:right; font-family:'Cinzel',serif; font-size:14px; letter-spacing:1px; color:var(--gold); margin-top:24px; }
+@media (max-width:640px){
+  .text-lightbox-panel { padding:44px 22px 32px; }
+  .text-lightbox-title { font-size:21px; }
+  .text-lightbox-body p { font-size:17px; }
+  .text-lightbox-body p.tl-quote { font-size:19px; }
+}
 .video-lightbox { display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.97); flex-direction:column; align-items:center; justify-content:center; }
 .video-lightbox.open { display:flex; }
 .video-lightbox-wrap { position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
@@ -783,7 +797,7 @@ footer { text-align:center; }
       <button class="tab active" id="tab-portfolyo">Portfolyolarım</button>
       <button class="tab" id="tab-turkiye">Türkiye'nin Güzellikleri</button>
       <button class="tab" id="tab-dunya">Dünyadan Fotoğraflar</button>
-      <button class="tab" id="tab-video">Fotoğraf Videolarım</button>
+      <button class="tab" id="tab-video">Fotoğraf Sunumlarım</button>
       <button class="tab" id="tab-tfsf">TFSF Yöneticiliğim</button>
       <button class="tab" id="tab-yazi">Fotoğraf Yazılarım</button>
     </div>
@@ -860,6 +874,14 @@ footer { text-align:center; }
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Nostalji</div>
             <div class="gallery-cat-count" id="count-nostalji">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openGallery('ve-insan')">
+          <img id="cover-ve-insan" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Ve İnsan">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Ve İnsan</div>
+            <div class="gallery-cat-count" id="count-ve-insan">Fotoğrafları Keşfet</div>
           </div>
         </div>
       </div>
@@ -984,6 +1006,14 @@ footer { text-align:center; }
             <div class="gallery-cat-count" id="count-fotograf-yazilari">Fotoğrafları Keşfet</div>
           </div>
         </div>
+        <div class="gallery-cat-card" onclick="openKesifYazisi()" style="background:linear-gradient(135deg,#3a2c16,#0d0b08);display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:64px;opacity:.45;">🧭</div>
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Keşfetme Merakı Olmayanlar Fotoğrafçı Olmasın!</div>
+            <div class="gallery-cat-count">Yazıyı Oku</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1091,264 +1121,505 @@ footer { text-align:center; }
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi1_ad" data-ek-label="Sergi 1 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi1_ad" data-ek-label="Sergi 1 · Ad" data-ek-group="Sergiler">Bitlis Fotoğrafları</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi1_konu" data-ek-label="Sergi 1 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi1_konu" data-ek-label="Sergi 1 · Konu" data-ek-group="Sergiler">Bitlis Fotoğrafları</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi1_yil" data-ek-label="Sergi 1 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi1_yil" data-ek-label="Sergi 1 · Yıl" data-ek-group="Sergiler">1991</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi1_sehir" data-ek-label="Sergi 1 · Şehir" data-ek-group="Sergiler">İstanbul</span><span class="exhibition-country" data-ek="sergi1_ulke" data-ek-label="Sergi 1 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi1_sehir" data-ek-label="Sergi 1 · Şehir" data-ek-group="Sergiler">Bitlis</span><span class="exhibition-country" data-ek="sergi1_ulke" data-ek-label="Sergi 1 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-1')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi2_ad" data-ek-label="Sergi 2 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi2_ad" data-ek-label="Sergi 2 · Ad" data-ek-group="Sergiler">Doğa ve İnsan</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi2_konu" data-ek-label="Sergi 2 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi2_konu" data-ek-label="Sergi 2 · Konu" data-ek-group="Sergiler">Doğa ve İnsan</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi2_yil" data-ek-label="Sergi 2 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi2_yil" data-ek-label="Sergi 2 · Yıl" data-ek-group="Sergiler">1991</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi2_sehir" data-ek-label="Sergi 2 · Şehir" data-ek-group="Sergiler">Ankara</span><span class="exhibition-country" data-ek="sergi2_ulke" data-ek-label="Sergi 2 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi2_sehir" data-ek-label="Sergi 2 · Şehir" data-ek-group="Sergiler">Tatvan</span><span class="exhibition-country" data-ek="sergi2_ulke" data-ek-label="Sergi 2 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-2')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi3_ad" data-ek-label="Sergi 3 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi3_ad" data-ek-label="Sergi 3 · Ad" data-ek-group="Sergiler">Objektifimden</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi3_konu" data-ek-label="Sergi 3 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi3_konu" data-ek-label="Sergi 3 · Konu" data-ek-group="Sergiler">Objektifimden</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi3_yil" data-ek-label="Sergi 3 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi3_yil" data-ek-label="Sergi 3 · Yıl" data-ek-group="Sergiler">1992</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi3_sehir" data-ek-label="Sergi 3 · Şehir" data-ek-group="Sergiler">Antalya</span><span class="exhibition-country" data-ek="sergi3_ulke" data-ek-label="Sergi 3 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi3_sehir" data-ek-label="Sergi 3 · Şehir" data-ek-group="Sergiler">Bitlis</span><span class="exhibition-country" data-ek="sergi3_ulke" data-ek-label="Sergi 3 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-3')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi4_ad" data-ek-label="Sergi 4 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi4_ad" data-ek-label="Sergi 4 · Ad" data-ek-group="Sergiler">Esintiler</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi4_konu" data-ek-label="Sergi 4 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi4_konu" data-ek-label="Sergi 4 · Konu" data-ek-group="Sergiler">Esintiler</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi4_yil" data-ek-label="Sergi 4 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi4_yil" data-ek-label="Sergi 4 · Yıl" data-ek-group="Sergiler">1995</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi4_sehir" data-ek-label="Sergi 4 · Şehir" data-ek-group="Sergiler">Gaziantep</span><span class="exhibition-country" data-ek="sergi4_ulke" data-ek-label="Sergi 4 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi4_sehir" data-ek-label="Sergi 4 · Şehir" data-ek-group="Sergiler">Edirne</span><span class="exhibition-country" data-ek="sergi4_ulke" data-ek-label="Sergi 4 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-4')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi5_ad" data-ek-label="Sergi 5 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi5_ad" data-ek-label="Sergi 5 · Ad" data-ek-group="Sergiler">Ve İnsan</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi5_konu" data-ek-label="Sergi 5 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi5_konu" data-ek-label="Sergi 5 · Konu" data-ek-group="Sergiler">Ve İnsan</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi5_yil" data-ek-label="Sergi 5 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi5_yil" data-ek-label="Sergi 5 · Yıl" data-ek-group="Sergiler">1996</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi5_sehir" data-ek-label="Sergi 5 · Şehir" data-ek-group="Sergiler">Bitlis</span><span class="exhibition-country" data-ek="sergi5_ulke" data-ek-label="Sergi 5 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi5_sehir" data-ek-label="Sergi 5 · Şehir" data-ek-group="Sergiler">Balıkesir Tahtakuşlar</span><span class="exhibition-country" data-ek="sergi5_ulke" data-ek-label="Sergi 5 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-5')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi6_ad" data-ek-label="Sergi 6 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi6_ad" data-ek-label="Sergi 6 · Ad" data-ek-group="Sergiler">Düş Fotoğrafları</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi6_konu" data-ek-label="Sergi 6 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi6_konu" data-ek-label="Sergi 6 · Konu" data-ek-group="Sergiler">Düş Fotoğrafları</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi6_yil" data-ek-label="Sergi 6 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi6_yil" data-ek-label="Sergi 6 · Yıl" data-ek-group="Sergiler">1998</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi6_sehir" data-ek-label="Sergi 6 · Şehir" data-ek-group="Sergiler">Antalya</span><span class="exhibition-country" data-ek="sergi6_ulke" data-ek-label="Sergi 6 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi6_sehir" data-ek-label="Sergi 6 · Şehir" data-ek-group="Sergiler">Edirne</span><span class="exhibition-country" data-ek="sergi6_ulke" data-ek-label="Sergi 6 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-6')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi7_ad" data-ek-label="Sergi 7 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi7_ad" data-ek-label="Sergi 7 · Ad" data-ek-group="Sergiler">Ege\'nin Tarihi Dokusu</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi7_konu" data-ek-label="Sergi 7 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi7_konu" data-ek-label="Sergi 7 · Konu" data-ek-group="Sergiler">Ege\'nin Tarihi Dokusu</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi7_yil" data-ek-label="Sergi 7 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi7_yil" data-ek-label="Sergi 7 · Yıl" data-ek-group="Sergiler">1999</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi7_sehir" data-ek-label="Sergi 7 · Şehir" data-ek-group="Sergiler">İstanbul</span><span class="exhibition-country" data-ek="sergi7_ulke" data-ek-label="Sergi 7 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi7_sehir" data-ek-label="Sergi 7 · Şehir" data-ek-group="Sergiler">Aydın</span><span class="exhibition-country" data-ek="sergi7_ulke" data-ek-label="Sergi 7 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-7')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi8_ad" data-ek-label="Sergi 8 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi8_ad" data-ek-label="Sergi 8 · Ad" data-ek-group="Sergiler">Düş Fotoğrafları</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi8_konu" data-ek-label="Sergi 8 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi8_konu" data-ek-label="Sergi 8 · Konu" data-ek-group="Sergiler">Düş Fotoğrafları</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi8_yil" data-ek-label="Sergi 8 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi8_yil" data-ek-label="Sergi 8 · Yıl" data-ek-group="Sergiler">2001</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi8_sehir" data-ek-label="Sergi 8 · Şehir" data-ek-group="Sergiler">Ankara</span><span class="exhibition-country" data-ek="sergi8_ulke" data-ek-label="Sergi 8 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi8_sehir" data-ek-label="Sergi 8 · Şehir" data-ek-group="Sergiler">İstanbul</span><span class="exhibition-country" data-ek="sergi8_ulke" data-ek-label="Sergi 8 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-8')">İncele →</button>
         </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi9_ad" data-ek-label="Sergi 9 · Ad" data-ek-group="Sergiler">Kayseri\'de Vakıf Eserleri</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi9_konu" data-ek-label="Sergi 9 · Konu" data-ek-group="Sergiler">Kayseri\'de Vakıf Eserleri</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi9_yil" data-ek-label="Sergi 9 · Yıl" data-ek-group="Sergiler">2002</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi9_sehir" data-ek-label="Sergi 9 · Şehir" data-ek-group="Sergiler">Kayseri</span><span class="exhibition-country" data-ek="sergi9_ulke" data-ek-label="Sergi 9 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-9')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi10_ad" data-ek-label="Sergi 10 · Ad" data-ek-group="Sergiler">Düş Fotoğrafları</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi10_konu" data-ek-label="Sergi 10 · Konu" data-ek-group="Sergiler">Düş Fotoğrafları</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi10_yil" data-ek-label="Sergi 10 · Yıl" data-ek-group="Sergiler">2002</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi10_sehir" data-ek-label="Sergi 10 · Şehir" data-ek-group="Sergiler">Adana</span><span class="exhibition-country" data-ek="sergi10_ulke" data-ek-label="Sergi 10 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-10')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi11_ad" data-ek-label="Sergi 11 · Ad" data-ek-group="Sergiler">Serbest</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi11_konu" data-ek-label="Sergi 11 · Konu" data-ek-group="Sergiler">Serbest</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi11_yil" data-ek-label="Sergi 11 · Yıl" data-ek-group="Sergiler">2003</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi11_sehir" data-ek-label="Sergi 11 · Şehir" data-ek-group="Sergiler">Uzunköprü Yeniköy</span><span class="exhibition-country" data-ek="sergi11_ulke" data-ek-label="Sergi 11 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-11')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi12_ad" data-ek-label="Sergi 12 · Ad" data-ek-group="Sergiler">Düş Fotoğrafları</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi12_konu" data-ek-label="Sergi 12 · Konu" data-ek-group="Sergiler">Düş Fotoğrafları</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi12_yil" data-ek-label="Sergi 12 · Yıl" data-ek-group="Sergiler">2004</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi12_sehir" data-ek-label="Sergi 12 · Şehir" data-ek-group="Sergiler">Antalya</span><span class="exhibition-country" data-ek="sergi12_ulke" data-ek-label="Sergi 12 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-12')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi13_ad" data-ek-label="Sergi 13 · Ad" data-ek-group="Sergiler">Sultanlar Şehri: Edirne</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi13_konu" data-ek-label="Sergi 13 · Konu" data-ek-group="Sergiler">Sultanlar Şehri: Edirne</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi13_yil" data-ek-label="Sergi 13 · Yıl" data-ek-group="Sergiler">2006</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi13_sehir" data-ek-label="Sergi 13 · Şehir" data-ek-group="Sergiler">Edirne</span><span class="exhibition-country" data-ek="sergi13_ulke" data-ek-label="Sergi 13 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-13')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi14_ad" data-ek-label="Sergi 14 · Ad" data-ek-group="Sergiler">Nevşehir\'in Tarihi Dokusu</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi14_konu" data-ek-label="Sergi 14 · Konu" data-ek-group="Sergiler">Nevşehir\'in Tarihi Dokusu</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi14_yil" data-ek-label="Sergi 14 · Yıl" data-ek-group="Sergiler">2006</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi14_sehir" data-ek-label="Sergi 14 · Şehir" data-ek-group="Sergiler">Nevşehir</span><span class="exhibition-country" data-ek="sergi14_ulke" data-ek-label="Sergi 14 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-14')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi15_ad" data-ek-label="Sergi 15 · Ad" data-ek-group="Sergiler">Endülüs</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi15_konu" data-ek-label="Sergi 15 · Konu" data-ek-group="Sergiler">Endülüs</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi15_yil" data-ek-label="Sergi 15 · Yıl" data-ek-group="Sergiler">2007</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi15_sehir" data-ek-label="Sergi 15 · Şehir" data-ek-group="Sergiler">Edirne</span><span class="exhibition-country" data-ek="sergi15_ulke" data-ek-label="Sergi 15 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-15')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi16_ad" data-ek-label="Sergi 16 · Ad" data-ek-group="Sergiler">Vakıf Eserlerimiz</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi16_konu" data-ek-label="Sergi 16 · Konu" data-ek-group="Sergiler">Vakıf Eserlerimiz</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi16_yil" data-ek-label="Sergi 16 · Yıl" data-ek-group="Sergiler">2007</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi16_sehir" data-ek-label="Sergi 16 · Şehir" data-ek-group="Sergiler">Gaziantep</span><span class="exhibition-country" data-ek="sergi16_ulke" data-ek-label="Sergi 16 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-16')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi17_ad" data-ek-label="Sergi 17 · Ad" data-ek-group="Sergiler">Vakıf Eserlerimiz</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi17_konu" data-ek-label="Sergi 17 · Konu" data-ek-group="Sergiler">Vakıf Eserlerimiz</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi17_yil" data-ek-label="Sergi 17 · Yıl" data-ek-group="Sergiler">2008</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi17_sehir" data-ek-label="Sergi 17 · Şehir" data-ek-group="Sergiler">Kilis</span><span class="exhibition-country" data-ek="sergi17_ulke" data-ek-label="Sergi 17 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-17')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi18_ad" data-ek-label="Sergi 18 · Ad" data-ek-group="Sergiler">Balkanlardan Esintiler</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi18_konu" data-ek-label="Sergi 18 · Konu" data-ek-group="Sergiler">Balkanlardan Esintiler</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi18_yil" data-ek-label="Sergi 18 · Yıl" data-ek-group="Sergiler">2010</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi18_sehir" data-ek-label="Sergi 18 · Şehir" data-ek-group="Sergiler">Gaziantep</span><span class="exhibition-country" data-ek="sergi18_ulke" data-ek-label="Sergi 18 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-18')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi19_ad" data-ek-label="Sergi 19 · Ad" data-ek-group="Sergiler">Kudüs</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi19_konu" data-ek-label="Sergi 19 · Konu" data-ek-group="Sergiler">Kudüs</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi19_yil" data-ek-label="Sergi 19 · Yıl" data-ek-group="Sergiler">2011</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi19_sehir" data-ek-label="Sergi 19 · Şehir" data-ek-group="Sergiler">Gaziantep</span><span class="exhibition-country" data-ek="sergi19_ulke" data-ek-label="Sergi 19 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-19')">İncele →</button>
+        </div>
+        <div class="exhibition-card">
+          <div class="ex-field">
+            <span class="ex-label">Sergi Adı</span>
+            <h3 class="exhibition-title" data-ek="sergi20_ad" data-ek-label="Sergi 20 · Ad" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</h3>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Konu</span>
+            <p class="exhibition-topic" data-ek="sergi20_konu" data-ek-label="Sergi 20 · Konu" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</p>
+          </div>
+          <div class="ex-divider"></div>
+          <div class="ex-field">
+            <span class="ex-label">Yıl</span>
+            <span class="ex-year" data-ek="sergi20_yil" data-ek-label="Sergi 20 · Yıl" data-ek-group="Sergiler">2011</span>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Şehir / Ülke</span>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi20_sehir" data-ek-label="Sergi 20 · Şehir" data-ek-group="Sergiler">Ankara (Dışişleri Bakanlığı)</span><span class="exhibition-country" data-ek="sergi20_ulke" data-ek-label="Sergi 20 · Ülke" data-ek-group="Sergiler">Türkiye</span></div>
+          </div>
+          <button class="exhibition-explore-btn" onclick="openGallery('sergi-ulusal-20')">İncele →</button>
+        </div>
       </div>
+      <p class="exhibitions-note" style="margin-top:1.5rem;opacity:.75;font-style:italic;">(Ve onlarca karma sergi)</p>
     </div>
     <div class="exhibitions-panel" id="extab-uluslararasi" role="tabpanel">
       <div class="exhibitions-grid">
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi9_ad" data-ek-label="Sergi 9 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi21_ad" data-ek-label="Sergi 21 · Ad" data-ek-group="Sergiler">Edirne</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi9_konu" data-ek-label="Sergi 9 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi21_konu" data-ek-label="Sergi 21 · Konu" data-ek-group="Sergiler">Edirne</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi9_yil" data-ek-label="Sergi 9 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi21_yil" data-ek-label="Sergi 21 · Yıl" data-ek-group="Sergiler">2004</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi9_sehir" data-ek-label="Sergi 9 · Şehir" data-ek-group="Sergiler">New York</span><span class="exhibition-country" data-ek="sergi9_ulke" data-ek-label="Sergi 9 · Ülke" data-ek-group="Sergiler">Amerika</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi21_sehir" data-ek-label="Sergi 21 · Şehir" data-ek-group="Sergiler">Strasbourg</span><span class="exhibition-country" data-ek="sergi21_ulke" data-ek-label="Sergi 21 · Ülke" data-ek-group="Sergiler">Fransa</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-1')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi10_ad" data-ek-label="Sergi 10 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi22_ad" data-ek-label="Sergi 22 · Ad" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi10_konu" data-ek-label="Sergi 10 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi22_konu" data-ek-label="Sergi 22 · Konu" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi10_yil" data-ek-label="Sergi 10 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi22_yil" data-ek-label="Sergi 22 · Yıl" data-ek-group="Sergiler">—</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi10_sehir" data-ek-label="Sergi 10 · Şehir" data-ek-group="Sergiler">Lusaka</span><span class="exhibition-country" data-ek="sergi10_ulke" data-ek-label="Sergi 10 · Ülke" data-ek-group="Sergiler">Zambiya</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi22_sehir" data-ek-label="Sergi 22 · Şehir" data-ek-group="Sergiler">Haskova</span><span class="exhibition-country" data-ek="sergi22_ulke" data-ek-label="Sergi 22 · Ülke" data-ek-group="Sergiler">Bulgaristan</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-2')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi11_ad" data-ek-label="Sergi 11 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi23_ad" data-ek-label="Sergi 23 · Ad" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi11_konu" data-ek-label="Sergi 11 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi23_konu" data-ek-label="Sergi 23 · Konu" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi11_yil" data-ek-label="Sergi 11 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi23_yil" data-ek-label="Sergi 23 · Yıl" data-ek-group="Sergiler">—</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi11_sehir" data-ek-label="Sergi 11 · Şehir" data-ek-group="Sergiler">Strasburg</span><span class="exhibition-country" data-ek="sergi11_ulke" data-ek-label="Sergi 11 · Ülke" data-ek-group="Sergiler">Fransa</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi23_sehir" data-ek-label="Sergi 23 · Şehir" data-ek-group="Sergiler">Kırcaali</span><span class="exhibition-country" data-ek="sergi23_ulke" data-ek-label="Sergi 23 · Ülke" data-ek-group="Sergiler">Bulgaristan</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-3')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi12_ad" data-ek-label="Sergi 12 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi24_ad" data-ek-label="Sergi 24 · Ad" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi12_konu" data-ek-label="Sergi 12 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi24_konu" data-ek-label="Sergi 24 · Konu" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi12_yil" data-ek-label="Sergi 12 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi24_yil" data-ek-label="Sergi 24 · Yıl" data-ek-group="Sergiler">2011</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi12_sehir" data-ek-label="Sergi 12 · Şehir" data-ek-group="Sergiler">Haskova</span><span class="exhibition-country" data-ek="sergi12_ulke" data-ek-label="Sergi 12 · Ülke" data-ek-group="Sergiler">Bulgaristan</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi24_sehir" data-ek-label="Sergi 24 · Şehir" data-ek-group="Sergiler">Lusaka</span><span class="exhibition-country" data-ek="sergi24_ulke" data-ek-label="Sergi 24 · Ülke" data-ek-group="Sergiler">Zambiya</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-4')">İncele →</button>
         </div>
         <div class="exhibition-card">
           <div class="ex-field">
             <span class="ex-label">Sergi Adı</span>
-            <h3 class="exhibition-title" data-ek="sergi13_ad" data-ek-label="Sergi 13 · Ad" data-ek-group="Sergiler">—</h3>
+            <h3 class="exhibition-title" data-ek="sergi25_ad" data-ek-label="Sergi 25 · Ad" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</h3>
           </div>
           <div class="ex-field">
             <span class="ex-label">Konu</span>
-            <p class="exhibition-topic" data-ek="sergi13_konu" data-ek-label="Sergi 13 · Konu" data-ek-group="Sergiler">—</p>
+            <p class="exhibition-topic" data-ek="sergi25_konu" data-ek-label="Sergi 25 · Konu" data-ek-group="Sergiler">Şehirlerin Sultanı Edirne</p>
           </div>
           <div class="ex-divider"></div>
           <div class="ex-field">
             <span class="ex-label">Yıl</span>
-            <span class="ex-year" data-ek="sergi13_yil" data-ek-label="Sergi 13 · Yıl" data-ek-group="Sergiler">—</span>
+            <span class="ex-year" data-ek="sergi25_yil" data-ek-label="Sergi 25 · Yıl" data-ek-group="Sergiler">2012</span>
           </div>
           <div class="ex-field">
             <span class="ex-label">Şehir / Ülke</span>
-            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi13_sehir" data-ek-label="Sergi 13 · Şehir" data-ek-group="Sergiler">Kırcaali</span><span class="exhibition-country" data-ek="sergi13_ulke" data-ek-label="Sergi 13 · Ülke" data-ek-group="Sergiler">Bulgaristan</span></div>
+            <div class="exhibition-loc"><span class="pin">📍</span><span data-ek="sergi25_sehir" data-ek-label="Sergi 25 · Şehir" data-ek-group="Sergiler">New York</span><span class="exhibition-country" data-ek="sergi25_ulke" data-ek-label="Sergi 25 · Ülke" data-ek-group="Sergiler">ABD</span></div>
           </div>
           <button class="exhibition-explore-btn" onclick="openGallery('sergi-uluslararasi-5')">İncele →</button>
         </div>
@@ -1495,6 +1766,50 @@ footer { text-align:center; }
       <iframe id="kirkpinarVideoPlayer" src="" allow="autoplay; fullscreen" allowfullscreen frameborder="0"></iframe>
       <div class="video-mask-tr"></div>
     </div>
+  </div>
+</div>
+<div class="text-lightbox" id="kesifLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeKesifYazisi()">✕</button>
+    <div class="text-lightbox-eyebrow">Fotoğraf Yazılarım</div>
+    <h3 class="text-lightbox-title">Keşfetme Merakı Olmayanlar Fotoğrafçı Olmasın!</h3>
+    <div class="text-lightbox-body">
+      <p>Fotoğraf için sayısız tanımlama yapılmıştır.</p>
+      <p>Bu tanımlara şunu da ekleyemez miyiz?</p>
+      <p class="tl-quote">"Fotoğraf bir keşfetme sanatıdır veya uğraşısıdır."</p>
+      <p>Çekmek aynı zamanda keşfetmek değil midir?</p>
+      <p>Makineleri boyunlarında, çantaları sırtlarında köşe bucak dolaşan biz fotoğrafçılar, aslında yaşamı keşfe çıkmıyor muyuz?</p>
+      <p>Keşfettiğimiz yeni şeyleri çekmekten çok daha fazla bir zevk almıyor muyuz?</p>
+      <p>Bilmediğim yerleri fotoğraflamaya gittiğimde kendimi bir kâşif gibi hissederim.</p>
+      <p>En iyi ve en farklı fotoğrafları çekebilmek için orayı iyi tanımak, iyi gezmek, çok araştırmak adına ne çabalar sergilerim, bir bilseniz.</p>
+      <p>Herkesin gördüğünden farklısını görmek, herkesin çektiğinden daha farklısını çekmek için nasıl düşünüp planlar yaptığımı…</p>
+      <p>Gezi gruplarına dikkat edin; onlar belli bir güzergâhtan ayrılmazlar, programları düzenlidir. "Toplan!" komutuyla araçlarındadırlar.</p>
+      <p>Fotoğrafçılar öyle mi?</p>
+      <p>Fotoğrafçıda görüntüyü keşfetme merakı vardır.</p>
+      <p>Hep en uzaklara giderler, olmadık yerlere dalarlar, hep tepelerin ötesini merak ederler. Duvarların arkası onlar için eşsiz fotoğraflarla doludur.</p>
+      <p>"Toplan!" komutunda da araca en son gelenler fotoğraf çekenlerdir.</p>
+      <p>Sadece çevreyi, doğayı ya da kentleri keşfetmek mi?</p>
+      <p>Ya insanları?</p>
+      <p>İnsanları keşfetmek, bu kâşif duygusunun en doruğudur bence. Komşumuzun çocuğu, mahallemizin yaşlı teyzesi, Karadeniz yaylalarının Fatma ninesi, Urfa Kapalı Çarşısı'nın Halil amcası ya da Trakya'nın bereketli topraklarının Hüsmen Agası…</p>
+      <p>Hindistan'da, Afrika'da ya da Orta Asya bozkırlarında… İnsan… İnsan… İnsan…</p>
+      <p>Kahvenin önünden geçerken ya içeride fotoğraflık bir iki portre varsa?</p>
+      <p>Şu tarlada çalışan kadınlar müthiş fotoğraflıksa?</p>
+      <p>Ya önünden geçtiğimiz şu köyün içinde çok güzel çocuk portrelerini kaçırıyorsak…</p>
+      <p>Fotoğrafçı aynı zamanda çektiği her kareyle hayatı keşfeder.</p>
+      <p>Gülen gözleri, bir ağaç kabuğundaki detayları, çiçeğin içindeki gizemli dünyayı, bir su damlasındaki yansımaları…</p>
+      <p>Işığı keşfetmek nasıl bir duygudur? Bunu fotoğraf çekmeyenler bilemez.</p>
+      <p>Dalga boylarını, açıktan koyuya giden tonlarını, cisimlerin üzerinde bıraktığı envai türlü etkileri…</p>
+      <p>Hele renklerin alını morunu…</p>
+      <p>Denizin mavisini, ormanın yeşilini…</p>
+      <p>Biraz daha mı beklesek şu gün batımının kızıllığını? Şu denizden gelen gemi biraz daha mı yaklaşsa beyaz yelkenleriyle? Biraz daha mı yürüsek şu dağın tepelerine doğru?</p>
+      <p>Görmediğimiz hangi şehre gitsek, yaşamadığımız hangi festivalde olsak?</p>
+      <p>Hangi gölün sabahında tanyeriyle birlikte uyansak…</p>
+      <p>Hayvanları, bitkileri…</p>
+      <p>Canlıları, cansızları…</p>
+      <p>Evet, fotoğrafçı makinesi elinde dolaşırken aslında hayatı keşfe çıkar.</p>
+      <p class="tl-quote">Keşfetme merakı olmayanlar; tepelerin arkasını, duvarların ötesini merak etmeyenler sakın fotoğrafçı olmasın…</p>
+    </div>
+    <div class="text-lightbox-signature">Enver Şengül</div>
   </div>
 </div>
 <div class="lightbox" id="lightbox">
@@ -1863,6 +2178,7 @@ const GALLERY_CATS = {
   'muzisyenler':        { title:'Müzisyenler',        desc:'Notaların görüntüye dönüştüğü anlar. Sahne arkası ve sahnede müziğin insanları.', folder:'Müzisyenler' },
   'kirkpinar':          { title:'Er Meydanı-Kırkpınar',  desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
   'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
+  've-insan':           { title:'Ve İnsan',           desc:'İnsanın yaşamdan aldığı izler… Yüzlerde, anlarda ve hallerde saklı insanlık hikâyeleri.', folder:'Ve İnsan' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
   'dunya-zambiya':  { title:'Zambiya',    desc:'Afrikadan yasam, renk ve insanlik uzerine kareler.', folder:'dunya-zambiya' },
@@ -1875,19 +2191,31 @@ const GALLERY_CATS = {
   'dunya-halep':    { title:'Halep',      desc:'Tarihin acisini ve direncini tasıyan Halepten belgesel kareler.', folder:'dunya-halep' },
   'dunya-balkanlar':{ title:'Balkanlar',  desc:'Osmanlı mirasının ve Balkan ruhunun yaşadığı coğrafyadan kareler.', folder:'dunya-balkanlar' },
   'fotograf-yazilari': { title:'Fotoğraf Yazılarım', desc:'Fotoğraf üzerine kaleme alınmış yazılar, yorumlar ve düşüncelerden görsel kareler.', folder:'FOTOGRAF-YAZILARIM', root:true },
-  'sergi-ulusal-1':        { title:'İstanbul Sergisi',   desc:'İstanbul\'da açılan sergiden kareler.', folder:'sergi-ulusal-1' },
-  'sergi-ulusal-2':        { title:'Ankara Sergisi',     desc:'Ankara\'da açılan sergiden kareler.', folder:'sergi-ulusal-2' },
-  'sergi-ulusal-3':        { title:'Antalya Sergisi',    desc:'Antalya\'da açılan sergiden kareler.', folder:'sergi-ulusal-3' },
-  'sergi-ulusal-4':        { title:'Gaziantep Sergisi',  desc:'Gaziantep\'te açılan sergiden kareler.', folder:'sergi-ulusal-4' },
-  'sergi-ulusal-5':        { title:'Bitlis Sergisi',     desc:'Bitlis\'te açılan sergiden kareler.', folder:'sergi-ulusal-5' },
-  'sergi-ulusal-6':        { title:'Antalya Karma Sergi',desc:'Antalya\'da açılan karma sergiden kareler.', folder:'sergi-ulusal-6' },
-  'sergi-ulusal-7':        { title:'İstanbul Karma Sergi',desc:'İstanbul\'da açılan karma sergiden kareler.', folder:'sergi-ulusal-7' },
-  'sergi-ulusal-8':        { title:'Ankara Karma Sergi', desc:'Ankara\'da açılan karma sergiden kareler.', folder:'sergi-ulusal-8' },
-  'sergi-uluslararasi-1':  { title:'New York Sergisi',   desc:'New York, Amerika\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-1' },
-  'sergi-uluslararasi-2':  { title:'Zambiya Sergisi',    desc:'Lusaka, Zambiya\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-2' },
-  'sergi-uluslararasi-3':  { title:'Strasburg Sergisi',  desc:'Strasburg, Fransa\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-3' },
-  'sergi-uluslararasi-4':  { title:'Haskova Sergisi',    desc:'Haskova, Bulgaristan\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-4' },
-  'sergi-uluslararasi-5':  { title:'Kırcaali Sergisi',   desc:'Kırcaali, Bulgaristan\'da açılan sergiden kareler.', folder:'sergi-uluslararasi-5' },
+  'sergi-ulusal-1':       { title:'Bitlis Fotoğrafları', desc:'1991 Bitlis, Türkiye\'de açılan \'Bitlis Fotoğrafları\' sergisinden kareler.', folder:'sergi-ulusal-1' },
+  'sergi-ulusal-2':       { title:'Doğa ve İnsan', desc:'1991 Tatvan, Türkiye\'de açılan \'Doğa ve İnsan\' sergisinden kareler.', folder:'sergi-ulusal-2' },
+  'sergi-ulusal-3':       { title:'Objektifimden', desc:'1992 Bitlis, Türkiye\'de açılan \'Objektifimden\' sergisinden kareler.', folder:'sergi-ulusal-3' },
+  'sergi-ulusal-4':       { title:'Esintiler', desc:'1995 Edirne, Türkiye\'de açılan \'Esintiler\' sergisinden kareler.', folder:'sergi-ulusal-4' },
+  'sergi-ulusal-5':       { title:'Ve İnsan', desc:'1996 Balıkesir Tahtakuşlar, Türkiye\'de açılan \'Ve İnsan\' sergisinden kareler.', folder:'sergi-ulusal-5' },
+  'sergi-ulusal-6':       { title:'Düş Fotoğrafları', desc:'1998 Edirne, Türkiye\'de açılan \'Düş Fotoğrafları\' sergisinden kareler.', folder:'sergi-ulusal-6' },
+  'sergi-ulusal-7':       { title:'Ege\'nin Tarihi Dokusu', desc:'1999 Aydın, Türkiye\'de açılan \'Ege\'nin Tarihi Dokusu\' sergisinden kareler.', folder:'sergi-ulusal-7' },
+  'sergi-ulusal-8':       { title:'Düş Fotoğrafları', desc:'2001 İstanbul, Türkiye\'de açılan \'Düş Fotoğrafları\' sergisinden kareler.', folder:'sergi-ulusal-8' },
+  'sergi-ulusal-9':       { title:'Kayseri\'de Vakıf Eserleri', desc:'2002 Kayseri, Türkiye\'de açılan \'Kayseri\'de Vakıf Eserleri\' sergisinden kareler.', folder:'sergi-ulusal-9' },
+  'sergi-ulusal-10':      { title:'Düş Fotoğrafları', desc:'2002 Adana, Türkiye\'de açılan \'Düş Fotoğrafları\' sergisinden kareler.', folder:'sergi-ulusal-10' },
+  'sergi-ulusal-11':      { title:'Serbest', desc:'2003 Uzunköprü Yeniköy, Türkiye\'de açılan \'Serbest\' sergisinden kareler.', folder:'sergi-ulusal-11' },
+  'sergi-ulusal-12':      { title:'Düş Fotoğrafları', desc:'2004 Antalya, Türkiye\'de açılan \'Düş Fotoğrafları\' sergisinden kareler.', folder:'sergi-ulusal-12' },
+  'sergi-ulusal-13':      { title:'Sultanlar Şehri: Edirne', desc:'2006 Edirne, Türkiye\'de açılan \'Sultanlar Şehri: Edirne\' sergisinden kareler.', folder:'sergi-ulusal-13' },
+  'sergi-ulusal-14':      { title:'Nevşehir\'in Tarihi Dokusu', desc:'2006 Nevşehir, Türkiye\'de açılan \'Nevşehir\'in Tarihi Dokusu\' sergisinden kareler.', folder:'sergi-ulusal-14' },
+  'sergi-ulusal-15':      { title:'Endülüs', desc:'2007 Edirne, Türkiye\'de açılan \'Endülüs\' sergisinden kareler.', folder:'sergi-ulusal-15' },
+  'sergi-ulusal-16':      { title:'Vakıf Eserlerimiz', desc:'2007 Gaziantep, Türkiye\'de açılan \'Vakıf Eserlerimiz\' sergisinden kareler.', folder:'sergi-ulusal-16' },
+  'sergi-ulusal-17':      { title:'Vakıf Eserlerimiz', desc:'2008 Kilis, Türkiye\'de açılan \'Vakıf Eserlerimiz\' sergisinden kareler.', folder:'sergi-ulusal-17' },
+  'sergi-ulusal-18':      { title:'Balkanlardan Esintiler', desc:'2010 Gaziantep, Türkiye\'de açılan \'Balkanlardan Esintiler\' sergisinden kareler.', folder:'sergi-ulusal-18' },
+  'sergi-ulusal-19':      { title:'Kudüs', desc:'2011 Gaziantep, Türkiye\'de açılan \'Kudüs\' sergisinden kareler.', folder:'sergi-ulusal-19' },
+  'sergi-ulusal-20':      { title:'Şehirlerin Sultanı Edirne', desc:'2011 Ankara (Dışişleri Bakanlığı), Türkiye\'de açılan \'Şehirlerin Sultanı Edirne\' sergisinden kareler.', folder:'sergi-ulusal-20' },
+  'sergi-uluslararasi-1': { title:'Edirne', desc:'2004 Strasbourg, Fransa\'da açılan \'Edirne\' sergisinden kareler.', folder:'sergi-uluslararasi-1' },
+  'sergi-uluslararasi-2': { title:'Şehirlerin Sultanı Edirne', desc:'Haskova, Bulgaristan\'da açılan \'Şehirlerin Sultanı Edirne\' sergisinden kareler.', folder:'sergi-uluslararasi-2' },
+  'sergi-uluslararasi-3': { title:'Şehirlerin Sultanı Edirne', desc:'Kırcaali, Bulgaristan\'da açılan \'Şehirlerin Sultanı Edirne\' sergisinden kareler.', folder:'sergi-uluslararasi-3' },
+  'sergi-uluslararasi-4': { title:'Şehirlerin Sultanı Edirne', desc:'2011 Lusaka, Zambiya\'da açılan \'Şehirlerin Sultanı Edirne\' sergisinden kareler.', folder:'sergi-uluslararasi-4' },
+  'sergi-uluslararasi-5': { title:'Şehirlerin Sultanı Edirne', desc:'2012 New York, ABD\'de açılan \'Şehirlerin Sultanı Edirne\' sergisinden kareler.', folder:'sergi-uluslararasi-5' },
 };
 
 let currentPhotos  = [];
@@ -2074,6 +2402,25 @@ document.getElementById('kirkpinarVideoLightbox').addEventListener('click', func
 document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('kirkpinarVideoLightbox');
   if (modal.classList.contains('open') && e.key === 'Escape') closeKirkpinarVideo();
+});
+
+// ══════ Keşfetme Merakı Olmayanlar Fotoğrafçı Olmasın! (yazı) ══════
+function openKesifYazisi() {
+  const modal = document.getElementById('kesifLightbox');
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeKesifYazisi() {
+  document.getElementById('kesifLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('kesifLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeKesifYazisi();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('kesifLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeKesifYazisi();
 });
 
 // ══════ Fotoğraf Videolarım — YouTube kanal videoları ══════
@@ -2893,7 +3240,6 @@ function ekSaveAll(){
     .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
 }
 
-  
 function ekResetAll(){
   if(!confirm('Tüm düzenlemeler silinip orijinal metinlere dönülecek. Emin misiniz?')) return;
   const status = document.getElementById('ekStatus');
@@ -2904,6 +3250,8 @@ function ekResetAll(){
     .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
 }
 
+
+  
 function ekApplyStoredContent(){
   if(!firebaseDb) return;
   ekScanFields();
