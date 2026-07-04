@@ -26,7 +26,6 @@ nav{
   border-bottom:1px solid rgba(201,168,76,.15);
   backdrop-filter:blur(12px);
 }
-  
 .nav-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-style:italic;color:var(--gold);text-decoration:none;}
 .nav-links{display:flex;gap:32px;list-style:none;}
 .nav-links a{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream2);text-decoration:none;transition:color .3s;}
@@ -183,30 +182,30 @@ nav{
 .exhibitions-bg{background:var(--dark2);}
 .exhibitions-intro{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;line-height:1.6;color:var(--cream);max-width:820px;margin-bottom:38px;}
 /* Sekmeler (Ulusal / Uluslararası) */
-.exhibitions-tabs{display:inline-flex;gap:4px;margin-bottom:38px;padding:5px;border:1px solid rgba(201,168,76,.22);background:rgba(13,11,8,.4);border-radius:2px;}
-.exhibition-tab{appearance:none;border:none;background:transparent;cursor:pointer;font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);padding:11px 26px;transition:all .3s;white-space:nowrap;}
+.exhibitions-tabs{display:inline-flex;gap:4px;margin-bottom:32px;padding:4px;border:1px solid rgba(201,168,76,.22);background:rgba(13,11,8,.4);border-radius:2px;}
+.exhibition-tab{appearance:none;border:none;background:transparent;cursor:pointer;font-family:'Raleway',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);padding:10px 22px;transition:all .3s;white-space:nowrap;}
 .exhibition-tab:hover{color:var(--gold-light);}
 .exhibition-tab.active{background:var(--gold);color:var(--dark);}
 .exhibitions-panel{display:none;}
 .exhibitions-panel.active{display:block;animation:exFade .4s ease;}
 @keyframes exFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 /* Küçük bilgi kartları */
-.exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.exhibition-card{background:var(--dark3);border:1px solid rgba(201,168,76,.14);border-radius:2px;padding:22px 22px 20px;position:relative;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column;}
+.exhibitions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;}
+.exhibition-card{background:var(--dark3);border:1px solid rgba(201,168,76,.14);border-radius:2px;padding:17px 17px 15px;position:relative;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column;}
 .exhibition-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height .35s ease;}
 .exhibition-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 14px 34px rgba(0,0,0,.45);}
 .exhibition-card:hover::before{height:100%;}
-.ex-field{margin-bottom:15px;}
-.ex-label{display:block;font-family:'Raleway',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;opacity:.85;}
-.exhibition-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white);line-height:1.28;}
-.exhibition-topic{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--cream);line-height:1.4;min-height:21px;}
-.ex-year{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--gold-light);letter-spacing:1px;}
-.exhibition-loc{display:flex;align-items:baseline;gap:6px;font-size:12.5px;font-weight:700;letter-spacing:.5px;color:var(--white);}
-.exhibition-loc .pin{font-size:11px;color:var(--gold);}
-.exhibition-country{font-size:12.5px;font-weight:500;color:var(--muted);}
+.ex-field{margin-bottom:11px;}
+.ex-label{display:block;font-family:'Raleway',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;opacity:.85;}
+.exhibition-title{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--white);line-height:1.28;}
+.exhibition-topic{font-family:'Cormorant Garamond',serif;font-size:13.5px;font-style:italic;color:var(--cream);line-height:1.4;min-height:19px;}
+.ex-year{font-family:'Cormorant Garamond',serif;font-size:15.5px;font-weight:700;color:var(--gold-light);letter-spacing:1px;}
+.exhibition-loc{display:flex;align-items:baseline;gap:6px;font-size:11.5px;font-weight:700;letter-spacing:.5px;color:var(--white);}
+.exhibition-loc .pin{font-size:10px;color:var(--gold);}
+.exhibition-country{font-size:11.5px;font-weight:500;color:var(--muted);}
 .exhibition-country::before{content:'/';margin-right:6px;color:var(--gold);font-weight:400;}
-.ex-divider{height:1px;background:rgba(201,168,76,.14);margin:2px 0 15px;}
-.exhibition-explore-btn{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding:10px 0;justify-content:center;border:1px solid rgba(201,168,76,.4);font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:transparent;cursor:pointer;transition:all .3s;font-family:'Raleway',sans-serif;width:100%;border-radius:1px;}
+.ex-divider{height:1px;background:rgba(201,168,76,.14);margin:2px 0 11px;}
+.exhibition-explore-btn{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding:9px 0;justify-content:center;border:1px solid rgba(201,168,76,.4);font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);background:transparent;cursor:pointer;transition:all .3s;font-family:'Raleway',sans-serif;width:100%;border-radius:1px;}
 .exhibition-explore-btn:hover{background:var(--gold);color:var(--dark);}
 .contact-bg{background:linear-gradient(to bottom,var(--dark2),var(--dark));}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
@@ -255,6 +254,9 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .press-grid{grid-template-columns:repeat(2,1fr);}
   .edu-grid{grid-template-columns:1fr;}
   .exhibitions-grid{grid-template-columns:repeat(2,1fr);}
+  .world-grid{grid-template-columns:repeat(3,1fr);}
+  .portfolio-grid{grid-template-columns:repeat(3,1fr);}
+  .p-item.big{grid-column:span 1;grid-row:span 1;}
   footer{flex-direction:column;text-align:center;padding:32px 24px;}
 }
 @media(max-width:768px){
@@ -313,7 +315,8 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .press-grid{grid-template-columns:1fr 1fr;gap:2px;}
   .press-item{padding:24px 16px;}
   .press-name{font-size:15px;}
-  .exhibitions-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .exhibitions-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .exhibition-card{padding:14px 14px 13px;}
   .exhibitions-intro{font-size:18px;}
   .exhibition-tab{padding:10px 16px;font-size:10px;letter-spacing:1.2px;}
   .exhibitions-tabs{width:100%;}
@@ -323,6 +326,35 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.13);padding:
   .cform input,.cform textarea{font-size:16px;}
   footer{flex-direction:column;text-align:center;padding:32px 20px;gap:16px;}
   .footer-links{flex-wrap:wrap;justify-content:center;gap:16px;}
+}
+@media(max-width:480px){
+  .nav-logo{font-size:22px;}
+  .section-inner{padding:40px 16px;}
+  .hero-left{padding:80px 16px 48px;}
+  .hero-name{font-size:clamp(42px,15vw,60px);}
+  .hero-quote{font-size:15px;}
+  .hero-bio{font-size:12.5px;}
+  .stats-bar{grid-template-columns:1fr;}
+  .stat{border-right:none !important;}
+  .roles-grid{grid-template-columns:1fr;}
+  .world-grid{grid-template-columns:1fr 1fr;gap:6px;}
+  .portfolio-grid{gap:2px;}
+  .p-item.big{grid-column:span 1;}
+  .press-grid{grid-template-columns:1fr;gap:2px;}
+  .book-info{padding:20px 20px 24px;}
+  .edu-card{padding:26px 18px;}
+  .edu-num{font-size:48px;}
+  .exhibitions-grid{grid-template-columns:1fr;gap:10px;}
+  .exhibition-card{padding:18px 18px 16px;}
+  .exhibitions-tabs{flex-direction:column;padding:4px;gap:4px;}
+  .exhibition-tab{width:100%;}
+  .cinfo-list li{padding:14px 0;gap:12px;}
+  .cinfo-icon{width:36px;height:36px;font-size:14px;}
+  .card-content{padding:22px 16px;}
+  .award-feature-box{padding:26px 18px;}
+  .af-year{font-size:38px;}
+  .footer-links{gap:12px;}
+  .footer-links a{font-size:9px;}
 }
 h1,h2,h3,h4,h5,h6,
 nav, .nav-links, .nav-logo,
@@ -343,7 +375,6 @@ nav, .nav-links, .nav-logo,
 .section-title, .card-desc {
   text-align:left;
 }
-  
 .stats-bar, .stat, .stat-texts,
 .p-item, .w-item,
 .press-item, .bc-title, .bc-author, .book-cover-inner,
@@ -466,6 +497,28 @@ footer { text-align:center; }
   .lb-prev { left:8px; } .lb-next { right:8px; }
   .lightbox-img { height:76vh; width:auto; max-width:96vw; }
   .gallery-cat-title { font-size:16px; }
+}
+@media(max-width:480px){
+  .gallery-cats { grid-template-columns:1fr; }
+  .gallery-page-header { padding:12px 14px; }
+  .gallery-page-body { padding:14px; }
+  .gallery-page-title { font-size:12px; }
+  .gallery-page-logo { font-size:14px; }
+  .gallery-page-desc { font-size:14.5px; margin-bottom:20px; }
+  .photo-masonry, .inanclar-grid { grid-template-columns:1fr 1fr; gap:2px; }
+  .photo-masonry.portrait-mode, .inanclar-grid.portrait-mode { grid-template-columns:1fr 1fr; }
+  .gallery-page-x { width:38px; height:38px; font-size:15px; }
+  .gallery-cat-title { font-size:14px; }
+  .gallery-cat-count { font-size:9px; }
+  .gallery-cat-info { padding:18px 18px 16px; }
+  .gallery-pagination { gap:10px; margin-top:18px; }
+  .gallery-page-btn { padding:9px 13px; font-size:9px; }
+  .gallery-page-indicator { font-size:13px; min-width:56px; }
+  .lb-btn { width:36px; height:36px; font-size:14px; }
+  .lb-close, .lb-music-toggle { width:38px; height:38px; }
+  .lb-music-toggle { right:56px; }
+  .lightbox-watermark { font-size:10px; bottom:14px; right:16px; }
+  .lightbox-stats { bottom:14px; left:14px; }
 }
 .btn-buy { display:inline-flex;align-items:center;gap:8px; margin-top:16px;padding:11px 22px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'Raleway',sans-serif; font-size:10px;font-weight:700;letter-spacing:2px; text-transform:uppercase;text-decoration:none; transition:all .3s; }
 .btn-buy:hover{background:var(--gold);color:var(--dark);}
@@ -777,11 +830,11 @@ footer { text-align:center; }
           </div>
         </div>
         <div class="gallery-cat-card" onclick="openKirkpinarVideo()">
-          <img id="cover-kirkpinar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Kırkpınar">
+          <img id="cover-kirkpinar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Er Meydanı-Kırkpınar">
           <div class="video-play-badge">▶ Video</div>
           <div class="gallery-cat-arrow">▶</div>
           <div class="gallery-cat-info">
-            <div class="gallery-cat-title">Kırkpınar</div>
+            <div class="gallery-cat-title">Er Meydanı-Kırkpınar</div>
             <div class="gallery-cat-count" id="count-kirkpinar">Videoyu İzle</div>
           </div>
         </div>
@@ -1615,8 +1668,6 @@ function getContactFormData(){
   return { name, email, subject: subject || 'Web Sitesi İletişim Formu', message };
 }
 
-
-  
 function sendViaWhatsApp(){
   const data = getContactFormData();
   if (!data) return;
@@ -1778,12 +1829,12 @@ function submitPhotoVote(fileId, value){
 const GALLERY_CATS = {
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
-  'edirnenin-taninmis-yuzleri': { title:'Edirnenin Tanınmış Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
+  'edirnenin-taninmis-yuzleri': { title:'Edirnenin Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
   'kurgusal':           { title:'Kurgusal Kadraj',    desc:'Gerçeklikle hayal arasında. Sahnelenen anlar, kurulan dünyalar ve görsel anlatı denemeleri.', folder:'Kurgusal Kadraj' },
   'edirne':             { title:'Şehirlerin Sultanı: Edirne', desc:'Tarihin ve mimarinin ic ice gectigi Edirne sokaklarindan, camilerinden ve yasamından kareler.', folder:'Şehirlerin Sultanı: Edirne' },
   'dans':               { title:'Dans',               desc:'Hareketin şiiri. Sahne ışıklarında, sokak köşelerinde, doğanın içinde dans eden insanlar.', folder:'Dans' },
   'muzisyenler':        { title:'Müzisyenler',        desc:'Notaların görüntüye dönüştüğü anlar. Sahne arkası ve sahnede müziğin insanları.', folder:'Müzisyenler' },
-  'kirkpinar':          { title:'Kırkpınar',          desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
+  'kirkpinar':          { title:'Er Meydanı-Kırkpınar',  desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
   'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
@@ -2723,6 +2774,7 @@ function ekSaveAll(){
     .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
 }
 
+  
 function ekResetAll(){
   if(!confirm('Tüm düzenlemeler silinip orijinal metinlere dönülecek. Emin misiniz?')) return;
   const status = document.getElementById('ekStatus');
