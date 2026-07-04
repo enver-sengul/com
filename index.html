@@ -2079,8 +2079,7 @@ document.addEventListener('keydown', function(e) {
 // ══════ Fotoğraf Videolarım — YouTube kanal videoları ══════
 // Not: Google Cloud Console'daki aynı API anahtarı (DRIVE_API_KEY) için
 // "YouTube Data API v3" servisinin de etkinleştirilmiş olması gerekir.
-const YOUTUBE_CHANNEL_ID = 'UC1jqwIWvk9Y4BkLZQItL-HQ';
-const YOUTUBE_UPLOADS_PLAYLIST_ID = 'UU' + YOUTUBE_CHANNEL_ID.slice(2);
+const YOUTUBE_HANDLE = 'enversengul3013';
 const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@enversengul3013/videos';
 let youtubeVideosLoaded = false;
 
@@ -2090,6 +2089,17 @@ function ytEscapeHtmlText(str){
   return d.innerHTML;
 }
 
+// @handle üzerinden kanalın gerçek (UC...) ID'sini bulur — sabit/tahmini bir ID
+// yazmak yerine her zaman doğru sonucu garanti eder.
+async function resolveYouTubeChannelId(){
+  const url = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${YOUTUBE_HANDLE}&key=${DRIVE_API_KEY}`;
+  const r = await fetch(url);
+  const d = await r.json();
+  if (d.error) throw new Error(d.error.message || 'YouTube API hatası');
+  if (!d.items || !d.items.length) throw new Error('Kanal bulunamadı');
+  return d.items[0].id;
+}
+
 async function loadYouTubeVideos(){
   if (youtubeVideosLoaded) return;
   youtubeVideosLoaded = true;
@@ -2097,9 +2107,12 @@ async function loadYouTubeVideos(){
   const loading = document.getElementById('ytLoading');
   if (!grid || !loading) return;
   try {
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${YOUTUBE_UPLOADS_PLAYLIST_ID}&maxResults=24&key=${DRIVE_API_KEY}`;
+    const channelId = await resolveYouTubeChannelId();
+    const uploadsPlaylistId = 'UU' + channelId.slice(2);
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=24&key=${DRIVE_API_KEY}`;
     const r = await fetch(url);
     const d = await r.json();
+    if (d.error) throw new Error(d.error.message || 'YouTube API hatası');
     if (!d.items || !d.items.length) throw new Error('Video bulunamadı');
 
     grid.innerHTML = '';
@@ -2123,6 +2136,7 @@ async function loadYouTubeVideos(){
     });
     loading.style.display = 'none';
   } catch(e) {
+    console.warn('YouTube videoları yüklenemedi:', e);
     loading.innerHTML = `<p style="text-align:center;padding:20px 0;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;">Videolar şu anda yüklenemedi.<br>Kanalımı doğrudan <a href="${YOUTUBE_CHANNEL_URL}" target="_blank" rel="noopener" style="color:var(--gold);">YouTube'da</a> izleyebilirsiniz.</p>`;
   }
 }
