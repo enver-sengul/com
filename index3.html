@@ -560,7 +560,10 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 </div>
 <div class="lightbox" id="lightbox">
   <button class="gallery-close" id="lightboxClose" aria-label="Kapat">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Önceki">‹</button>
   <img id="lightboxImg" alt="">
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Sonraki">›</button>
+  <div class="lb-counter mono" id="lbCounter"></div>
 </div>
 
 <div class="rule"></div>
@@ -890,15 +893,23 @@ let photosCache = {};
 
 async function getFolderIdByName(parentId, name){
   const cacheKey = parentId + '/' + name;
-  if (folderCache[cacheKey]) return folderCache[cacheKey];
+  if (cacheKey in folderCache) return folderCache[cacheKey];
   const q = encodeURIComponent(`'${parentId}' in parents and name='${name}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
   const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&key=${DRIVE_API_KEY}`;
-  try{
-    const r = await fetch(url);
-    const d = await r.json();
-    if (d.files && d.files.length > 0){ folderCache[cacheKey] = d.files[0].id; return d.files[0].id; }
-  }catch(e){ console.warn('Klasör bulunamadı:', name, e); }
-  return null;
+  // aynı klasör için eşzamanlı gelen istekleri tek bir promise'e indirger (rate-limit'i önler)
+  const promise = (async () => {
+    try{
+      const r = await fetch(url);
+      const d = await r.json();
+      if (d.error){ console.warn('Drive API hatası:', d.error.message); folderCache[cacheKey] = null; return null; }
+      if (d.files && d.files.length > 0){ return d.files[0].id; }
+    }catch(e){ console.warn('Klasör bulunamadı:', name, e); }
+    return null;
+  })();
+  folderCache[cacheKey] = promise;
+  const result = await promise;
+  folderCache[cacheKey] = result; // ileride tekrar await edilebilir sabit değer olarak sakla
+  return result;
 }
 
 async function getPhotosInFolder(folderId){
@@ -981,27 +992,52 @@ function renderPhotoTab(tabKey){
       <div class="frame-cap">${cat.title}</div>
     </div>`;
   }).join('');
-  cats.forEach(key => loadFrameCover(key));
+  // kapakları aynı anda değil, kuyruklu (en fazla 2 eşzamanlı) yükle — Drive rate-limit'ine takılmamak için
+  runWithConcurrency(cats, 2, loadFrameCover);
 }
 
-async function loadFrameCover(key){
+function runWithConcurrency(items, limit, worker){
+  let idx = 0;
+  const runners = new Array(Math.min(limit, items.length)).fill(0).map(async () => {
+    while (idx < items.length){
+      const item = items[idx++];
+      await worker(item);
+    }
+  });
+  return Promise.all(runners);
+}
+
+async function loadFrameCover(key, attempt){
+  attempt = attempt || 0;
   const cat = GALLERY_CATS[key];
   const frame = document.querySelector(`.frame[data-cat="${key}"]`);
   const countEl = document.getElementById('fc-' + key);
   try{
     const folderId = await resolveCatFolderId(cat);
-    if (!folderId){ if(frame) frame.classList.remove('loading'); return; }
+    if (!folderId){
+      if (frame){ frame.classList.remove('loading'); }
+      if (countEl) countEl.textContent = 'Klasör bulunamadı';
+      return;
+    }
     const photos = await getPhotosInFolder(folderId);
     if (frame){
       frame.classList.remove('loading');
       if (photos.length){
-        frame.style.backgroundImage = `url('${driveImgUrl(photos[0].id,'w600')}')`;
+        const img = new Image();
+        img.onload = () => { frame.style.backgroundImage = `url('${driveImgUrl(photos[0].id,'w600')}')`; };
+        img.onerror = () => {
+          // görsel indirilemedi (izin/oran limiti) — bir kez daha dene
+          if (attempt < 1){ setTimeout(()=>loadFrameCover(key, attempt+1), 900); }
+          else if (countEl) countEl.textContent = photos.length + ' Fotoğraf (önizleme yüklenemedi)';
+        };
+        img.src = driveImgUrl(photos[0].id,'w600');
         frame.querySelector('.frame-img').style.display = 'none';
       }
     }
-    if (countEl) countEl.textContent = photos.length ? photos.length + ' Fotoğraf' : '';
+    if (countEl) countEl.textContent = photos.length ? photos.length + ' Fotoğraf' : 'Klasör boş';
   }catch(e){
     if (frame) frame.classList.remove('loading');
+    if (countEl) countEl.textContent = 'Yüklenemedi';
   }
 }
 
