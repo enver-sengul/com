@@ -51,8 +51,6 @@ body.light{
 }
 body.light .field{opacity:.28}
 
-
-  
 /* ---------- justified paragraph styles ---------- */
 .prose p,
 .sec-desc,
@@ -66,8 +64,13 @@ body.light .field{opacity:.28}
   -webkit-hyphens:auto;
 }
 .tml-text,.proj-text{hyphens:none}
-@media(max-width:600px){
-  .prose p,.sec-desc,.tml-text,.proj-text,.card .body,.subtitle{text-align:left;hyphens:none}
+/* Mobil ve tablette iki yana yaslama kapalı — dar ekranda okunabilirlik için sol hizalama */
+@media(max-width:960px){
+  .prose p,.sec-desc,.tml-text,.proj-text,.card .body,.subtitle{
+    text-align:left !important;
+    hyphens:none !important;
+    -webkit-hyphens:none !important;
+  }
 }
 ::selection{background:var(--accent);color:#fff}
 a{color:inherit;text-decoration:none}
@@ -1057,6 +1060,8 @@ const countIO = new IntersectionObserver((entries)=>{
 },{threshold:.5});
 setTimeout(()=>$$('.stat .num').forEach(el=>countIO.observe(el)),300);
 
+
+  
 /* ---------- back to top ---------- */
 const toTop=$('#toTop');
 window.addEventListener('scroll',()=>{
