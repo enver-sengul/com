@@ -603,10 +603,11 @@ footer { text-align:center; }
     <li><a href="#iletisim">İletişim</a></li>
   </ul>
   <div class="nav-social">
-    <a href="#" title="Instagram">&#9651;</a>
-    <a href="#" title="Facebook">f</a>
-    <a href="#" title="YouTube">▷</a>
-    <a href="#" title="E-posta">✉</a>
+    <a href="https://www.instagram.com/enversengul/" target="_blank" rel="noopener" title="Instagram">&#9651;</a>
+    <a href="https://x.com/enverengul" target="_blank" rel="noopener" title="X (Twitter)">𝕏</a>
+    <a href="https://www.facebook.com/100063697549676/about/" target="_blank" rel="noopener" title="Facebook">f</a>
+    <a href="https://www.youtube.com/@enversengul3013" target="_blank" rel="noopener" title="YouTube">▷</a>
+    <a href="mailto:enversengulweb@gmail.com" title="E-posta">✉</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menü">
     <span></span><span></span><span></span>
@@ -621,10 +622,11 @@ footer { text-align:center; }
   <a href="#gazetecilik" onclick="closeMenu()">Gazetecilik</a>
   <a href="#iletisim" onclick="closeMenu()">İletişim</a>
   <div class="mobile-menu-social">
-    <a href="#">&#9651;</a>
-    <a href="#">f</a>
-    <a href="#">▷</a>
-    <a href="#">✉</a>
+    <a href="https://www.instagram.com/enversengul/" target="_blank" rel="noopener" title="Instagram">&#9651;</a>
+    <a href="https://x.com/enverengul" target="_blank" rel="noopener" title="X (Twitter)">𝕏</a>
+    <a href="https://www.facebook.com/100063697549676/about/" target="_blank" rel="noopener" title="Facebook">f</a>
+    <a href="https://www.youtube.com/@enversengul3013" target="_blank" rel="noopener" title="YouTube">▷</a>
+    <a href="mailto:enversengulweb@gmail.com" title="E-posta">✉</a>
   </div>
 </div>
 <section class="hero">
@@ -1733,7 +1735,16 @@ footer { text-align:center; }
           </li>
           <li>
             <div class="cinfo-icon">📷</div>
-            <div><div class="cinfo-label">Sosyal Medya</div><div class="cinfo-val">Instagram · Facebook · YouTube</div></div>
+            <div><div class="cinfo-label">Sosyal Medya</div><div class="cinfo-val">
+              <a href="https://www.instagram.com/enversengul/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Instagram</a> ·
+              <a href="https://x.com/enverengul" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">X</a> ·
+              <a href="https://www.facebook.com/100063697549676/about/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Facebook</a> ·
+              <a href="https://www.youtube.com/@enversengul3013" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">YouTube</a>
+            </div></div>
+          </li>
+          <li>
+            <div class="cinfo-icon">📖</div>
+            <div><div class="cinfo-label">Yayınevi</div><div class="cinfo-val"><a href="https://www.pusluyayincilik.com.tr/kisi/enver-sengul-0" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Puslu Yayıncılık — Yazar Profili</a></div></div>
           </li>
           <li>
             <div class="cinfo-icon">🎓</div>
@@ -3298,8 +3309,7 @@ function ekResetAll(){
     .then(()=>{ location.reload(); })
     .catch(err=>{ status.textContent = 'Hata: ' + err.message; });
 }
-
-  
+ 
 function ekApplyStoredContent(){
   if(!firebaseDb) return;
   ekScanFields();
