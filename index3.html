@@ -285,6 +285,46 @@ header{
 .ledger-title{font-family:'Fraunces',serif;font-size:16px;font-weight:500;}
 .ledger-topic{color:var(--ink-soft);font-size:13.5px;}
 .ledger-loc{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--ink-faint);}
+.ledger-row{cursor:pointer;}
+.ledger-hint{margin-top:22px;font-size:10.5px;color:var(--ink-faint);letter-spacing:.5px;}
+.drive-note{margin-top:18px;font-size:10.5px;color:var(--ink-faint);letter-spacing:.5px;}
+.drive-note.ok{color:var(--iznik-deep);}
+.drive-note.err{color:var(--stamp);}
+
+/* ---------- frame loading / real cover states ---------- */
+.frame{background-size:cover;background-position:center;}
+.frame.loading .frame-img{animation:pulseFrame 1.6s ease-in-out infinite;}
+@keyframes pulseFrame{0%,100%{opacity:1;}50%{opacity:.55;}}
+.frame-count{position:absolute;bottom:10px;right:10px;font-family:'Space Mono',monospace;font-size:9px;color:rgba(237,231,216,.8);z-index:1;}
+
+/* ---------- gallery modal ---------- */
+.gallery-modal{
+  position:fixed;inset:0;background:rgba(19,16,11,.92);z-index:200;display:none;
+  overflow-y:auto;padding:60px 24px;
+}
+.gallery-modal.open{display:block;}
+.gallery-modal-inner{max-width:1040px;margin:0 auto;position:relative;}
+.gallery-modal-head{margin-bottom:30px;color:var(--paper);}
+.gallery-modal-tag{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#b9d3d8;}
+.gallery-modal-title{font-size:32px;font-weight:500;margin:12px 0 10px;}
+.gallery-modal-desc{font-size:14.5px;line-height:1.7;color:rgba(237,231,216,.7);max-width:640px;font-family:'Work Sans',sans-serif;}
+.gallery-modal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.gallery-modal-grid img{width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;background:#2a2620;}
+.gallery-modal-msg{color:rgba(237,231,216,.65);font-style:italic;font-family:'Fraunces',serif;padding:40px 0;}
+.gallery-close{
+  position:absolute;top:-44px;right:0;background:none;border:1px solid rgba(237,231,216,.4);color:var(--paper);
+  width:36px;height:36px;cursor:pointer;font-size:15px;
+}
+.lightbox{
+  position:fixed;inset:0;background:rgba(10,8,5,.96);z-index:300;display:none;
+  align-items:center;justify-content:center;padding:40px;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:100%;max-height:90vh;object-fit:contain;}
+.lightbox .gallery-close{top:20px;right:20px;}
+@media (max-width:640px){
+  .gallery-modal-grid{grid-template-columns:repeat(2,1fr);}
+}
 
 /* ---------- education ---------- */
 .edu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);margin-top:56px;}
@@ -491,27 +531,37 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
   <div class="wrap">
     <div class="eyebrow reveal">Envanter No 001 · Fotoğrafçılığım</div>
     <h2 class="h2 reveal">Objektifin <em>gözüyle</em></h2>
-    <p class="lede reveal" style="margin-top:18px;">Portfolyolar, yurt içi ve yurt dışı fotoğraf çalışmaları, sunumlar ve atölyeler — kırk yılı aşkın bir bakışın kontakt baskısı.</p>
+    <p class="lede reveal" style="margin-top:18px;">Portfolyolar, yurt içi ve yurt dışı fotoğraf çalışmaları — kapak görselleri ve galeriler Google Drive'daki fotoğraf klasörlerinizden canlı olarak yükleniyor.</p>
 
-    <div class="tabs-row reveal">
+    <div class="tabs-row reveal" id="photoTabs">
       <button class="tab-btn active" data-tab="portfolyo">Portfolyolarım</button>
       <button class="tab-btn" data-tab="turkiye">Türkiye'nin Güzellikleri</button>
       <button class="tab-btn" data-tab="dunya">Dünyadan Fotoğraflar</button>
-      <button class="tab-btn" data-tab="video">Sunumlarım</button>
     </div>
 
-    <div class="sheet-grid reveal" id="pt-portfolyo">
-      <div class="frame"><div class="frame-img" style="--fc1:#1F5C6B;--fc2:#173b44;"></div><span class="frame-num mono">01</span><div class="frame-cap">Dünya İnançları</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#5b5346;--fc2:#211d16;"></div><span class="frame-num mono">02</span><div class="frame-cap">Portreler</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#9c7a2e;--fc2:#4a3a17;"></div><span class="frame-num mono">03</span><div class="frame-cap">Edirne'nin Tanınmış Yüzleri</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#2c6b78;--fc2:#0f2b31;"></div><span class="frame-num mono">04</span><div class="frame-cap">Kurgusal Kadraj</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#973B2B;--fc2:#3d1611;"></div><span class="frame-num mono">05</span><div class="frame-cap">Şehirlerin Sultanı: Edirne</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#8c8372;--fc2:#3a352b;"></div><span class="frame-num mono">06</span><div class="frame-cap">Dans</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#1F5C6B;--fc2:#0a1f24;"></div><span class="frame-num mono">07</span><div class="frame-cap">Müzisyenler</div></div>
-      <div class="frame"><div class="frame-img" style="--fc1:#5b5346;--fc2:#211d16;"></div><span class="frame-num mono">08</span><div class="frame-cap">Er Meydanı — Kırkpınar</div></div>
-    </div>
+    <div class="sheet-grid reveal photo-panel" id="pt-portfolyo"></div>
+    <div class="sheet-grid reveal photo-panel" id="pt-turkiye" style="display:none;"></div>
+    <div class="sheet-grid reveal photo-panel" id="pt-dunya" style="display:none;"></div>
+    <p class="drive-note mono" id="driveNote">Google Drive bağlantısı kuruluyor…</p>
   </div>
 </section>
+
+<!-- GALLERY MODAL (Drive-backed) -->
+<div class="gallery-modal" id="galleryModal">
+  <div class="gallery-modal-inner">
+    <button class="gallery-close" id="galleryClose" aria-label="Kapat">✕</button>
+    <div class="gallery-modal-head">
+      <span class="mono gallery-modal-tag" id="galleryTag">Kayıt</span>
+      <h3 class="eng gallery-modal-title" id="galleryTitle">—</h3>
+      <p class="gallery-modal-desc" id="galleryDesc"></p>
+    </div>
+    <div class="gallery-modal-grid" id="galleryGrid"></div>
+  </div>
+</div>
+<div class="lightbox" id="lightbox">
+  <button class="gallery-close" id="lightboxClose" aria-label="Kapat">✕</button>
+  <img id="lightboxImg" alt="">
+</div>
 
 <div class="rule"></div>
 
@@ -606,39 +656,17 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
     <div class="ex-panel active" id="extab-ulusal">
       <div class="ledger reveal">
         <div class="ledger-head"><span>Yıl</span><span>Sergi</span><span>Konu</span><span>Şehir</span></div>
-        <div class="ledger-row"><span class="ledger-year">1991</span><span class="ledger-title">Bitlis Fotoğrafları</span><span class="ledger-topic">Bitlis Fotoğrafları</span><span class="ledger-loc">Bitlis</span></div>
-        <div class="ledger-row"><span class="ledger-year">1991</span><span class="ledger-title">Doğa ve İnsan</span><span class="ledger-topic">Doğa ve İnsan</span><span class="ledger-loc">Tatvan</span></div>
-        <div class="ledger-row"><span class="ledger-year">1992</span><span class="ledger-title">Objektifimden</span><span class="ledger-topic">Objektifimden</span><span class="ledger-loc">Bitlis</span></div>
-        <div class="ledger-row"><span class="ledger-year">1995</span><span class="ledger-title">Esintiler</span><span class="ledger-topic">Esintiler</span><span class="ledger-loc">Edirne</span></div>
-        <div class="ledger-row"><span class="ledger-year">1996</span><span class="ledger-title">Ve İnsan</span><span class="ledger-topic">Ve İnsan</span><span class="ledger-loc">Balıkesir Tahtakuşlar</span></div>
-        <div class="ledger-row"><span class="ledger-year">1998</span><span class="ledger-title">Düş Fotoğrafları</span><span class="ledger-topic">Düş Fotoğrafları</span><span class="ledger-loc">Edirne</span></div>
-        <div class="ledger-row"><span class="ledger-year">1999</span><span class="ledger-title">Ege'nin Tarihi Dokusu</span><span class="ledger-topic">Ege'nin Tarihi Dokusu</span><span class="ledger-loc">Aydın</span></div>
-        <div class="ledger-row"><span class="ledger-year">2001</span><span class="ledger-title">Düş Fotoğrafları</span><span class="ledger-topic">Düş Fotoğrafları</span><span class="ledger-loc">İstanbul</span></div>
-        <div class="ledger-row"><span class="ledger-year">2002</span><span class="ledger-title">Kayseri'de Vakıf Eserleri</span><span class="ledger-topic">Kayseri'de Vakıf Eserleri</span><span class="ledger-loc">Kayseri</span></div>
-        <div class="ledger-row"><span class="ledger-year">2002</span><span class="ledger-title">Düş Fotoğrafları</span><span class="ledger-topic">Düş Fotoğrafları</span><span class="ledger-loc">Adana</span></div>
-        <div class="ledger-row"><span class="ledger-year">2003</span><span class="ledger-title">Serbest</span><span class="ledger-topic">Serbest</span><span class="ledger-loc">Uzunköprü Yeniköy</span></div>
-        <div class="ledger-row"><span class="ledger-year">2004</span><span class="ledger-title">Düş Fotoğrafları</span><span class="ledger-topic">Düş Fotoğrafları</span><span class="ledger-loc">Antalya</span></div>
-        <div class="ledger-row"><span class="ledger-year">2006</span><span class="ledger-title">Sultanlar Şehri: Edirne</span><span class="ledger-topic">Sultanlar Şehri: Edirne</span><span class="ledger-loc">Edirne</span></div>
-        <div class="ledger-row"><span class="ledger-year">2006</span><span class="ledger-title">Nevşehir'in Tarihi Dokusu</span><span class="ledger-topic">Nevşehir'in Tarihi Dokusu</span><span class="ledger-loc">Nevşehir</span></div>
-        <div class="ledger-row"><span class="ledger-year">2007</span><span class="ledger-title">Endülüs</span><span class="ledger-topic">Endülüs</span><span class="ledger-loc">Edirne</span></div>
-        <div class="ledger-row"><span class="ledger-year">2007</span><span class="ledger-title">Vakıf Eserlerimiz</span><span class="ledger-topic">Vakıf Eserlerimiz</span><span class="ledger-loc">Gaziantep</span></div>
-        <div class="ledger-row"><span class="ledger-year">2008</span><span class="ledger-title">Vakıf Eserlerimiz</span><span class="ledger-topic">Vakıf Eserlerimiz</span><span class="ledger-loc">Kilis</span></div>
-        <div class="ledger-row"><span class="ledger-year">2010</span><span class="ledger-title">Balkanlardan Esintiler</span><span class="ledger-topic">Balkanlardan Esintiler</span><span class="ledger-loc">Gaziantep</span></div>
-        <div class="ledger-row"><span class="ledger-year">2011</span><span class="ledger-title">Kudüs</span><span class="ledger-topic">Kudüs</span><span class="ledger-loc">Gaziantep</span></div>
-        <div class="ledger-row"><span class="ledger-year">2011</span><span class="ledger-title">Şehirlerin Sultanı Edirne</span><span class="ledger-topic">Şehirlerin Sultanı Edirne</span><span class="ledger-loc">Ankara (Dışişleri Bakanlığı)</span></div>
+        <div id="ledger-ulusal"></div>
       </div>
     </div>
 
     <div class="ex-panel" id="extab-uluslararasi">
       <div class="ledger reveal">
         <div class="ledger-head"><span>Yıl</span><span>Sergi</span><span>Konu</span><span>Şehir / Ülke</span></div>
-        <div class="ledger-row"><span class="ledger-year">2004</span><span class="ledger-title">Edirne</span><span class="ledger-topic">Edirne</span><span class="ledger-loc">Strasbourg, Fransa</span></div>
-        <div class="ledger-row"><span class="ledger-year">—</span><span class="ledger-title">Şehirlerin Sultanı Edirne</span><span class="ledger-topic">Şehirlerin Sultanı Edirne</span><span class="ledger-loc">Haskova, Bulgaristan</span></div>
-        <div class="ledger-row"><span class="ledger-year">—</span><span class="ledger-title">Şehirlerin Sultanı Edirne</span><span class="ledger-topic">Şehirlerin Sultanı Edirne</span><span class="ledger-loc">Kırcaali, Bulgaristan</span></div>
-        <div class="ledger-row"><span class="ledger-year">2011</span><span class="ledger-title">Şehirlerin Sultanı Edirne</span><span class="ledger-topic">Şehirlerin Sultanı Edirne</span><span class="ledger-loc">Lusaka, Zambiya</span></div>
-        <div class="ledger-row"><span class="ledger-year">2012</span><span class="ledger-title">Şehirlerin Sultanı Edirne</span><span class="ledger-topic">Şehirlerin Sultanı Edirne</span><span class="ledger-loc">New York, ABD</span></div>
+        <div id="ledger-uluslararasi"></div>
       </div>
     </div>
+    <p class="ledger-hint mono">Bir satıra tıklayın — o serginin Drive klasöründeki fotoğraflar galeri olarak açılır.</p>
   </div>
 </section>
 
@@ -754,13 +782,255 @@ const mm = document.getElementById('mobileMenu');
 hb.addEventListener('click', ()=> mm.classList.toggle('open'));
 mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
 
-// photography tabs (visual only in this mockup)
-document.querySelectorAll('.tabs-row .tab-btn').forEach(btn=>{
+// reveal on scroll
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ═══════════════════════════════════════════════════
+// GOOGLE DRIVE ENTEGRASYONU
+// Mevcut sitenizle aynı yapı: WEB klasörü > PORTFOLYOM > kategori klasörleri
+// Kendi projenizdeki DRIVE_API_KEY / DRIVE_ROOT_ID değerleriyle birebir aynı.
+// ═══════════════════════════════════════════════════
+const DRIVE_API_KEY = 'AIzaSyB7qdkmXaAxl4C66DGp_oGcpaCivbfmfaI';
+const DRIVE_ROOT_ID = '16BQMeFeWdlWHYmoLDW0b76B1TH_az1-j';
+
+// Kategori tanımları — klasör adları mevcut Drive yapınızla birebir eşleşir
+const GALLERY_CATS = {
+  'dunya-inanclar':      { title:'Dünya İnançları', desc:"İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.", folder:'Dünya İnançları' },
+  'portreler':           { title:'Portreler', desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
+  'edirnenin-taninmis-yuzleri': { title:'Edirnenin Yüzleri', desc:"Edirne'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.", folder:'Edirnenin-taninmis-yuzleri' },
+  'kurgusal':            { title:'Kurgusal Kadraj', desc:'Gerçeklikle hayal arasında. Sahnelenen anlar, kurulan dünyalar ve görsel anlatı denemeleri.', folder:'Kurgusal Kadraj' },
+  'edirne':              { title:'Şehirlerin Sultanı: Edirne', desc:'Tarihin ve mimarinin iç içe geçtiği Edirne sokaklarından, camilerinden ve yaşamından kareler.', folder:'Şehirlerin Sultanı: Edirne' },
+  'dans':                { title:'Dans', desc:'Hareketin şiiri. Sahne ışıklarında, sokak köşelerinde, doğanın içinde dans eden insanlar.', folder:'Dans' },
+  'muzisyenler':         { title:'Müzisyenler', desc:'Notaların görüntüye dönüştüğü anlar. Sahne arkası ve sahnede müziğin insanları.', folder:'Müzisyenler' },
+  'kirkpinar':           { title:'Er Meydanı — Kırkpınar', desc:"Yağlı güreşin 700 yıllık mirası. Kırkpınar'da ter, toprak ve pehlivanlık geleneğinden kareler.", folder:'Kirkpinar' },
+  'nostalji':            { title:'Nostalji', desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
+  've-insan':            { title:'Ve İnsan', desc:'İnsanın yaşamdan aldığı izler… Yüzlerde, anlarda ve hallerde saklı insanlık hikâyeleri.', folder:'Ve İnsan' },
+  'fotograf-yazilari':   { title:'Fotoğraf Yazılarım', desc:'Fotoğraf üzerine kaleme alınmış yazılar, yorumlar ve düşüncelerden görsel kareler.', folder:'FOTOGRAF-YAZILARIM', root:true },
+  'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
+  'dunya-newyork':   { title:'New York', desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
+  'dunya-zambiya':   { title:'Zambiya', desc:'Afrika’dan yaşam, renk ve insanlık üzerine kareler.', folder:'dunya-zambiya' },
+  'dunya-paris':     { title:'Paris', desc:"Işın şehri Paris'ten sokak köşeleri, mimari ve anlık yaşam.", folder:'dunya-paris' },
+  'dunya-endulus':   { title:'Endülüs', desc:'İslam ve Avrupa medeniyetlerinin buluştuğu Endülüs’ten tarihi kareler.', folder:'dunya-endulus' },
+  'dunya-italya':    { title:'İtalya', desc:'Rönesansın, sanatın ve lezzetin ülkesinden gözlem kareleri.', folder:'dunya-italya' },
+  'dunya-prag':      { title:'Prag', desc:"Orta Avrupa'nın en büyüleyici şehri Prag'dan gotik ve barok kareler.", folder:'dunya-prag' },
+  'dunya-riga':      { title:'Riga', desc:"Baltık'ın incisi Riga'dan mimari ve insan portreleri.", folder:'dunya-riga' },
+  'dunya-kudus':     { title:'Kudüs', desc:"Üç dinin kutsal şehri Kudüs'ten ruhani ve insani kareler.", folder:'dunya-kudus' },
+  'dunya-halep':     { title:'Halep', desc:"Tarihin acısını ve direncini taşıyan Halep'ten belgesel kareler.", folder:'dunya-halep' },
+  'dunya-balkanlar': { title:'Balkanlar', desc:'Osmanlı mirasının ve Balkan ruhunun yaşadığı coğrafyadan kareler.', folder:'dunya-balkanlar' },
+  'sergi-ulusal-1':{title:'Bitlis Fotoğrafları',desc:"1991 Bitlis, Türkiye'de açılan 'Bitlis Fotoğrafları' sergisinden kareler.",folder:'sergi-ulusal-1'},
+  'sergi-ulusal-2':{title:'Doğa ve İnsan',desc:"1991 Tatvan, Türkiye'de açılan 'Doğa ve İnsan' sergisinden kareler.",folder:'sergi-ulusal-2'},
+  'sergi-ulusal-3':{title:'Objektifimden',desc:"1992 Bitlis, Türkiye'de açılan 'Objektifimden' sergisinden kareler.",folder:'sergi-ulusal-3'},
+  'sergi-ulusal-4':{title:'Esintiler',desc:"1995 Edirne, Türkiye'de açılan 'Esintiler' sergisinden kareler.",folder:'sergi-ulusal-4'},
+  'sergi-ulusal-5':{title:'Ve İnsan',desc:"1996 Balıkesir Tahtakuşlar, Türkiye'de açılan 'Ve İnsan' sergisinden kareler.",folder:'sergi-ulusal-5'},
+  'sergi-ulusal-6':{title:'Düş Fotoğrafları',desc:"1998 Edirne, Türkiye'de açılan 'Düş Fotoğrafları' sergisinden kareler.",folder:'sergi-ulusal-6'},
+  'sergi-ulusal-7':{title:"Ege'nin Tarihi Dokusu",desc:"1999 Aydın, Türkiye'de açılan 'Ege'nin Tarihi Dokusu' sergisinden kareler.",folder:'sergi-ulusal-7'},
+  'sergi-ulusal-8':{title:'Düş Fotoğrafları',desc:"2001 İstanbul, Türkiye'de açılan 'Düş Fotoğrafları' sergisinden kareler.",folder:'sergi-ulusal-8'},
+  'sergi-ulusal-9':{title:"Kayseri'de Vakıf Eserleri",desc:"2002 Kayseri, Türkiye'de açılan 'Kayseri'de Vakıf Eserleri' sergisinden kareler.",folder:'sergi-ulusal-9'},
+  'sergi-ulusal-10':{title:'Düş Fotoğrafları',desc:"2002 Adana, Türkiye'de açılan 'Düş Fotoğrafları' sergisinden kareler.",folder:'sergi-ulusal-10'},
+  'sergi-ulusal-11':{title:'Serbest',desc:"2003 Uzunköprü Yeniköy, Türkiye'de açılan 'Serbest' sergisinden kareler.",folder:'sergi-ulusal-11'},
+  'sergi-ulusal-12':{title:'Düş Fotoğrafları',desc:"2004 Antalya, Türkiye'de açılan 'Düş Fotoğrafları' sergisinden kareler.",folder:'sergi-ulusal-12'},
+  'sergi-ulusal-13':{title:'Sultanlar Şehri: Edirne',desc:"2006 Edirne, Türkiye'de açılan 'Sultanlar Şehri: Edirne' sergisinden kareler.",folder:'sergi-ulusal-13'},
+  'sergi-ulusal-14':{title:"Nevşehir'in Tarihi Dokusu",desc:"2006 Nevşehir, Türkiye'de açılan 'Nevşehir'in Tarihi Dokusu' sergisinden kareler.",folder:'sergi-ulusal-14'},
+  'sergi-ulusal-15':{title:'Endülüs',desc:"2007 Edirne, Türkiye'de açılan 'Endülüs' sergisinden kareler.",folder:'sergi-ulusal-15'},
+  'sergi-ulusal-16':{title:'Vakıf Eserlerimiz',desc:"2007 Gaziantep, Türkiye'de açılan 'Vakıf Eserlerimiz' sergisinden kareler.",folder:'sergi-ulusal-16'},
+  'sergi-ulusal-17':{title:'Vakıf Eserlerimiz',desc:"2008 Kilis, Türkiye'de açılan 'Vakıf Eserlerimiz' sergisinden kareler.",folder:'sergi-ulusal-17'},
+  'sergi-ulusal-18':{title:'Balkanlardan Esintiler',desc:"2010 Gaziantep, Türkiye'de açılan 'Balkanlardan Esintiler' sergisinden kareler.",folder:'sergi-ulusal-18'},
+  'sergi-ulusal-19':{title:'Kudüs',desc:"2011 Gaziantep, Türkiye'de açılan 'Kudüs' sergisinden kareler.",folder:'sergi-ulusal-19'},
+  'sergi-ulusal-20':{title:'Şehirlerin Sultanı Edirne',desc:"2011 Ankara (Dışişleri Bakanlığı), Türkiye'de açılan 'Şehirlerin Sultanı Edirne' sergisinden kareler.",folder:'sergi-ulusal-20'},
+  'sergi-uluslararasi-1':{title:'Edirne',desc:"2004 Strasbourg, Fransa'da açılan 'Edirne' sergisinden kareler.",folder:'sergi-uluslararasi-1'},
+  'sergi-uluslararasi-2':{title:'Şehirlerin Sultanı Edirne',desc:"Haskova, Bulgaristan'da açılan 'Şehirlerin Sultanı Edirne' sergisinden kareler.",folder:'sergi-uluslararasi-2'},
+  'sergi-uluslararasi-3':{title:'Şehirlerin Sultanı Edirne',desc:"Kırcaali, Bulgaristan'da açılan 'Şehirlerin Sultanı Edirne' sergisinden kareler.",folder:'sergi-uluslararasi-3'},
+  'sergi-uluslararasi-4':{title:'Şehirlerin Sultanı Edirne',desc:"2011 Lusaka, Zambiya'da açılan 'Şehirlerin Sultanı Edirne' sergisinden kareler.",folder:'sergi-uluslararasi-4'},
+  'sergi-uluslararasi-5':{title:'Şehirlerin Sultanı Edirne',desc:"2012 New York, ABD'de açılan 'Şehirlerin Sultanı Edirne' sergisinden kareler.",folder:'sergi-uluslararasi-5'},
+};
+
+// Sekmelere göre gösterilecek kategori sırası
+const PHOTO_TABS = {
+  portfolyo: ['dunya-inanclar','portreler','edirnenin-taninmis-yuzleri','kurgusal','edirne','dans','muzisyenler','kirkpinar','nostalji','ve-insan','fotograf-yazilari'],
+  turkiye:   ['turkiyenin-guzellikleri'],
+  dunya:     ['dunya-newyork','dunya-zambiya','dunya-paris','dunya-endulus','dunya-italya','dunya-prag','dunya-riga','dunya-kudus','dunya-halep','dunya-balkanlar'],
+};
+
+// Sergiler — kayıt defteri (ledger) verisi
+const EXHIBITIONS_ULUSAL = [
+  ['1991','sergi-ulusal-1','Bitlis Fotoğrafları','Bitlis Fotoğrafları','Bitlis'],
+  ['1991','sergi-ulusal-2','Doğa ve İnsan','Doğa ve İnsan','Tatvan'],
+  ['1992','sergi-ulusal-3','Objektifimden','Objektifimden','Bitlis'],
+  ['1995','sergi-ulusal-4','Esintiler','Esintiler','Edirne'],
+  ['1996','sergi-ulusal-5','Ve İnsan','Ve İnsan','Balıkesir Tahtakuşlar'],
+  ['1998','sergi-ulusal-6','Düş Fotoğrafları','Düş Fotoğrafları','Edirne'],
+  ['1999','sergi-ulusal-7',"Ege'nin Tarihi Dokusu","Ege'nin Tarihi Dokusu",'Aydın'],
+  ['2001','sergi-ulusal-8','Düş Fotoğrafları','Düş Fotoğrafları','İstanbul'],
+  ['2002','sergi-ulusal-9',"Kayseri'de Vakıf Eserleri","Kayseri'de Vakıf Eserleri",'Kayseri'],
+  ['2002','sergi-ulusal-10','Düş Fotoğrafları','Düş Fotoğrafları','Adana'],
+  ['2003','sergi-ulusal-11','Serbest','Serbest','Uzunköprü Yeniköy'],
+  ['2004','sergi-ulusal-12','Düş Fotoğrafları','Düş Fotoğrafları','Antalya'],
+  ['2006','sergi-ulusal-13','Sultanlar Şehri: Edirne','Sultanlar Şehri: Edirne','Edirne'],
+  ['2006','sergi-ulusal-14',"Nevşehir'in Tarihi Dokusu","Nevşehir'in Tarihi Dokusu",'Nevşehir'],
+  ['2007','sergi-ulusal-15','Endülüs','Endülüs','Edirne'],
+  ['2007','sergi-ulusal-16','Vakıf Eserlerimiz','Vakıf Eserlerimiz','Gaziantep'],
+  ['2008','sergi-ulusal-17','Vakıf Eserlerimiz','Vakıf Eserlerimiz','Kilis'],
+  ['2010','sergi-ulusal-18','Balkanlardan Esintiler','Balkanlardan Esintiler','Gaziantep'],
+  ['2011','sergi-ulusal-19','Kudüs','Kudüs','Gaziantep'],
+  ['2011','sergi-ulusal-20','Şehirlerin Sultanı Edirne','Şehirlerin Sultanı Edirne','Ankara (Dışişleri Bakanlığı)'],
+];
+const EXHIBITIONS_ULUSLARARASI = [
+  ['2004','sergi-uluslararasi-1','Edirne','Edirne','Strasbourg, Fransa'],
+  ['—','sergi-uluslararasi-2','Şehirlerin Sultanı Edirne','Şehirlerin Sultanı Edirne','Haskova, Bulgaristan'],
+  ['—','sergi-uluslararasi-3','Şehirlerin Sultanı Edirne','Şehirlerin Sultanı Edirne','Kırcaali, Bulgaristan'],
+  ['2011','sergi-uluslararasi-4','Şehirlerin Sultanı Edirne','Şehirlerin Sultanı Edirne','Lusaka, Zambiya'],
+  ['2012','sergi-uluslararasi-5','Şehirlerin Sultanı Edirne','Şehirlerin Sultanı Edirne','New York, ABD'],
+];
+
+let folderCache = {};
+let photosCache = {};
+
+async function getFolderIdByName(parentId, name){
+  const cacheKey = parentId + '/' + name;
+  if (folderCache[cacheKey]) return folderCache[cacheKey];
+  const q = encodeURIComponent(`'${parentId}' in parents and name='${name}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
+  const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&key=${DRIVE_API_KEY}`;
+  try{
+    const r = await fetch(url);
+    const d = await r.json();
+    if (d.files && d.files.length > 0){ folderCache[cacheKey] = d.files[0].id; return d.files[0].id; }
+  }catch(e){ console.warn('Klasör bulunamadı:', name, e); }
+  return null;
+}
+
+async function getPhotosInFolder(folderId){
+  if (photosCache[folderId]) return photosCache[folderId];
+  let all = [], pageToken = null;
+  do{
+    const q = encodeURIComponent(`'${folderId}' in parents and (mimeType contains 'image/jpeg' or mimeType contains 'image/webp' or mimeType contains 'image/png') and trashed=false`);
+    let url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=nextPageToken,files(id,name,mimeType)&pageSize=100&key=${DRIVE_API_KEY}`;
+    if (pageToken) url += '&pageToken=' + pageToken;
+    try{
+      const r = await fetch(url);
+      const d = await r.json();
+      if (d.files) all = all.concat(d.files);
+      pageToken = d.nextPageToken || null;
+    }catch(e){ break; }
+  } while(pageToken);
+  all.sort((a,b)=>{
+    const aCover = /^1\.(jpe?g|png|webp)$/i.test(a.name) ? 0 : 1;
+    const bCover = /^1\.(jpe?g|png|webp)$/i.test(b.name) ? 0 : 1;
+    if (aCover !== bCover) return aCover - bCover;
+    return a.name.localeCompare(b.name, 'tr', { numeric:true, sensitivity:'base' });
+  });
+  photosCache[folderId] = all;
+  return all;
+}
+
+function driveImgUrl(fileId, size){
+  size = size || 'w800';
+  return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
+}
+
+async function resolveCatFolderId(cat){
+  let folderId = null;
+  try{
+    if (cat.root){
+      folderId = await getFolderIdByName(DRIVE_ROOT_ID, cat.folder);
+    } else {
+      const portfolyomId = await getFolderIdByName(DRIVE_ROOT_ID, 'PORTFOLYOM');
+      if (portfolyomId){
+        if (cat.folder.startsWith('dunya-') && cat.folder !== 'dunya-inanclar'){
+          const dunyaId = await getFolderIdByName(portfolyomId, 'Dünyadan Fotoğraflarım');
+          if (dunyaId) folderId = await getFolderIdByName(dunyaId, cat.folder.replace('dunya-',''));
+        } else if (cat.folder.startsWith('sergi-ulusal-')){
+          const sergilerId = await getFolderIdByName(portfolyomId, 'Sergiler');
+          if (sergilerId){
+            const ulusalId = await getFolderIdByName(sergilerId, 'Ulusal');
+            if (ulusalId) folderId = await getFolderIdByName(ulusalId, cat.folder.replace('sergi-ulusal-',''));
+          }
+        } else if (cat.folder.startsWith('sergi-uluslararasi-')){
+          const sergilerId = await getFolderIdByName(portfolyomId, 'Sergiler');
+          if (sergilerId){
+            const uluslararasiId = await getFolderIdByName(sergilerId, 'Uluslararası');
+            if (uluslararasiId) folderId = await getFolderIdByName(uluslararasiId, cat.folder.replace('sergi-uluslararasi-',''));
+          }
+        } else {
+          folderId = await getFolderIdByName(portfolyomId, cat.folder);
+        }
+      }
+    }
+  }catch(e){}
+  return folderId;
+}
+
+// ---- render photo tab frames ----
+const FRAME_TONES = ['#1F5C6B,#173b44','#5b5346,#211d16','#9c7a2e,#4a3a17','#2c6b78,#0f2b31','#973B2B,#3d1611','#8c8372,#3a352b'];
+
+function renderPhotoTab(tabKey){
+  const el = document.getElementById('pt-' + tabKey);
+  if (!el || el.dataset.rendered) return;
+  el.dataset.rendered = '1';
+  const cats = PHOTO_TABS[tabKey];
+  el.innerHTML = cats.map((key, i)=>{
+    const cat = GALLERY_CATS[key];
+    const tone = FRAME_TONES[i % FRAME_TONES.length];
+    const [c1,c2] = tone.split(',');
+    return `<div class="frame loading" data-cat="${key}" onclick="openGallery('${key}')">
+      <div class="frame-img" style="--fc1:${c1};--fc2:${c2};"></div>
+      <span class="frame-num mono">${String(i+1).padStart(2,'0')}</span>
+      <span class="frame-count mono" id="fc-${key}"></span>
+      <div class="frame-cap">${cat.title}</div>
+    </div>`;
+  }).join('');
+  cats.forEach(key => loadFrameCover(key));
+}
+
+async function loadFrameCover(key){
+  const cat = GALLERY_CATS[key];
+  const frame = document.querySelector(`.frame[data-cat="${key}"]`);
+  const countEl = document.getElementById('fc-' + key);
+  try{
+    const folderId = await resolveCatFolderId(cat);
+    if (!folderId){ if(frame) frame.classList.remove('loading'); return; }
+    const photos = await getPhotosInFolder(folderId);
+    if (frame){
+      frame.classList.remove('loading');
+      if (photos.length){
+        frame.style.backgroundImage = `url('${driveImgUrl(photos[0].id,'w600')}')`;
+        frame.querySelector('.frame-img').style.display = 'none';
+      }
+    }
+    if (countEl) countEl.textContent = photos.length ? photos.length + ' Fotoğraf' : '';
+  }catch(e){
+    if (frame) frame.classList.remove('loading');
+  }
+}
+
+// tab switching
+document.querySelectorAll('#photoTabs .tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.tabs-row .tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('#photoTabs .tab-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
+    document.querySelectorAll('.photo-panel').forEach(p=>p.style.display='none');
+    const panel = document.getElementById('pt-' + btn.dataset.tab);
+    panel.style.display = 'grid';
+    renderPhotoTab(btn.dataset.tab);
   });
 });
+
+// ---- render exhibitions ledger ----
+function renderLedger(containerId, rows){
+  const el = document.getElementById(containerId);
+  el.innerHTML = rows.map(([year, key, title, topic, loc])=>{
+    return `<div class="ledger-row" onclick="openGallery('${key}')">
+      <span class="ledger-year">${year}</span>
+      <span class="ledger-title">${title}</span>
+      <span class="ledger-topic">${topic}</span>
+      <span class="ledger-loc">${loc}</span>
+    </div>`;
+  }).join('');
+}
+renderLedger('ledger-ulusal', EXHIBITIONS_ULUSAL);
+renderLedger('ledger-uluslararasi', EXHIBITIONS_ULUSLARARASI);
 
 // exhibitions tabs
 document.querySelectorAll('.ex-tabs .tab-btn').forEach(btn=>{
@@ -772,11 +1042,70 @@ document.querySelectorAll('.ex-tabs .tab-btn').forEach(btn=>{
   });
 });
 
-// reveal on scroll
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// ---- gallery modal ----
+const galleryModal = document.getElementById('galleryModal');
+const lightbox = document.getElementById('lightbox');
+
+async function openGallery(catKey){
+  const cat = GALLERY_CATS[catKey];
+  if (!cat) return;
+  document.getElementById('galleryTag').textContent = 'Envanter · ' + catKey;
+  document.getElementById('galleryTitle').textContent = cat.title;
+  document.getElementById('galleryDesc').textContent = cat.desc;
+  const grid = document.getElementById('galleryGrid');
+  grid.innerHTML = '<p class="gallery-modal-msg">Fotoğraflar Drive\'dan yükleniyor…</p>';
+  galleryModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const folderId = await resolveCatFolderId(cat);
+  if (!folderId){
+    grid.innerHTML = `<p class="gallery-modal-msg">Bu klasör Drive'da bulunamadı. "${cat.folder}" adlı klasörün doğru konumda olduğundan emin olun.</p>`;
+    return;
+  }
+  const photos = await getPhotosInFolder(folderId);
+  if (!photos.length){
+    grid.innerHTML = '<p class="gallery-modal-msg">Bu klasörde henüz fotoğraf yok.</p>';
+    return;
+  }
+  grid.innerHTML = photos.map(p => `<img src="${driveImgUrl(p.id,'w400')}" loading="lazy" onclick="openLightbox('${driveImgUrl(p.id,'w1600')}')">`).join('');
+}
+
+function openLightbox(url){
+  document.getElementById('lightboxImg').src = url;
+  lightbox.classList.add('open');
+}
+document.getElementById('lightboxClose').addEventListener('click', ()=>{
+  lightbox.classList.remove('open');
+  document.getElementById('lightboxImg').src = '';
+});
+document.getElementById('galleryClose').addEventListener('click', ()=>{
+  galleryModal.classList.remove('open');
+  document.body.style.overflow = '';
+});
+galleryModal.addEventListener('click', (e)=>{ if(e.target === galleryModal){ galleryModal.classList.remove('open'); document.body.style.overflow=''; } });
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox){ lightbox.classList.remove('open'); document.getElementById('lightboxImg').src=''; } });
+
+// ---- init: connectivity check + first tab render ----
+async function checkDriveConnection(){
+  const note = document.getElementById('driveNote');
+  try{
+    const r = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(`'${DRIVE_ROOT_ID}' in parents and trashed=false`)}&fields=files(id,name)&pageSize=1&key=${DRIVE_API_KEY}`);
+    const d = await r.json();
+    if (d.error){
+      note.textContent = 'Drive bağlantı hatası: ' + (d.error.message || 'API anahtarını/klasör iznini kontrol edin.');
+      note.classList.add('err');
+    } else {
+      note.textContent = 'Google Drive bağlantısı aktif — kapak görselleri klasörlerinizden canlı yükleniyor.';
+      note.classList.add('ok');
+    }
+  }catch(e){
+    note.textContent = 'Drive bağlantısı kurulamadı — ağ/CORS ayarlarını kontrol edin.';
+    note.classList.add('err');
+  }
+}
+  
+checkDriveConnection();
+renderPhotoTab('portfolyo');
 </script>
 </body>
 </html>
