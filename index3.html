@@ -5,45 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enver Şengül | Fotoğraf Sanatçısı · Yazar · Müze Yöneticisi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Space+Mono:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EDE7D8;
-  --paper-deep:#E1D9C4;
-  --card:#F4F0E4;
-  --ink:#211D16;
-  --ink-soft:#5B5346;
-  --ink-faint:#8C8372;
-  --iznik:#1F5C6B;
-  --iznik-deep:#123B45;
+  --paper:#E6D8AE;
+  --paper-deep:#D8C68F;
+  --card:#EEE1B8;
+  --ink:#3B2A17;
+  --ink-soft:#5C4526;
+  --ink-faint:#8A7248;
+  --iznik:#6E1F1F;
+  --iznik-deep:#4A1414;
   --brass:#9C7A2E;
-  --stamp:#973B2B;
-  --line:rgba(33,29,22,.16);
-  --line-strong:rgba(33,29,22,.28);
+  --stamp:#6E1F1F;
+  --line:rgba(59,42,23,.24);
+  --line-strong:rgba(59,42,23,.4);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
-  background:var(--paper);
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(ellipse at 15% 8%, rgba(184,155,94,.35), transparent 45%),
+    radial-gradient(ellipse at 85% 15%, rgba(160,128,72,.28), transparent 50%),
+    radial-gradient(ellipse at 25% 92%, rgba(140,105,58,.3), transparent 48%),
+    radial-gradient(ellipse at 90% 88%, rgba(184,155,94,.3), transparent 45%),
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(90,66,36,.18) 100%);
   color:var(--ink);
-  font-family:'Work Sans',sans-serif;
-  font-weight:300;
+  font-family:'EB Garamond',serif;
+  font-weight:400;
+  font-size:17px;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 img{max-width:100%;display:block;}
 a{color:inherit;}
-.mono{font-family:'Space Mono',monospace;}
-.eng{font-family:'Fraunces',serif;}
+.mono{font-family:'IM Fell English SC',serif;}
+.eng{font-family:'Cinzel',serif;}
 
-/* ---------- texture ---------- */
+/* ---------- texture: aged parchment fiber grain ---------- */
 .grain{
-  position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.035;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.09;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
-
-  
 /* ---------- label plate (museum object label signature element) ---------- */
 .label-plate{
   border:1px solid var(--line-strong);
@@ -57,21 +62,22 @@ a{color:inherit;}
 .label-plate::before{
   content:attr(data-tag);
   position:absolute;top:-11px;left:18px;background:var(--paper);
-  padding:0 8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;
+  padding:0 8px;font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:2px;
   text-transform:uppercase;color:var(--iznik-deep);font-weight:700;
 }
 .label-row{display:flex;gap:22px;flex-wrap:wrap;}
 .label-field{display:flex;flex-direction:column;gap:3px;min-width:120px;}
-.label-field span:first-child{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);}
+.label-field span:first-child{font-family:'IM Fell English SC',serif;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);}
 .label-field span:last-child{font-size:14px;color:var(--ink);font-weight:500;}
 
-/* ---------- stamp ---------- */
+/* ---------- wax seal ---------- */
 .stamp{
   display:inline-flex;align-items:center;justify-content:center;
-  width:78px;height:78px;border-radius:50%;
-  border:2px solid var(--stamp);color:var(--stamp);
-  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;
-  text-align:center;line-height:1.3;transform:rotate(-9deg);opacity:.85;
+  width:78px;height:78px;border-radius:50% 48% 52% 46%/48% 52% 46% 54%;
+  background:radial-gradient(circle at 35% 30%, #8a2b2b, var(--stamp) 60%, #4a1414 100%);
+  color:#EEE1B8;box-shadow:0 2px 5px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.15);
+  font-family:'IM Fell English SC',serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;
+  text-align:center;line-height:1.3;transform:rotate(-9deg);
   flex-shrink:0;
 }
 
@@ -79,30 +85,34 @@ a{color:inherit;}
 .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
 section{position:relative;}
 .section-pad{padding:120px 0;}
-.rule{height:1px;background:var(--line);width:100%;}
+.rule{height:1px;background:var(--line);width:100%;position:relative;}
+.rule::before{
+  content:'❦';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:var(--paper);padding:0 20px;color:var(--brass);font-size:17px;line-height:1;
+}
 .eyebrow{
-  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  font-family:'IM Fell English SC',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--iznik-deep);display:flex;align-items:center;gap:10px;margin-bottom:18px;
 }
 .eyebrow::before{content:'';width:26px;height:1px;background:var(--brass);}
 .h2{
-  font-family:'Fraunces',serif;font-weight:500;font-size:clamp(32px,4.2vw,52px);
+  font-family:'Cinzel',serif;font-weight:500;font-size:clamp(32px,4.2vw,52px);
   line-height:1.08;letter-spacing:-.01em;
 }
-.h2 em{font-style:italic;color:var(--iznik);font-weight:400;}
-.lede{font-size:17px;line-height:1.75;color:var(--ink-soft);max-width:640px;font-weight:300;}
+.h2 em{font-family:'EB Garamond',serif;font-style:italic;color:var(--iznik);font-weight:500;}
+.lede{font-size:17px;line-height:1.75;color:var(--ink-soft);max-width:640px;font-weight:400;}
 
 /* ---------- nav ---------- */
 header{
-  position:sticky;top:0;z-index:50;background:rgba(237,231,216,.92);backdrop-filter:blur(8px);
+  position:sticky;top:0;z-index:50;background:rgba(230,216,174,.93);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
 }
 .nav-inner{max-width:1180px;margin:0 auto;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;}
-.brand{font-family:'Fraunces',serif;font-size:19px;font-weight:500;letter-spacing:.01em;}
+.brand{font-family:'Cinzel',serif;font-size:19px;font-weight:500;letter-spacing:.01em;}
 .brand span{color:var(--iznik);font-style:italic;}
 .navlinks{display:flex;gap:34px;list-style:none;}
 .navlinks a{
-  font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'IM Fell English SC',serif;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;
   text-decoration:none;color:var(--ink-soft);position:relative;padding-bottom:4px;
 }
 .navlinks a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--iznik);transition:width .25s;}
@@ -110,39 +120,41 @@ header{
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
 .hamburger span{width:22px;height:1.5px;background:var(--ink);}
 .mobile-menu{display:none;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);}
-.mobile-menu a{padding:16px 40px;border-top:1px solid var(--line);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;text-decoration:none;color:var(--ink);}
+.mobile-menu a{padding:16px 40px;border-top:1px solid var(--line);font-family:'IM Fell English SC',serif;font-size:12px;letter-spacing:1px;text-decoration:none;color:var(--ink);}
 .mobile-menu.open{display:flex;}
 
 /* ---------- hero: exhibit nameplate ---------- */
 .hero{padding:96px 0 0;position:relative;}
 .hero-top{max-width:1180px;margin:0 auto;padding:0 40px;text-align:center;}
-.hero-kicker{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:26px;}
+.hero-kicker{font-family:'IM Fell English SC',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:26px;}
 .hero-name{
-  font-family:'Fraunces',serif;font-weight:500;font-size:clamp(56px,10vw,132px);
+  font-family:'Cinzel',serif;font-weight:500;font-size:clamp(56px,10vw,132px);
   line-height:.92;letter-spacing:-.015em;
 }
-.hero-name em{font-style:italic;color:var(--iznik);display:block;font-weight:400;}
+.hero-name em{font-family:'EB Garamond',serif;font-style:italic;color:var(--iznik);display:block;font-weight:500;}
 .hero-titles{
-  margin-top:26px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.5px;
+  margin-top:26px;font-family:'IM Fell English SC',serif;font-size:12px;letter-spacing:1.5px;
   text-transform:uppercase;color:var(--ink-soft);
 }
 .hero-plate-wrap{display:flex;justify-content:center;margin:52px 0 0;}
 .hero-plate{
   border:1px solid var(--line-strong);background:var(--card);
   padding:30px 40px;max-width:760px;width:100%;position:relative;
+  box-shadow:0 0 0 5px var(--paper), 0 0 0 6px var(--line-strong);
 }
 .hero-plate::before{
-  content:'TEŞHİR ETİKETİ · ENVANTER NO 001';
+  content:'FERAĞ KAYDI · VARAK NO 1';
   position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--paper);
-  padding:0 10px;font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;color:var(--iznik-deep);font-weight:700;white-space:nowrap;
+  padding:0 10px;font-family:'IM Fell English SC',serif;font-size:9.5px;letter-spacing:2px;color:var(--iznik-deep);font-weight:700;white-space:nowrap;
 }
-.hero-quote{font-family:'Fraunces',serif;font-style:italic;font-size:20px;line-height:1.6;color:var(--ink);text-align:center;margin-bottom:24px;}
+.hero-quote{font-family:'EB Garamond',serif;font-style:italic;font-size:22px;line-height:1.6;color:var(--ink);text-align:center;margin-bottom:24px;}
 .hero-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;border-top:1px solid var(--line);padding-top:22px;}
 .hero-fields .label-field{align-items:center;text-align:center;}
-.hero-cta{display:flex;gap:16px;justify-content:center;margin:44px 0 0;flex-wrap:wrap;}
+.hero-cta{display:flex;gap:26px;justify-content:center;margin:44px 0 0;flex-wrap:wrap;}
 .btn{
-  font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'IM Fell English SC',serif;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;
   padding:15px 28px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--ink);
+  box-shadow:0 0 0 3px var(--paper), 0 0 0 4px var(--line-strong);
   transition:all .25s;
 }
 .btn-solid{background:var(--ink);color:var(--paper);}
@@ -154,7 +166,7 @@ header{
   aspect-ratio:21/9;position:relative;overflow:hidden;
   background:
     repeating-linear-gradient(115deg, rgba(31,92,107,.14) 0 2px, transparent 2px 26px),
-    linear-gradient(135deg,#173b44,#1F5C6B 46%,#2c6b78 70%,#0f2b31);
+    linear-gradient(135deg,#3A1A10,#6E1F1F 46%,#8A5A2E 70%,#241408);
 }
 .hero-frame::after{
   content:'';position:absolute;inset:0;
@@ -163,7 +175,7 @@ header{
 }
 .hero-frame-cap{
   position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;
-  padding:14px 22px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;
+  padding:14px 22px;font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:1.5px;
   color:rgba(237,231,216,.85);text-transform:uppercase;background:linear-gradient(transparent,rgba(15,20,20,.55));
 }
 
@@ -172,8 +184,8 @@ header{
 .stat-grid{max-width:1180px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(5,1fr);}
 .stat{padding:34px 20px;border-left:1px solid var(--line);text-align:center;}
 .stat:first-child{border-left:none;}
-.stat-num{font-family:'Fraunces',serif;font-size:26px;font-weight:500;color:var(--iznik-deep);}
-.stat-lbl{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+.stat-num{font-family:'Cinzel',serif;font-size:26px;font-weight:500;color:var(--iznik-deep);}
+.stat-lbl{font-family:'IM Fell English SC',serif;font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
 
 /* ---------- index / quick nav cards ---------- */
 .index-nav{max-width:1180px;margin:0 auto;padding:110px 40px 0;}
@@ -184,11 +196,11 @@ header{
 }
 .index-item:first-child{border-left:none;}
 .index-item:hover{background:var(--card);}
-.index-item-no{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-faint);}
-.index-item-title{font-family:'Fraunces',serif;font-size:19px;font-weight:500;margin-top:20px;line-height:1.2;}
+.index-item-no{font-family:'IM Fell English SC',serif;font-size:11px;color:var(--ink-faint);}
+.index-item-title{font-family:'Cinzel',serif;font-size:19px;font-weight:500;margin-top:20px;line-height:1.2;}
 .index-item.has-photo{color:#EDE7D8;}
 .index-item.has-photo .index-item-no{color:rgba(237,231,216,.72);}
-.index-item-arrow{font-family:'Space Mono',monospace;font-size:14px;margin-top:20px;color:var(--iznik);}
+.index-item-arrow{font-family:'IM Fell English SC',serif;font-size:14px;margin-top:20px;color:var(--iznik);}
 
 /* ---------- about ---------- */
 .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:start;margin-top:56px;}
@@ -203,20 +215,20 @@ header{
   background:var(--paper);border:2px solid var(--brass);display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;
 }
-.about-frame-medal b{font-family:'Fraunces',serif;font-size:20px;color:var(--brass);}
-.about-frame-medal span{font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);line-height:1.3;margin-top:2px;}
-.about-quote{font-family:'Fraunces',serif;font-style:italic;font-size:24px;line-height:1.5;color:var(--ink);margin-bottom:26px;}
+.about-frame-medal b{font-family:'Cinzel',serif;font-size:20px;color:var(--brass);}
+.about-frame-medal span{font-family:'IM Fell English SC',serif;font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);line-height:1.3;margin-top:2px;}
+.about-quote{font-family:'EB Garamond',serif;font-style:italic;font-weight:500;font-size:24px;line-height:1.5;color:var(--ink);margin-bottom:26px;}
 .about-body p{font-size:16px;line-height:1.85;color:var(--ink-soft);margin-bottom:18px;font-weight:300;}
 .role-row{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 34px;}
 .role-chip{
-  font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;padding:9px 14px;
+  font-family:'IM Fell English SC',serif;font-size:10.5px;letter-spacing:.5px;padding:9px 14px;
   border:1px solid var(--line-strong);color:var(--ink-soft);
 }
 
 /* ---------- photography: contact sheet ---------- */
 .tabs-row{display:flex;gap:0;flex-wrap:wrap;border-bottom:1px solid var(--line-strong);margin:50px 0 0;}
 .tab-btn{
-  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  font-family:'IM Fell English SC',serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;
   padding:14px 20px;background:none;border:none;cursor:pointer;color:var(--ink-faint);position:relative;
 }
 .tab-btn.active{color:var(--ink);}
@@ -227,14 +239,14 @@ header{
 }
 .frame-img{
   position:absolute;inset:0;
-  background:linear-gradient(150deg, var(--fc1,#1F5C6B), var(--fc2,#173b44));
+  background:linear-gradient(150deg, var(--fc1,#6E1F1F), var(--fc2,#3A1010));
 }
 .frame-img::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(237,231,216,.14) 1px,transparent 1.4px);background-size:6px 6px;}
-.frame-num{position:absolute;top:8px;left:10px;font-family:'Space Mono',monospace;font-size:9px;color:rgba(237,231,216,.75);z-index:1;}
+.frame-num{position:absolute;top:8px;left:10px;font-family:'IM Fell English SC',serif;font-size:9px;color:rgba(237,231,216,.75);z-index:1;}
 .frame-cap{
   position:absolute;left:0;right:0;bottom:0;padding:12px 12px 10px;
   background:linear-gradient(transparent,rgba(10,15,15,.62));color:#EDE7D8;
-  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.5px;text-transform:uppercase;
+  font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:.5px;text-transform:uppercase;
 }
 
 /* ---------- books: catalog cards ---------- */
@@ -245,12 +257,12 @@ header{
   border-bottom:1px solid var(--line-strong);
 }
 .book-spine::before{content:'';position:absolute;left:0;top:0;bottom:0;width:14px;background:rgba(33,29,22,.14);}
-.book-mark{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--paper);text-align:center;padding:0 30px;line-height:1.4;}
+.book-mark{font-family:'EB Garamond',serif;font-style:italic;font-weight:500;font-size:15px;color:var(--paper);text-align:center;padding:0 30px;line-height:1.4;}
 .book-body{padding:24px 26px 28px;}
-.book-catno{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--ink-faint);text-transform:uppercase;}
-.book-title{font-family:'Fraunces',serif;font-size:21px;font-weight:500;margin:12px 0 12px;line-height:1.25;}
+.book-catno{font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:1px;color:var(--ink-faint);text-transform:uppercase;}
+.book-title{font-family:'Cinzel',serif;font-size:21px;font-weight:500;margin:12px 0 12px;line-height:1.25;}
 .book-desc{font-size:14.5px;line-height:1.7;color:var(--ink-soft);margin-bottom:20px;font-weight:300;}
-.book-link{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-decoration:none;color:var(--iznik-deep);text-transform:uppercase;border-bottom:1px solid var(--iznik-deep);padding-bottom:2px;}
+.book-link{font-family:'IM Fell English SC',serif;font-size:11px;letter-spacing:1px;text-decoration:none;color:var(--iznik-deep);text-transform:uppercase;border-bottom:1px solid var(--iznik-deep);padding-bottom:2px;}
 
 /* ---------- heritage / award ---------- */
 .heritage-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;margin-top:56px;align-items:start;}
@@ -265,9 +277,9 @@ header{
   width:120px;height:120px;border-radius:50%;border:2px solid var(--brass);margin:0 auto 22px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
-.medal-ring b{font-family:'Fraunces',serif;font-size:30px;color:var(--brass);}
-.medal-ring span{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--ink-faint);}
-.medal-box h3{font-family:'Fraunces',serif;font-size:20px;font-weight:500;margin-bottom:14px;}
+.medal-ring b{font-family:'Cinzel',serif;font-size:30px;color:var(--brass);}
+.medal-ring span{font-family:'IM Fell English SC',serif;font-size:9px;letter-spacing:1px;color:var(--ink-faint);}
+.medal-box h3{font-family:'Cinzel',serif;font-size:20px;font-weight:500;margin-bottom:14px;}
 .medal-box p{font-size:14px;line-height:1.75;color:var(--ink-soft);font-weight:300;}
 
 /* ---------- exhibitions: ledger timeline ---------- */
@@ -277,7 +289,7 @@ header{
 .ledger{margin-top:2px;}
 .ledger-head{
   display:grid;grid-template-columns:70px 1.4fr 1fr .9fr;gap:16px;padding:12px 0;
-  border-bottom:1px solid var(--line-strong);font-family:'Space Mono',monospace;font-size:9.5px;
+  border-bottom:1px solid var(--line-strong);font-family:'IM Fell English SC',serif;font-size:9.5px;
   letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint);
 }
 .ledger-row{
@@ -285,10 +297,10 @@ header{
   border-bottom:1px solid var(--line);align-items:center;font-size:14px;
 }
 .ledger-row:hover{background:var(--card);}
-.ledger-year{font-family:'Space Mono',monospace;color:var(--iznik-deep);font-weight:700;}
-.ledger-title{font-family:'Fraunces',serif;font-size:16px;font-weight:500;}
+.ledger-year{font-family:'IM Fell English SC',serif;color:var(--iznik-deep);font-weight:700;}
+.ledger-title{font-family:'Cinzel',serif;font-size:16px;font-weight:500;}
 .ledger-topic{color:var(--ink-soft);font-size:13.5px;}
-.ledger-loc{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--ink-faint);}
+.ledger-loc{font-family:'IM Fell English SC',serif;font-size:11.5px;color:var(--ink-faint);}
 .ledger-row{cursor:pointer;}
 .ledger-hint{margin-top:22px;font-size:10.5px;color:var(--ink-faint);letter-spacing:.5px;}
 .drive-note{margin-top:18px;font-size:10.5px;color:var(--ink-faint);letter-spacing:.5px;}
@@ -299,7 +311,7 @@ header{
 .frame{background-size:cover;background-position:center;}
 .frame.loading .frame-img{animation:pulseFrame 1.6s ease-in-out infinite;}
 @keyframes pulseFrame{0%,100%{opacity:1;}50%{opacity:.55;}}
-.frame-count{position:absolute;bottom:10px;right:10px;font-family:'Space Mono',monospace;font-size:9px;color:rgba(237,231,216,.8);z-index:1;}
+.frame-count{position:absolute;bottom:10px;right:10px;font-family:'IM Fell English SC',serif;font-size:9px;color:rgba(237,231,216,.8);z-index:1;}
 
 /* ---------- gallery modal ---------- */
 .gallery-modal{
@@ -309,12 +321,12 @@ header{
 .gallery-modal.open{display:block;}
 .gallery-modal-inner{max-width:1040px;margin:0 auto;position:relative;}
 .gallery-modal-head{margin-bottom:30px;color:var(--paper);}
-.gallery-modal-tag{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#b9d3d8;}
+.gallery-modal-tag{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#D9BE85;}
 .gallery-modal-title{font-size:32px;font-weight:500;margin:12px 0 10px;}
-.gallery-modal-desc{font-size:14.5px;line-height:1.7;color:rgba(237,231,216,.7);max-width:640px;font-family:'Work Sans',sans-serif;}
+.gallery-modal-desc{font-size:14.5px;line-height:1.7;color:rgba(237,231,216,.7);max-width:640px;font-family:'EB Garamond',serif;}
 .gallery-modal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 .gallery-modal-grid img{width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;background:#2a2620;}
-.gallery-modal-msg{color:rgba(237,231,216,.65);font-style:italic;font-family:'Fraunces',serif;padding:40px 0;}
+.gallery-modal-msg{color:rgba(237,231,216,.65);font-style:italic;font-family:'Cinzel',serif;padding:40px 0;}
 .gallery-close{
   position:absolute;top:-44px;right:0;background:none;border:1px solid rgba(237,231,216,.4);color:var(--paper);
   width:36px;height:36px;cursor:pointer;font-size:15px;
@@ -351,28 +363,28 @@ header{
 /* ---------- education ---------- */
 .edu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);margin-top:56px;}
 .edu-card{background:var(--paper);padding:34px 26px;}
-.edu-no{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-faint);}
-.edu-title{font-family:'Fraunces',serif;font-size:19px;font-weight:500;margin:18px 0 14px;}
+.edu-no{font-family:'IM Fell English SC',serif;font-size:11px;color:var(--ink-faint);}
+.edu-title{font-family:'Cinzel',serif;font-size:19px;font-weight:500;margin:18px 0 14px;}
 .edu-desc{font-size:13.5px;line-height:1.7;color:var(--ink-soft);font-weight:300;}
 
 /* ---------- press ---------- */
 .press-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);margin-top:56px;}
 .press-item{background:var(--card);padding:26px 20px;display:flex;flex-direction:column;gap:8px;min-height:110px;justify-content:center;}
-.press-name{font-family:'Fraunces',serif;font-size:16px;font-weight:500;}
-.press-role{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);}
+.press-name{font-family:'Cinzel',serif;font-size:16px;font-weight:500;}
+.press-role{font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);}
 
 /* ---------- contact ---------- */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:56px;}
 .cinfo-list{list-style:none;margin-top:28px;}
 .cinfo-list li{display:flex;gap:18px;padding:16px 0;border-top:1px solid var(--line);}
 .cinfo-list li:last-child{border-bottom:1px solid var(--line);}
-.cinfo-label{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;}
+.cinfo-label{font-family:'IM Fell English SC',serif;font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;}
 .cinfo-val{font-size:14.5px;color:var(--ink);}
 .cinfo-val a{text-decoration:none;border-bottom:1px solid var(--line-strong);}
 .cform{border:1px solid var(--line-strong);background:var(--card);padding:32px;}
 .cform input,.cform textarea{
   width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-strong);
-  padding:14px 0;font-family:'Work Sans',sans-serif;font-size:14.5px;color:var(--ink);margin-bottom:20px;
+  padding:14px 0;font-family:'EB Garamond',serif;font-size:14.5px;color:var(--ink);margin-bottom:20px;
 }
 .cform input::placeholder,.cform textarea::placeholder{color:var(--ink-faint);}
 .cform textarea{min-height:100px;resize:vertical;}
@@ -380,9 +392,9 @@ header{
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 .footer-inner{max-width:1180px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
-.footer-copy{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--ink-faint);line-height:1.8;}
+.footer-copy{font-family:'IM Fell English SC',serif;font-size:10.5px;color:var(--ink-faint);line-height:1.8;}
 .footer-links{display:flex;gap:24px;}
-.footer-links a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--ink-soft);}
+.footer-links a{font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--ink-soft);}
 
 /* ---------- reveal animation ---------- */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
@@ -445,7 +457,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-top">
-    <div class="hero-kicker reveal">Edirne, Türkiye · Kalıcı Koleksiyon</div>
+    <div class="hero-kicker reveal">Edirne, Türkiye · Bir Ömrün Sayfaları</div>
     <h1 class="hero-name reveal">ENVER<em>ŞENGÜL</em></h1>
     <p class="hero-titles reveal">Fotoğraf Sanatçısı — Yazar — Müze Yöneticisi — Gazeteci — Eğitimci</p>
   </div>
@@ -469,7 +481,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 
   <div class="hero-frame-wrap reveal">
     <div class="hero-frame" data-anasayfa="hero">
-      <div class="hero-frame-cap"><span>Portre · Edirne</span><span>Envanter No 000</span></div>
+      <div class="hero-frame-cap"><span>Tasvir · Edirne</span><span>Varak No 1</span></div>
     </div>
   </div>
 </section>
@@ -488,27 +500,27 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <div class="index-nav">
   <div class="index-grid reveal">
     <a href="#fotografcilik" class="index-item" data-anasayfa="kart-foto">
-      <span class="index-item-no mono">001</span>
+      <span class="index-item-no mono">I</span>
       <span class="index-item-title">Fotoğrafçılığım</span>
       <span class="index-item-arrow">→</span>
     </a>
     <a href="#yazarlik" class="index-item" data-anasayfa="kart-yazar">
-      <span class="index-item-no mono">002</span>
+      <span class="index-item-no mono">II</span>
       <span class="index-item-title">Yazarlığım</span>
       <span class="index-item-arrow">→</span>
     </a>
     <a href="#kulturel" class="index-item" data-anasayfa="kart-kultur">
-      <span class="index-item-no mono">003</span>
+      <span class="index-item-no mono">III</span>
       <span class="index-item-title">Kültürel Miras</span>
       <span class="index-item-arrow">→</span>
     </a>
     <a href="#egitim" class="index-item" data-anasayfa="kart-egitim">
-      <span class="index-item-no mono">004</span>
+      <span class="index-item-no mono">IV</span>
       <span class="index-item-title">Eğitim & Atölyeler</span>
       <span class="index-item-arrow">→</span>
     </a>
     <a href="#gazetecilik" class="index-item" data-anasayfa="kart-gazete">
-      <span class="index-item-no mono">005</span>
+      <span class="index-item-no mono">V</span>
       <span class="index-item-title">Gazetecilik & Yazılar</span>
       <span class="index-item-arrow">→</span>
     </a>
@@ -518,7 +530,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- ABOUT -->
 <section class="section-pad" id="hakkimda">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 002 · Hakkımda</div>
+    <div class="eyebrow reveal">Bâb-ı Evvel · Hakkımda</div>
     <h2 class="h2 reveal">Bitlis'ten Edirne'ye<br><em>bir ömrün birikimi</em></h2>
     <div class="about-grid">
       <div class="reveal">
@@ -551,7 +563,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- PHOTOGRAPHY -->
 <section class="section-pad" id="fotografcilik">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 001 · Fotoğrafçılığım</div>
+    <div class="eyebrow reveal">Bâb-ı Sânî · Fotoğrafçılığım</div>
     <h2 class="h2 reveal">Objektifin <em>gözüyle</em></h2>
     <p class="lede reveal" style="margin-top:18px;">Portfolyolar, yurt içi ve yurt dışı fotoğraf çalışmaları — kapak görselleri ve galeriler Google Drive'daki fotoğraf klasörlerinizden canlı olarak yükleniyor.</p>
 
@@ -593,11 +605,11 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- BOOKS -->
 <section class="section-pad" id="yazarlik">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 002 · Yazarlığım</div>
+    <div class="eyebrow reveal">Bâb-ı Sâlis · Yazarlığım</div>
     <h2 class="h2 reveal">Kelimelerin <em>evreni</em></h2>
     <div class="books-grid">
       <div class="book-card reveal">
-        <div class="book-spine" data-anasayfa="kitap-daruessifa" style="background:linear-gradient(150deg,#1F5C6B,#0f2b31);"><div class="book-mark">Darüşşifa<br>Delilik Mevsimi</div></div>
+        <div class="book-spine" data-anasayfa="kitap-daruessifa" style="background:linear-gradient(150deg,#6E1F1F,#3A1010);"><div class="book-mark">Darüşşifa<br>Delilik Mevsimi</div></div>
         <div class="book-body">
           <span class="book-catno">Kayıt · Roman</span>
           <h3 class="book-title">Darüşşifa<br>Delilik Mevsimi</h3>
@@ -606,7 +618,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
         </div>
       </div>
       <div class="book-card reveal">
-        <div class="book-spine" data-anasayfa="kitap-kayipzaman" style="background:linear-gradient(150deg,#5b5346,#211d16);"><div class="book-mark">Kayıp Zamanın<br>Bekçisi</div></div>
+        <div class="book-spine" data-anasayfa="kitap-kayipzaman" style="background:linear-gradient(150deg,#5C4526,#241708);"><div class="book-mark">Kayıp Zamanın<br>Bekçisi</div></div>
         <div class="book-body">
           <span class="book-catno">Kayıt · Roman</span>
           <h3 class="book-title">Kayıp Zamanın<br>Bekçisi</h3>
@@ -615,7 +627,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
         </div>
       </div>
       <div class="book-card reveal">
-        <div class="book-spine" data-anasayfa="kitap-kusatma" style="background:linear-gradient(150deg,#973B2B,#3d1611);"><div class="book-mark">Kuşatma<br>Bir Balkan Savaşı Romanı</div></div>
+        <div class="book-spine" data-anasayfa="kitap-kusatma" style="background:linear-gradient(150deg,#9C7A2E,#4A3610);"><div class="book-mark">Kuşatma<br>Bir Balkan Savaşı Romanı</div></div>
         <div class="book-body">
           <span class="book-catno">Kayıt · Roman</span>
           <h3 class="book-title">Kuşatma<br>Bir Balkan Savaşı Romanı</h3>
@@ -636,7 +648,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- HERITAGE -->
 <section class="section-pad" id="kulturel">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 003 · Kültürel Miras</div>
+    <div class="eyebrow reveal">Bâb-ı Râbi' · Kültürel Miras</div>
     <h2 class="h2 reveal">Müzecilik & <em>ödüller</em></h2>
     <div class="heritage-grid">
       <div class="reveal">
@@ -669,7 +681,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- EXHIBITIONS -->
 <section class="section-pad" id="sergiler">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 006 · Ulusal ve Uluslararası Sergiler</div>
+    <div class="eyebrow reveal">Bâb-ı Hâmis · Ulusal ve Uluslararası Sergiler</div>
     <h2 class="h2 reveal">Karelerin <em>yolculuğu</em></h2>
     <p class="lede reveal" style="margin-top:18px;">1991'den 2012'ye, Bitlis'ten New York'a — kişisel ve karma fotoğraf sergilerinden bir seçki, kayıt defteri düzeninde.</p>
 
@@ -700,7 +712,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- EDUCATION -->
 <section class="section-pad" id="egitim">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 004 · Eğitim & Atölyeler</div>
+    <div class="eyebrow reveal">Bâb-ı Sâdis · Eğitim & Atölyeler</div>
     <h2 class="h2 reveal">Bilgiyi <em>paylaşmak</em></h2>
     <div class="edu-grid">
       <div class="edu-card reveal">
@@ -732,7 +744,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- PRESS -->
 <section class="section-pad" id="gazetecilik">
   <div class="wrap">
-    <div class="eyebrow reveal">Envanter No 005 · Gazetecilik & Yazılar</div>
+    <div class="eyebrow reveal">Bâb-ı Sâbiʿ · Gazetecilik & Yazılar</div>
     <h2 class="h2 reveal">Basın & <em>kalem</em></h2>
     <div class="press-grid">
       <div class="press-item reveal"><div class="press-name">TRT</div><div class="press-role">Muhabirlik</div></div>
@@ -752,7 +764,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- CONTACT -->
 <section class="section-pad" id="iletisim">
   <div class="wrap">
-    <div class="eyebrow reveal">İletişim</div>
+    <div class="eyebrow reveal">Bâb-ı Hâtime · İletişim</div>
     <h2 class="h2 reveal">Bir <em>mesaj</em> gönderin</h2>
     <div class="contact-grid">
       <div class="reveal">
@@ -996,7 +1008,7 @@ async function resolveCatFolderId(cat){
 }
 
 // ---- render photo tab frames ----
-const FRAME_TONES = ['#1F5C6B,#173b44','#5b5346,#211d16','#9c7a2e,#4a3a17','#2c6b78,#0f2b31','#973B2B,#3d1611','#8c8372,#3a352b'];
+const FRAME_TONES = ['#6E1F1F,#3A1010','#5C4526,#2A1B0E','#9C7A2E,#4A3610','#7A5A2E,#3D2C10','#4A2E1A,#241408','#8A6A3A,#3E2C14'];
 
 function renderPhotoTab(tabKey){
   const el = document.getElementById('pt-' + tabKey);
@@ -1109,7 +1121,7 @@ let currentIndex = 0;
 async function openGallery(catKey){
   const cat = GALLERY_CATS[catKey];
   if (!cat) return;
-  document.getElementById('galleryTag').textContent = 'Envanter · ' + catKey;
+  document.getElementById('galleryTag').textContent = 'Varak · ' + catKey;
   document.getElementById('galleryTitle').textContent = cat.title;
   document.getElementById('galleryDesc').textContent = cat.desc;
   const grid = document.getElementById('galleryGrid');
@@ -1272,6 +1284,8 @@ async function checkDriveConnection(){
     note.classList.add('err');
   }
 }
+
+  
 checkDriveConnection();
 loadAnasayfaImages();
 renderPhotoTab('portfolyo');
