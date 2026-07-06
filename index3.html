@@ -184,6 +184,8 @@ header{
 .index-item:hover{background:var(--card);}
 .index-item-no{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-faint);}
 .index-item-title{font-family:'Fraunces',serif;font-size:19px;font-weight:500;margin-top:20px;line-height:1.2;}
+.index-item.has-photo{color:#EDE7D8;}
+.index-item.has-photo .index-item-no{color:rgba(237,231,216,.72);}
 .index-item-arrow{font-family:'Space Mono',monospace;font-size:14px;margin-top:20px;color:var(--iznik);}
 
 /* ---------- about ---------- */
@@ -322,6 +324,24 @@ header{
 .lightbox.open{display:flex;}
 .lightbox img{max-width:100%;max-height:90vh;object-fit:contain;}
 .lightbox .gallery-close{top:20px;right:20px;}
+.lb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);background:rgba(237,231,216,.08);
+  border:1px solid rgba(237,231,216,.35);color:var(--paper);width:52px;height:52px;border-radius:50%;
+  font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;
+  transition:background .2s;
+}
+.lb-nav:hover{background:rgba(237,231,216,.2);}
+.lb-prev{left:24px;}
+.lb-next{right:24px;}
+.lb-counter{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  color:rgba(237,231,216,.75);font-size:11px;letter-spacing:1.5px;
+}
+@media (max-width:640px){
+  .lb-nav{width:40px;height:40px;font-size:20px;}
+  .lb-prev{left:10px;}
+  .lb-next{right:10px;}
+}
 @media (max-width:640px){
   .gallery-modal-grid{grid-template-columns:repeat(2,1fr);}
 }
@@ -446,7 +466,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
   </div>
 
   <div class="hero-frame-wrap reveal">
-    <div class="hero-frame">
+    <div class="hero-frame" data-anasayfa="hero">
       <div class="hero-frame-cap"><span>Portre · Edirne</span><span>Envanter No 000</span></div>
     </div>
   </div>
@@ -465,27 +485,27 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
 <!-- QUICK INDEX -->
 <div class="index-nav">
   <div class="index-grid reveal">
-    <a href="#fotografcilik" class="index-item">
+    <a href="#fotografcilik" class="index-item" data-anasayfa="kart-foto">
       <span class="index-item-no mono">001</span>
       <span class="index-item-title">Fotoğrafçılığım</span>
       <span class="index-item-arrow">→</span>
     </a>
-    <a href="#yazarlik" class="index-item">
+    <a href="#yazarlik" class="index-item" data-anasayfa="kart-yazar">
       <span class="index-item-no mono">002</span>
       <span class="index-item-title">Yazarlığım</span>
       <span class="index-item-arrow">→</span>
     </a>
-    <a href="#kulturel" class="index-item">
+    <a href="#kulturel" class="index-item" data-anasayfa="kart-kultur">
       <span class="index-item-no mono">003</span>
       <span class="index-item-title">Kültürel Miras</span>
       <span class="index-item-arrow">→</span>
     </a>
-    <a href="#egitim" class="index-item">
+    <a href="#egitim" class="index-item" data-anasayfa="kart-egitim">
       <span class="index-item-no mono">004</span>
       <span class="index-item-title">Eğitim & Atölyeler</span>
       <span class="index-item-arrow">→</span>
     </a>
-    <a href="#gazetecilik" class="index-item">
+    <a href="#gazetecilik" class="index-item" data-anasayfa="kart-gazete">
       <span class="index-item-no mono">005</span>
       <span class="index-item-title">Gazetecilik & Yazılar</span>
       <span class="index-item-arrow">→</span>
@@ -500,7 +520,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
     <h2 class="h2 reveal">Bitlis'ten Edirne'ye<br><em>bir ömrün birikimi</em></h2>
     <div class="about-grid">
       <div class="reveal">
-        <div class="about-frame">
+        <div class="about-frame" data-anasayfa="hakkimda">
           <div class="about-frame-medal"><b>2004</b><span>Avrupa<br>Müze Ödülü</span></div>
         </div>
       </div>
@@ -575,7 +595,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
     <h2 class="h2 reveal">Kelimelerin <em>evreni</em></h2>
     <div class="books-grid">
       <div class="book-card reveal">
-        <div class="book-spine" style="background:linear-gradient(150deg,#1F5C6B,#0f2b31);"><div class="book-mark">Darüşşifa<br>Delilik Mevsimi</div></div>
+        <div class="book-spine" data-anasayfa="kitap-daruessifa" style="background:linear-gradient(150deg,#1F5C6B,#0f2b31);"><div class="book-mark">Darüşşifa<br>Delilik Mevsimi</div></div>
         <div class="book-body">
           <span class="book-catno">Kayıt · Roman</span>
           <h3 class="book-title">Darüşşifa<br>Delilik Mevsimi</h3>
@@ -584,7 +604,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
         </div>
       </div>
       <div class="book-card reveal">
-        <div class="book-spine" style="background:linear-gradient(150deg,#5b5346,#211d16);"><div class="book-mark">Kayıp Zamanın<br>Bekçisi</div></div>
+        <div class="book-spine" data-anasayfa="kitap-kayipzaman" style="background:linear-gradient(150deg,#5b5346,#211d16);"><div class="book-mark">Kayıp Zamanın<br>Bekçisi</div></div>
         <div class="book-body">
           <span class="book-catno">Kayıt · Roman</span>
           <h3 class="book-title">Kayıp Zamanın<br>Bekçisi</h3>
@@ -593,7 +613,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
         </div>
       </div>
       <div class="book-card reveal">
-        <div class="book-spine" style="background:linear-gradient(150deg,#973B2B,#3d1611);"><div class="book-mark">Kuşatma<br>Bir Balkan Savaşı Romanı</div></div>
+        <div class="book-spine" data-anasayfa="kitap-kusatma" style="background:linear-gradient(150deg,#973B2B,#3d1611);"><div class="book-mark">Kuşatma<br>Bir Balkan Savaşı Romanı</div></div>
         <div class="book-body">
           <span class="book-catno">Kayıt · Roman</span>
           <h3 class="book-title">Kuşatma<br>Bir Balkan Savaşı Romanı</h3>
@@ -632,7 +652,7 @@ footer{border-top:1px solid var(--line-strong);padding:50px 0;}
         </ul>
       </div>
       <div class="reveal">
-        <div class="medal-box">
+        <div class="medal-box" data-anasayfa="odul">
           <div class="medal-ring"><b>2004</b><span>AVRUPA MÜZE ÖDÜLÜ</span></div>
           <h3>Avrupa'nın En İyi Müzesi</h3>
           <p>Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi, bu prestijli ödüle layık görülerek Türkiye müzeciliği tarihinde bir ilk olan bu başarıyı elde etti.</p>
@@ -1081,6 +1101,8 @@ document.querySelectorAll('.ex-tabs .tab-btn').forEach(btn=>{
 // ---- gallery modal ----
 const galleryModal = document.getElementById('galleryModal');
 const lightbox = document.getElementById('lightbox');
+let currentPhotos = [];
+let currentIndex = 0;
 
 async function openGallery(catKey){
   const cat = GALLERY_CATS[catKey];
@@ -1099,27 +1121,136 @@ async function openGallery(catKey){
     return;
   }
   const photos = await getPhotosInFolder(folderId);
+  currentPhotos = photos;
   if (!photos.length){
     grid.innerHTML = '<p class="gallery-modal-msg">Bu klasörde henüz fotoğraf yok.</p>';
     return;
   }
-  grid.innerHTML = photos.map(p => `<img src="${driveImgUrl(p.id,'w400')}" loading="lazy" onclick="openLightbox('${driveImgUrl(p.id,'w1600')}')">`).join('');
+  grid.innerHTML = photos.map((p,i) => `<img src="${driveImgUrl(p.id,'w400')}" loading="lazy" onclick="openLightbox(${i})">`).join('');
 }
 
-function openLightbox(url){
-  document.getElementById('lightboxImg').src = url;
+function openLightbox(index){
+  currentIndex = index;
+  updateLightboxImg();
   lightbox.classList.add('open');
 }
-document.getElementById('lightboxClose').addEventListener('click', ()=>{
+function updateLightboxImg(){
+  if (!currentPhotos.length) return;
+  document.getElementById('lightboxImg').src = driveImgUrl(currentPhotos[currentIndex].id, 'w1600');
+  document.getElementById('lbCounter').textContent = (currentIndex+1) + ' / ' + currentPhotos.length;
+}
+function lbNav(dir){
+  if (!currentPhotos.length) return;
+  currentIndex = (currentIndex + dir + currentPhotos.length) % currentPhotos.length;
+  updateLightboxImg();
+}
+document.getElementById('lbPrev').addEventListener('click', ()=>lbNav(-1));
+document.getElementById('lbNext').addEventListener('click', ()=>lbNav(1));
+
+function closeLightbox(){
   lightbox.classList.remove('open');
   document.getElementById('lightboxImg').src = '';
-});
-document.getElementById('galleryClose').addEventListener('click', ()=>{
+}
+function closeGalleryModal(){
   galleryModal.classList.remove('open');
   document.body.style.overflow = '';
+}
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('galleryClose').addEventListener('click', closeGalleryModal);
+galleryModal.addEventListener('click', (e)=>{ if(e.target === galleryModal) closeGalleryModal(); });
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+
+document.addEventListener('keydown', (e)=>{
+  if (lightbox.classList.contains('open')){
+    if (e.key === 'ArrowRight') lbNav(1);
+    else if (e.key === 'ArrowLeft') lbNav(-1);
+    else if (e.key === 'Escape') closeLightbox();
+  } else if (galleryModal.classList.contains('open') && e.key === 'Escape'){
+    closeGalleryModal();
+  }
 });
-galleryModal.addEventListener('click', (e)=>{ if(e.target === galleryModal){ galleryModal.classList.remove('open'); document.body.style.overflow=''; } });
-lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox){ lightbox.classList.remove('open'); document.getElementById('lightboxImg').src=''; } });
+
+// ═══════════════════════════════════════════════════
+// ANASAYFA SABİT GÖRSELLERİ — WEB > ANASAYFA klasöründen
+// Dosya adları uzantıdan bağımsız eşleştirilir: "hero.jpg", "hero.webp", "hero.png" — hepsi "hero" anahtarıyla eşleşir.
+// ═══════════════════════════════════════════════════
+const ANASAYFA_IMAGES = {
+  'hero':              { selector:'[data-anasayfa="hero"]' },
+  'hakkimda':          { selector:'[data-anasayfa="hakkimda"]' },
+  'kart-foto':         { selector:'[data-anasayfa="kart-foto"]' },
+  'kart-yazar':        { selector:'[data-anasayfa="kart-yazar"]' },
+  'kart-kultur':       { selector:'[data-anasayfa="kart-kultur"]' },
+  'kart-egitim':       { selector:'[data-anasayfa="kart-egitim"]' },
+  'kart-gazete':       { selector:'[data-anasayfa="kart-gazete"]' },
+  'kitap-daruessifa':  { selector:'[data-anasayfa="kitap-daruessifa"]' },
+  'kitap-kayipzaman':  { selector:'[data-anasayfa="kitap-kayipzaman"]' },
+  'kitap-kusatma':     { selector:'[data-anasayfa="kitap-kusatma"]' },
+  'odul':              { selector:'[data-anasayfa="odul"]' },
+};
+// her anahtar için sahne rengi (scrim) — fotoğrafın üstündeki yazı hep okunur kalsın diye
+const ANASAYFA_SCRIM = {
+  'hero':             'linear-gradient(180deg, rgba(10,15,15,.05), rgba(8,12,12,.32))',
+  'hakkimda':         'linear-gradient(160deg, rgba(20,17,12,.04), rgba(15,13,9,.1))',
+  'kart-foto':        'linear-gradient(180deg, rgba(15,15,10,.2), rgba(10,10,8,.8))',
+  'kart-yazar':       'linear-gradient(180deg, rgba(15,15,10,.2), rgba(10,10,8,.8))',
+  'kart-kultur':      'linear-gradient(180deg, rgba(15,15,10,.2), rgba(10,10,8,.8))',
+  'kart-egitim':      'linear-gradient(180deg, rgba(15,15,10,.2), rgba(10,10,8,.8))',
+  'kart-gazete':      'linear-gradient(180deg, rgba(15,15,10,.2), rgba(10,10,8,.8))',
+  'kitap-daruessifa': 'linear-gradient(180deg, rgba(10,10,8,.1), rgba(8,8,6,.6))',
+  'kitap-kayipzaman': 'linear-gradient(180deg, rgba(10,10,8,.1), rgba(8,8,6,.6))',
+  'kitap-kusatma':    'linear-gradient(180deg, rgba(10,10,8,.1), rgba(8,8,6,.6))',
+  'odul':             'linear-gradient(rgba(244,240,228,.78), rgba(244,240,228,.78))',
+};
+
+async function loadAnasayfaImages(){
+  const note = document.getElementById('driveNote');
+  const anasayfaId = await getFolderIdByName(DRIVE_ROOT_ID, 'ANASAYFA');
+  if (!anasayfaId){
+    console.warn('ANASAYFA klasörü bulunamadı. WEB klasörü altında "ANASAYFA" adında bir klasör olduğundan emin olun.');
+    return;
+  }
+  const q = encodeURIComponent(`'${anasayfaId}' in parents and trashed=false`);
+  const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&pageSize=100&key=${DRIVE_API_KEY}`;
+  let files = [];
+  try{
+    const r = await fetch(url);
+    const d = await r.json();
+    if (d.error){ console.warn('ANASAYFA görselleri alınamadı:', d.error.message); return; }
+    files = d.files || [];
+  }catch(e){ console.warn('ANASAYFA görselleri alınamadı:', e); return; }
+
+  let matched = 0;
+  Object.keys(ANASAYFA_IMAGES).forEach(key=>{
+    const cfg = ANASAYFA_IMAGES[key];
+    // önce tam ada yakın eşleşme (uzantı farketmeksizin "key.herhangibirsey"), sonra gevşek içerir eşleşmesi dene
+    const file = files.find(f => f.name.toLowerCase().startsWith(key.toLowerCase() + '.'))
+              || files.find(f => f.name.toLowerCase() === key.toLowerCase())
+              || files.find(f => f.name.toLowerCase().includes(key.toLowerCase()));
+    if (!file){
+      console.warn('ANASAYFA görseli bulunamadı (uzantısı ne olursa olsun "'+key+'" ile başlayan bir dosya arandı):', key);
+      return;
+    }
+    matched++;
+    const size = (key === 'hero') ? 'w1920' : 'w1200';
+    const imgUrl = driveImgUrl(file.id, size);
+    const scrim = ANASAYFA_SCRIM[key] || '';
+    document.querySelectorAll(cfg.selector).forEach(el=>{
+      const img = new Image();
+      img.onload = () => {
+        el.style.backgroundImage = (scrim ? scrim + ', ' : '') + `url('${imgUrl}')`;
+        el.style.backgroundSize = 'cover';
+        el.style.backgroundPosition = 'center';
+        el.classList.add('has-photo');
+      };
+      img.onerror = () => { console.warn('Görsel indirilemedi:', file.name); };
+      img.src = imgUrl;
+    });
+  });
+  if (note && matched === 0){
+    note.textContent = 'ANASAYFA klasörü bulundu ama içindeki dosya adları eşleşmedi (hero, hakkimda, kart-foto… gibi adlarla başlamalı).';
+    note.classList.add('err');
+  }
+}
 
 // ---- init: connectivity check + first tab render ----
 async function checkDriveConnection(){
@@ -1139,8 +1270,8 @@ async function checkDriveConnection(){
     note.classList.add('err');
   }
 }
-  
 checkDriveConnection();
+loadAnasayfaImages();
 renderPhotoTab('portfolyo');
 </script>
 </body>
