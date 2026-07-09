@@ -309,7 +309,11 @@ nav{
 .books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-bottom:56px;}
 .book-card{background:var(--dark2);overflow:hidden;transition:transform .3s,box-shadow .3s;}
 .book-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.5);}
-.book-cover{aspect-ratio:2/3;position:relative;display:flex;align-items:center;justify-content:center;padding:40px 32px;}
+.book-cover{aspect-ratio:2/3;position:relative;display:flex;align-items:center;justify-content:center;padding:40px 32px;cursor:pointer;}
+.book-cover::after{content:"Yazıyı Oku";position:absolute;inset:auto 0 18px 0;text-align:center;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);opacity:0;transition:opacity .3s;pointer-events:none;}
+.book-card:hover .book-cover::after{opacity:.85;}
+.text-lightbox-body.tl-typing{position:relative;}
+.text-lightbox-body.tl-typing p::after{content:"▌";color:var(--gold);}
 .bc-1{background:url("kitap-daruessifa.jpg") center/cover no-repeat;}
 .bc-2{background:url("kitap-kayipzaman.jpg") center/cover no-repeat;}
 .bc-3{background:url("kitap-kusatma.jpg") center/cover no-repeat;}
@@ -1234,7 +1238,7 @@ footer { text-align:center; }
     <h2 class="section-title aos" data-ek="yazarlik_title" data-ek-br="1" data-ek-label="Yazarlık · Başlık" data-ek-group="Yazarlık">Kelimelerin <em>Evreni</em></h2>
     <div class="books-grid">
       <div class="book-card aos">
-        <div class="book-cover bc-1">
+        <div class="book-cover bc-1" onclick="openBookLightbox('book1')">
           <div class="book-cover-inner">
             <div class="bc-ornament">⚕</div>
             <div class="bc-title">Darüşşifa<br>Delilik Mevsimi</div>
@@ -1249,7 +1253,7 @@ footer { text-align:center; }
         </div>
       </div>
       <div class="book-card aos d1">
-        <div class="book-cover bc-2">
+        <div class="book-cover bc-2" onclick="openBookLightbox('book2')">
           <div class="book-cover-inner">
             <div class="bc-ornament">⏳</div>
             <div class="bc-title">Kayıp Zamanın<br>Bekçisi</div>
@@ -1264,7 +1268,7 @@ footer { text-align:center; }
         </div>
       </div>
       <div class="book-card aos d2">
-        <div class="book-cover bc-3">
+        <div class="book-cover bc-3" onclick="openBookLightbox('book3')">
           <div class="book-cover-inner">
             <div class="bc-ornament">⚔</div>
             <div class="bc-title">Kuşatma<br>Bir Balkan Savaşı Romanı</div>
@@ -2052,6 +2056,15 @@ footer { text-align:center; }
     <div class="text-lightbox-signature">Enver Şengül</div>
   </div>
 </div>
+<div class="text-lightbox" id="bookLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeBookLightbox()">✕</button>
+    <div class="text-lightbox-eyebrow" id="bookLightboxTag">Roman</div>
+    <h3 class="text-lightbox-title" id="bookLightboxTitle"></h3>
+    <div class="text-lightbox-body" id="bookLightboxBody"><p id="bookLightboxText"></p></div>
+    <div class="text-lightbox-signature" id="bookLightboxSignature">Enver Şengül</div>
+  </div>
+</div>
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
   <button class="lb-music-toggle music-toggle-btn" onclick="toggleBgMusic()" aria-label="Müzik" title="Müziği aç/kapat">🔊</button>
@@ -2663,6 +2676,84 @@ document.getElementById('kesifLightbox').addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('kesifLightbox');
   if (modal.classList.contains('open') && e.key === 'Escape') closeKesifYazisi();
+});
+
+// ══════ Yazarlığım: kitap tanıtım yazıları (yazılış animasyonlu) ══════
+const BOOK_DETAILS = {
+  book1: {
+    tag: 'Roman',
+    title: 'Darüşşifa · Delilik Mevsimi',
+    signature: 'Ahmet Ümit',
+    text: `Enver Şengül, Edirne Sultan II. Bayezid Darüşşifası'nda oluşturulan, Sağlık Müzesi'nde uzun yıllar yönetici olarak görev yaptığı süre boyunca elde ettiği birikimini nihayet tarihi bir romanla taçlandırıyor. Roman, bizleri Edirne'deki Osmanlı Sarayı'nın en şaşaalı günlerini yaşadığı 17. yüzyıla götürüyor. Osmanlı'nın ikinci payitahtı olan Edirne, sultanların da gözdesiydi. Birçok padişah gibi avcılığıyla ünlü Sultan 4. Mehmed Han da Edirne'yi çok sevmiş, payitaht İstanbul olmasına rağmen Devlet-i Aliyye'yi, üç nehrin birleştiği ve yeşil ormanlıklar içindeki Edirne'den yönetmişti. Yazar, o günlerin renkli bir hikâyesini sunuyor bizlere. Üç kıtanın yönetildiği Osmanlı Sarayı'nın ve günlerce süren büyük sünnet şenliklerindeki dillere destan eğlencelerin yanı sıra, tababet tarihinde önemli bir yeri olan ve akıl hastalarının musiki ile de tedavi edildiği Edirne Darüşşifası'nda yaşananları da akıcı bir dille ve belgelere dayanarak aktarıyor. Öyle ki; satırların arasında, o dönemdeki Edirne Sarayı ve anıtsal yapılarla bezeli Edirne sokaklarında, okurlarını bir zaman yolculuğuna çıkarmakla kalmıyor, Neyzen Destari'nin musiki ilmindeki ruha şifa olan nağmelerinin büyüsüne kapılarak, medresede eğitim gören Seydi Ali ve Müneccimbaşı Şeyh Ahmed Dede'yle birlikte, mısralar arasına ebced hesabıyla şifrelenmiş önemli sırların peşine düşürüyor. Ve Sinan ile Hacer'in hasta odalarında başlayan o imkânsız aşk hikâyesi de tıpkı romandaki sarmaşık gibi bizi sarıp sarmalıyor. Yoğun bir emekle yoğrulmuş bu kitabı, bir edebiyat kitabı olduğu kadar bir tarih çalışması olarak da okuyabilirsiniz.`
+  },
+  book2: {
+    tag: 'Roman',
+    title: 'Kayıp Zamanın Bekçisi',
+    signature: 'Enver Şengül',
+    text: `Kafam zaman yolculuğunun gizemli labirentlerinde, gözlerim ise işime yarayacak bir kitap bulmanın peşinde sahaf dükkânını dolaşıp duruyordum. Elim, tozlu raflardaki kitapların birisini bırakıp diğerini alıyordu. Son baktığım kitabın büyük, kırmızı ve gölgeli harflerle yazılmış olan ismi bir anda dikkatimi çekmişti: "Ruhun Göçü". İçimden bir ses, aradığım kitabın sanki bu olduğunu söylüyordu. "Ruhunuzun bir geçmişi ya da bir hafızası olabileceğini hiç düşündünüz mü? Ya da ruhumuzun geçmişle gelecek arasında yolculuk yapabileceğini?" Günümüz İstanbul'unda başlayıp, bundan tam 2764 yıl öncesindeki demir çağı medeniyetinin gizemli halkı olan Urartuların dünyasına uzanan bir zamana yolculuk hikâyesi. Kahramanlarından biri de bugün 80 yaşında olan ve Urartu dilini okuyup yazabilen dünyadaki çok az kişiden biri olan Mehmet Kuşman... Büyük bir merak ve heyecanla okuyacaksınız.`
+  },
+  book3: {
+    tag: 'Roman',
+    title: 'Kuşatma · Bir Balkan Savaşı Romanı',
+    signature: 'Enver Şengül',
+    text: `Balkan Harbi, 18 Ekim 1912 tarihinde Sırpların da desteğini alan Bulgar ordusunun Türk topraklarını çiğnemesiyle başlamış ve çok değil, birkaç gün içinde Edirne tamamen kuşatılmıştı. Şehir, düşman eline geçtiği 26 Mart 1913 tarihine kadar tam 155 gün bu amansız kuşatmanın altında kaldı. Bulgar Ordusu, Osmanlı kuvvetlerini büyük bir hezimete uğratarak Çatalca'ya kadar bütün Trakya'yı ele geçirmiş, geriye sadece denizin ortasında bir ada misali imparatorluğun eski payitahtı Edirne kalmıştı. Şehirde, 60 bini asker ve 80 bini sivil olmak üzere 140 bin insan yaşıyordu. Bu kalabalık nüfusa, Balkanların farklı coğrafyalarından can korkusuyla kopup gelen 25-30 bin civarında Müslüman muhacir de eklenmişti. Hiçbir yerden en küçük bir yardım alamayan ve dış dünya ile hiçbir şekilde haberleşemeyen on binlerce insan; Şükrü Paşa önderliğinde, müttefik kuvvetlerin ateş kusan toplarının yanı sıra, açlığa, dondurucu soğuğa ve salgın hastalıklara karşı tarihte eşine az rastlanan bir direniş sergilediler. Elinizde tuttuğunuz kitap, işte bu destansı direnişin romanıdır.`
+  }
+};
+
+let bookTypeRaf = null;
+function typeBookText(el, text){
+  if(bookTypeRaf) cancelAnimationFrame(bookTypeRaf);
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var body = document.getElementById('bookLightboxBody');
+  if(reduced){
+    el.textContent = text;
+    body.classList.remove('tl-typing');
+    return;
+  }
+  var total = text.length;
+  var duration = Math.min(6500, Math.max(1600, total * 13));
+  var start = null;
+  body.classList.add('tl-typing');
+  function frame(ts){
+    if(!start) start = ts;
+    var progress = Math.min(1, (ts - start) / duration);
+    el.textContent = text.slice(0, Math.floor(progress * total));
+    if(progress < 1){
+      bookTypeRaf = requestAnimationFrame(frame);
+    } else {
+      el.textContent = text;
+      body.classList.remove('tl-typing');
+    }
+  }
+  bookTypeRaf = requestAnimationFrame(frame);
+}
+
+function openBookLightbox(key){
+  const data = BOOK_DETAILS[key];
+  if(!data) return;
+  const modal = document.getElementById('bookLightbox');
+  document.getElementById('bookLightboxTag').textContent = data.tag;
+  document.getElementById('bookLightboxTitle').textContent = data.title;
+  document.getElementById('bookLightboxSignature').textContent = data.signature || 'Enver Şengül';
+  const textEl = document.getElementById('bookLightboxText');
+  textEl.textContent = '';
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  typeBookText(textEl, data.text);
+}
+function closeBookLightbox(){
+  if(bookTypeRaf) cancelAnimationFrame(bookTypeRaf);
+  document.getElementById('bookLightboxBody').classList.remove('tl-typing');
+  document.getElementById('bookLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('bookLightbox').addEventListener('click', function(e){
+  if(e.target === this) closeBookLightbox();
+});
+document.addEventListener('keydown', function(e){
+  const modal = document.getElementById('bookLightbox');
+  if(modal.classList.contains('open') && e.key === 'Escape') closeBookLightbox();
 });
 
 // ══════ Fotoğraf Videolarım — YouTube kanal videoları ══════
