@@ -1077,6 +1077,14 @@ footer { text-align:center; }
             <div class="gallery-cat-count" id="count-ve-insan">Fotoğrafları Keşfet</div>
           </div>
         </div>
+        <div class="gallery-cat-card" onclick="openGallery('minimal')">
+          <img id="cover-minimal" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Minimal">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Minimal</div>
+            <div class="gallery-cat-count" id="count-minimal">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="pt-turkiye" style="display:none;">
@@ -2412,6 +2420,7 @@ const GALLERY_CATS = {
   'kirkpinar':          { title:'Er Meydanı-Kırkpınar',  desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
   'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
   've-insan':           { title:'Ve İnsan',           desc:'İnsanın yaşamdan aldığı izler… Yüzlerde, anlarda ve hallerde saklı insanlık hikâyeleri.', folder:'Ve İnsan' },
+  'minimal':            { title:'Minimal',            desc:'Sadelikte saklı güç. Az ile çoğu anlatan, boşluğu ve çizgiyi ön plana çıkaran kareler.', folder:'Minimal' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
   'dunya-zambiya':  { title:'Zambiya',    desc:'Afrikadan yasam, renk ve insanlik uzerine kareler.', folder:'dunya-zambiya' },
