@@ -390,10 +390,19 @@ footer{background:var(--dark);border-top:1px solid rgba(var(--gold-rgb),.13);pad
 .footer-links a{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
 .footer-links a:hover{color:var(--gold);}
 .gold-line{height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.25;}
-.aos{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease;}
-.aos.in{opacity:1;transform:none;}
-.d1{transition-delay:0s;}.d2{transition-delay:0s;}.d3{transition-delay:0s;}
-.d4{transition-delay:0s;}.d5{transition-delay:0s;}
+.aos{opacity:0;transform:translateY(44px);filter:blur(4px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .8s cubic-bezier(.16,1,.3,1);}
+.aos.in{opacity:1;transform:none;filter:blur(0);}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
+.d4{transition-delay:.32s;}.d5{transition-delay:.4s;}
+/* Grid içi öğeler: otomatik kademeli (stagger) giriş */
+.reveal-item{opacity:0;transform:translateY(34px) scale(.95);filter:blur(5px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1),filter .65s cubic-bezier(.16,1,.3,1);}
+.reveal-item.in{opacity:1;transform:none;filter:blur(0);}
+/* Hero: sayfa yüklenince kademeli giriş */
+.hero-load-item{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+.hero-load-item.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){
+  .aos,.reveal-item,.hero-load-item{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
+}
 .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;cursor:pointer;z-index:200;background:none;border:none;padding:4px;}
 .hamburger span{display:block;height:2px;background:var(--gold);border-radius:2px;transition:all .3s;transform-origin:center;}
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
@@ -3537,5 +3546,97 @@ function ekSetFont(f){
   ekSetTheme(saved);
 })();
 </script>
+
+<!-- ===== Animasyon eklentisi: scroll-reveal kartlar + hover glow + hero yazı daktilo efekti ===== -->
+<style>
+/* Ana kartlar: sayfa kaydırıldıkça alttan belirme */
+.card{opacity:0;transform:translateY(36px);transition:opacity .7s ease, transform .7s ease, transform .3s;}
+.card.ek-in-view{opacity:1;transform:translateY(0);}
+/* Hover'da sıcak parıltı (mevcut card-bg zoom efektine ek) */
+.card::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle at 50% 0%, rgba(var(--gold-rgb),.35), transparent 65%);
+  opacity:0;transition:opacity .4s ease;}
+.card:hover::before{opacity:1;}
+.card:hover{transform:translateY(-4px);}
+/* Hero alıntısı: daktilo (typewriter) efekti */
+.hero-quote.ek-tw{border-right:2px solid var(--gold);padding-right:6px;}
+.hero-quote.ek-tw-done{animation:ekBlink 1s step-end infinite;}
+@keyframes ekBlink{50%{border-color:transparent;}}
+@media (prefers-reduced-motion: reduce){
+  .card{opacity:1;transform:none;transition:none;}
+  .hero-quote.ek-tw{border-right:none;}
+}
+</style>
+<script>
+(function(){
+  // --- Scroll-reveal: .cards-section içindeki kartlar ---
+  var cards = document.querySelectorAll('.cards-section .card');
+  var cardIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry, i){
+      if(entry.isIntersecting){
+        setTimeout(function(){ entry.target.classList.add('ek-in-view'); }, i * 90);
+        cardIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(function(el){ cardIO.observe(el); });
+
+  // --- Hero alıntısı: daktilo efekti (Firebase içerik yüklendikten sonra çalışır) ---
+  window.addEventListener('load', function(){
+    var q = document.querySelector('.hero-quote');
+    if(!q) return;
+    var fullText = q.textContent.trim();
+    if(!fullText) return;
+    q.textContent = '';
+    q.classList.add('ek-tw');
+    var i = 0;
+    function step(){
+      if(i <= fullText.length){
+        q.textContent = fullText.slice(0, i);
+        i++;
+        setTimeout(step, 32);
+      } else {
+        q.classList.remove('ek-tw');
+        q.classList.add('ek-tw-done');
+      }
+    }
+    setTimeout(step, 500);
+  });
+
+  // --- Tüm bölümlerdeki grid/kart öğeleri: otomatik kademeli (stagger) scroll-reveal ---
+  var gridSelectors = ['.gallery-cats','.exhibitions-grid','.books-grid','.press-grid','.roles-grid','.about-grid','.contact-grid','.edu-grid'];
+  var gridContainers = document.querySelectorAll(gridSelectors.join(','));
+  var revealIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  gridContainers.forEach(function(container){
+    Array.prototype.forEach.call(container.children, function(child, i){
+      if(child.classList.contains('aos')) return; // zaten kendi animasyonu var
+      child.classList.add('reveal-item');
+      child.style.transitionDelay = ((i % 8) * 0.06).toFixed(2) + 's';
+      revealIO.observe(child);
+    });
+  });
+
+  // --- Hero: sayfa açılır açılmaz kademeli (staggered) giriş ---
+  var heroSelectors = ['.hero-eyebrow','.hero-name','.hero-titles','.hero-quote-mark','.hero-bio','.hero-cta','.hero-photo','.hero-right-quote'];
+  var heroEls = document.querySelectorAll(heroSelectors.join(','));
+  heroEls.forEach(function(el, i){
+    el.classList.add('hero-load-item');
+    el.style.transitionDelay = (i * 0.09).toFixed(2) + 's';
+  });
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      heroEls.forEach(function(el){ el.classList.add('in'); });
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
