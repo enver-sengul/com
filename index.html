@@ -184,8 +184,26 @@ nav{
 .hero-eyebrow{display:none;}
 .hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
 .hero-eyebrow span{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
-.hero-name{font-family:var(--font-h1);font-size:clamp(36px,3.8vw,60px);font-weight:900;line-height:.92;letter-spacing:-1px;color:var(--white);margin-bottom:10px;}
+.hero-name{font-family:var(--font-h1);font-size:clamp(36px,3.8vw,60px);font-weight:900;line-height:.92;letter-spacing:-1px;color:var(--white);margin-bottom:10px;position:relative;opacity:0;}
+.hero-name.ek-name-ready{opacity:1;transition:opacity .2s ease;}
 .hero-name span{color:var(--gold);display:block;}
+/* Enver Şengül hero: neon parıltı döngüsü + yazılış animasyonu */
+.hero-name.ek-neon::before{
+  content:"";position:absolute;inset:-34px -24px;z-index:0;pointer-events:none;
+  background:conic-gradient(from 0deg, transparent 0%, rgba(var(--gold-rgb),.55) 12%, transparent 26%, transparent 74%, rgba(var(--gold-rgb),.4) 88%, transparent 100%);
+  filter:blur(28px);opacity:.65;animation:ekHaloSpin 5s linear infinite;
+}
+.hero-name > *{position:relative;z-index:1;}
+@keyframes ekHaloSpin{ to{ transform:rotate(360deg); } }
+@keyframes ekNeonPulse{
+  0%,100%{ text-shadow:0 0 6px rgba(var(--gold-rgb),.45),0 0 16px rgba(var(--gold-rgb),.28),0 0 34px rgba(var(--gold-rgb),.14); }
+  50%{ text-shadow:0 0 14px rgba(var(--gold-rgb),.9),0 0 32px rgba(var(--gold-rgb),.55),0 0 62px rgba(var(--gold-rgb),.32); }
+}
+.hero-name.ek-neon, .hero-name.ek-neon span{ animation:ekNeonPulse 3s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce){
+  .hero-name.ek-neon::before{ animation:none; }
+  .hero-name.ek-neon, .hero-name.ek-neon span{ animation:none; text-shadow:0 0 18px rgba(var(--gold-rgb),.4); }
+}
 .hero-titles{font-size:11px;font-weight:500;letter-spacing:2px;color:var(--gold-light);text-transform:uppercase;margin-bottom:10px;line-height:1.6;}
 .hero-titles b{color:var(--cream);}
 .hero-quote-mark{font-family:var(--font-serif);display:none;}
@@ -3581,6 +3599,38 @@ function ekSetFont(f){
   }, { threshold: 0.15 });
   cards.forEach(function(el){ cardIO.observe(el); });
 
+  // --- Hero isim: yazılış animasyonu + döngüsel neon parıltı ---
+  function startHeroNameTypewriter(){
+    var nameEl = document.querySelector('.hero-name');
+    if(!nameEl) return;
+    var rawParts = Array.prototype.slice.call(nameEl.childNodes).map(function(node){
+      return { node: node, text: node.textContent };
+    }).filter(function(p){ return p.text && p.text.trim().length; });
+    if(!rawParts.length) return;
+    rawParts.forEach(function(p){ p.node.textContent = ''; });
+    nameEl.classList.add('ek-name-ready');
+    var pi = 0, ci = 0;
+    function step(){
+      if(pi >= rawParts.length){
+        nameEl.classList.add('ek-neon');
+        return;
+      }
+      var current = rawParts[pi];
+      if(ci <= current.text.length){
+        var cursor = ci < current.text.length ? '▌' : '';
+        current.node.textContent = current.text.slice(0, ci) + cursor;
+        ci++;
+        setTimeout(step, 68);
+      } else {
+        current.node.textContent = current.text;
+        pi++; ci = 0;
+        setTimeout(step, 220);
+      }
+    }
+    setTimeout(step, 350);
+  }
+  startHeroNameTypewriter();
+
   // --- Hero alıntısı: daktilo efekti (Firebase içerik yüklendikten sonra çalışır) ---
   window.addEventListener('load', function(){
     var q = document.querySelector('.hero-quote');
@@ -3624,7 +3674,7 @@ function ekSetFont(f){
   });
 
   // --- Hero: sayfa açılır açılmaz kademeli (staggered) giriş ---
-  var heroSelectors = ['.hero-eyebrow','.hero-name','.hero-titles','.hero-quote-mark','.hero-bio','.hero-cta','.hero-photo','.hero-right-quote'];
+  var heroSelectors = ['.hero-eyebrow','.hero-titles','.hero-quote-mark','.hero-bio','.hero-cta','.hero-photo','.hero-right-quote'];
   var heroEls = document.querySelectorAll(heroSelectors.join(','));
   heroEls.forEach(function(el, i){
     el.classList.add('hero-load-item');
