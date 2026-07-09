@@ -2702,34 +2702,6 @@ const BOOK_DETAILS = {
   }
 };
 
-let bookTypeRaf = null;
-function typeBookText(el, text){
-  if(bookTypeRaf) cancelAnimationFrame(bookTypeRaf);
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var body = document.getElementById('bookLightboxBody');
-  if(reduced){
-    el.textContent = text;
-    body.classList.remove('tl-typing');
-    return;
-  }
-  var total = text.length;
-  var duration = Math.min(13000, Math.max(3200, total * 26));
-  var start = null;
-  body.classList.add('tl-typing');
-  function frame(ts){
-    if(!start) start = ts;
-    var progress = Math.min(1, (ts - start) / duration);
-    el.textContent = text.slice(0, Math.floor(progress * total));
-    if(progress < 1){
-      bookTypeRaf = requestAnimationFrame(frame);
-    } else {
-      el.textContent = text;
-      body.classList.remove('tl-typing');
-    }
-  }
-  bookTypeRaf = requestAnimationFrame(frame);
-}
-
 function openBookLightbox(key){
   const data = BOOK_DETAILS[key];
   if(!data) return;
@@ -2738,14 +2710,12 @@ function openBookLightbox(key){
   document.getElementById('bookLightboxTitle').textContent = data.title;
   document.getElementById('bookLightboxSignature').textContent = data.signature || 'Enver Şengül';
   const textEl = document.getElementById('bookLightboxText');
-  textEl.textContent = '';
+  textEl.textContent = data.text;
   modal.classList.add('open');
   modal.querySelector('.text-lightbox-panel').scrollTop = 0;
   document.body.style.overflow = 'hidden';
-  typeBookText(textEl, data.text);
 }
 function closeBookLightbox(){
-  if(bookTypeRaf) cancelAnimationFrame(bookTypeRaf);
   document.getElementById('bookLightboxBody').classList.remove('tl-typing');
   document.getElementById('bookLightbox').classList.remove('open');
   document.body.style.overflow = '';
