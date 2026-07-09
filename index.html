@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enver Şengül | Fotoğraf Sanatçısı · Yazar · Kültür Yöneticisi</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&family=Engagement&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -314,6 +314,8 @@ nav{
 .book-card:hover .book-cover::after{opacity:.85;}
 .text-lightbox-body.tl-typing{position:relative;}
 .text-lightbox-body.tl-typing p::after{content:"▌";color:var(--gold);}
+.book-lb-handwritten{font-family:'Engagement','Caveat',cursive;font-size:34px;line-height:1.7;color:var(--cream2);letter-spacing:.4px;}
+@media (max-width:640px){ .book-lb-handwritten{font-size:26px;} }
 .bc-1{background:url("kitap-daruessifa.jpg") center/cover no-repeat;}
 .bc-2{background:url("kitap-kayipzaman.jpg") center/cover no-repeat;}
 .bc-3{background:url("kitap-kusatma.jpg") center/cover no-repeat;}
@@ -2061,7 +2063,7 @@ footer { text-align:center; }
     <button class="lb-close" onclick="closeBookLightbox()">✕</button>
     <div class="text-lightbox-eyebrow" id="bookLightboxTag">Roman</div>
     <h3 class="text-lightbox-title" id="bookLightboxTitle"></h3>
-    <div class="text-lightbox-body" id="bookLightboxBody"><p id="bookLightboxText"></p></div>
+    <div class="text-lightbox-body" id="bookLightboxBody"><p id="bookLightboxText" class="book-lb-handwritten"></p></div>
     <div class="text-lightbox-signature" id="bookLightboxSignature">Enver Şengül</div>
   </div>
 </div>
@@ -2711,7 +2713,7 @@ function typeBookText(el, text){
     return;
   }
   var total = text.length;
-  var duration = Math.min(6500, Math.max(1600, total * 13));
+  var duration = Math.min(13000, Math.max(3200, total * 26));
   var start = null;
   body.classList.add('tl-typing');
   function frame(ts){
