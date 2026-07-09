@@ -200,6 +200,18 @@ nav{
   50%{ text-shadow:0 0 14px rgba(var(--gold-rgb),.9),0 0 32px rgba(var(--gold-rgb),.55),0 0 62px rgba(var(--gold-rgb),.32); }
 }
 .hero-name.ek-neon, .hero-name.ek-neon span{ animation:ekNeonPulse 3s ease-in-out infinite; }
+/* Video sekmesi: interaktif parçacık sahnesi */
+.video-interactive-hero{position:relative;height:260px;border-radius:8px;overflow:hidden;margin-bottom:32px;background:radial-gradient(circle at 50% 30%, var(--dark3), var(--dark2) 70%);border:1px solid rgba(var(--gold-rgb),.18);}
+.video-interactive-hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.vih-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;pointer-events:none;}
+.vih-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+.vih-title{font-family:var(--font-heading);font-size:clamp(22px,3vw,32px);color:var(--white);}
+.vih-title em{color:var(--gold);font-style:italic;}
+.vih-play{pointer-events:auto;width:58px;height:58px;border-radius:50%;border:1.5px solid var(--gold);background:rgba(var(--dark-rgb),.5);color:var(--gold);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,box-shadow .3s;animation:vihPulse 2.6s ease-in-out infinite;}
+.vih-play:hover{transform:scale(1.1);box-shadow:0 0 24px rgba(var(--gold-rgb),.5);}
+@keyframes vihPulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--gold-rgb),.35);}50%{box-shadow:0 0 0 14px rgba(var(--gold-rgb),0);}}
+@media (max-width:640px){ .video-interactive-hero{height:200px;} }
+@media (prefers-reduced-motion: reduce){ .vih-play{animation:none;} }
 @media (prefers-reduced-motion: reduce){
   .hero-name.ek-neon::before{ animation:none; }
   .hero-name.ek-neon, .hero-name.ek-neon span{ animation:none; text-shadow:0 0 18px rgba(var(--gold-rgb),.4); }
@@ -1065,6 +1077,14 @@ footer { text-align:center; }
             <div class="gallery-cat-count" id="count-ve-insan">Fotoğrafları Keşfet</div>
           </div>
         </div>
+        <div class="gallery-cat-card" onclick="openGallery('minimal')">
+          <img id="cover-minimal" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Minimal">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Minimal</div>
+            <div class="gallery-cat-count" id="count-minimal">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="pt-turkiye" style="display:none;">
@@ -1164,6 +1184,14 @@ footer { text-align:center; }
       </div>
     </div>
     <div id="pt-video" style="display:none;">
+      <div class="video-interactive-hero" id="videoInteractiveHero">
+        <canvas id="videoParticleCanvas"></canvas>
+        <div class="vih-content">
+          <div class="vih-eyebrow">Görüntü &amp; Ses</div>
+          <div class="vih-title">Kareler <em>Hayat Buluyor</em></div>
+          <button class="vih-play" type="button" onclick="document.getElementById('youtubeGrid').scrollIntoView({behavior:'smooth',block:'center'});" aria-label="Videolara git">▶</button>
+        </div>
+      </div>
       <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;color:var(--cream2);margin-bottom:32px;text-align:center;">YouTube kanalımdaki fotoğraf ve sunum videolarından bir seçki. Kart üzerine tıklayarak izleyebilirsiniz.</p>
       <div class="gallery-loading" id="ytLoading">
         <div class="gallery-loading-spinner"></div>
@@ -2392,6 +2420,7 @@ const GALLERY_CATS = {
   'kirkpinar':          { title:'Er Meydanı-Kırkpınar',  desc:'Yağlı güreşin 700 yıllık mirası. Kırkpınar\'da ter, toprak ve pehlivanlık geleneğinden kareler.', folder:'Kirkpinar' },
   'nostalji':           { title:'Nostalji',           desc:'Geçmişin izlerini taşıyan, zamanın ruhunu karelere yansıtan nostaljik fotoğraf çalışmaları.', folder:'Nostalji' },
   've-insan':           { title:'Ve İnsan',           desc:'İnsanın yaşamdan aldığı izler… Yüzlerde, anlarda ve hallerde saklı insanlık hikâyeleri.', folder:'Ve İnsan' },
+  'minimal':            { title:'Minimal',            desc:'Sadelikte saklı güç. Az ile çoğu anlatan, boşluğu ve çizgiyi ön plana çıkaran kareler.', folder:'Minimal' },
   'turkiyenin-guzellikleri': { title:"Türkiye'nin Güzellikleri", desc:"Anadolu'nun dört mevsimi, eşsiz coğrafyası ve zengin kültürel mirası.", folder:'turkiyenin-guzellikleri' },
   'dunya-newyork':  { title:'New York',   desc:'Metropolün nabzı, New York sokaklarından dünya şehrine dair gözlemler.', folder:'dunya-newyork' },
   'dunya-zambiya':  { title:'Zambiya',    desc:'Afrikadan yasam, renk ve insanlik uzerine kareler.', folder:'dunya-zambiya' },
@@ -3685,6 +3714,118 @@ function ekSetFont(f){
       heroEls.forEach(function(el){ el.classList.add('in'); });
     });
   });
+})();
+
+// --- Video sekmesi: imleç ile etkileşen parçacık sahnesi ---
+(function(){
+  var container = document.getElementById('pt-video');
+  var canvas = document.getElementById('videoParticleCanvas');
+  if(!container || !canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var pointer = { x: null, y: null };
+  var running = false;
+  var rafId = null;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = window.devicePixelRatio || 1;
+
+  function resize(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = Math.max(1, rect.width * dpr);
+    canvas.height = Math.max(1, rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function initParticles(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var count = Math.min(60, Math.max(20, Math.floor(rect.width / 16)));
+    particles = [];
+    for(var i = 0; i < count; i++){
+      particles.push({
+        x: Math.random() * rect.width,
+        y: Math.random() * rect.height,
+        r: Math.random() * 1.6 + 0.6,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        a: Math.random() * 0.45 + 0.25
+      });
+    }
+  }
+
+  function draw(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    var goldRgb = getComputedStyle(document.documentElement).getPropertyValue('--gold-rgb').trim() || '201,168,76';
+    particles.forEach(function(p){
+      if(pointer.x !== null){
+        var dx = p.x - pointer.x, dy = p.y - pointer.y;
+        var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        if(dist < 90){
+          var force = (90 - dist) / 90;
+          p.vx += (dx / dist) * force * 0.55;
+          p.vy += (dy / dist) * force * 0.55;
+        }
+      }
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= 0.96; p.vy *= 0.96;
+      if(p.x < 0) p.x = rect.width; if(p.x > rect.width) p.x = 0;
+      if(p.y < 0) p.y = rect.height; if(p.y > rect.height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + goldRgb + ',' + p.a + ')';
+      ctx.fill();
+    });
+    for(var i = 0; i < particles.length; i++){
+      for(var j = i + 1; j < particles.length; j++){
+        var a = particles[i], b = particles[j];
+        var dx2 = a.x - b.x, dy2 = a.y - b.y;
+        var d = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+        if(d < 68){
+          ctx.strokeStyle = 'rgba(' + goldRgb + ',' + (0.12 * (1 - d / 68)) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    if(running) rafId = requestAnimationFrame(draw);
+  }
+
+  function start(){
+    resize();
+    initParticles();
+    running = !reduced;
+    draw();
+  }
+  function stop(){
+    running = false;
+    if(rafId) cancelAnimationFrame(rafId);
+  }
+
+  canvas.parentElement.addEventListener('mousemove', function(e){
+    var rect = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  });
+  canvas.parentElement.addEventListener('mouseleave', function(){
+    pointer.x = null; pointer.y = null;
+  });
+  canvas.parentElement.addEventListener('touchmove', function(e){
+    if(!e.touches[0]) return;
+    var rect = canvas.getBoundingClientRect();
+    pointer.x = e.touches[0].clientX - rect.left;
+    pointer.y = e.touches[0].clientY - rect.top;
+  }, { passive: true });
+  window.addEventListener('resize', function(){ if(running) resize(); });
+
+  var mo = new MutationObserver(function(){
+    if(container.style.display !== 'none') start();
+    else stop();
+  });
+  mo.observe(container, { attributes: true, attributeFilter: ['style'] });
+  if(container.style.display !== 'none') start();
 })();
 </script>
 
