@@ -195,8 +195,24 @@ nav{
 .hero-eyebrow{display:none;}
 .hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
 .hero-eyebrow span{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
-.hero-logo-wrap{width:100%;max-width:520px;aspect-ratio:1497/326;margin-bottom:14px;}
-.hero-logo{width:100%;height:100%;object-fit:contain;object-position:left center;display:block;filter:drop-shadow(0 6px 16px rgba(0,0,0,.5));}
+.hero-logo-wrap{position:relative;width:100%;max-width:520px;aspect-ratio:1497/326;margin-bottom:14px;--logo-mask-url:linear-gradient(#000,#000);}
+.hero-logo{width:100%;height:100%;object-fit:contain;object-position:left center;display:block;position:relative;z-index:1;filter:drop-shadow(0 6px 16px rgba(0,0,0,.5));}
+.hero-logo-wrap::before{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(115deg, transparent 25%, rgba(255,255,255,0) 40%, rgba(255,255,255,.95) 50%, rgba(255,255,255,0) 60%, transparent 75%);
+  background-size:260% 100%;background-position:-80% 0;background-repeat:no-repeat;
+  -webkit-mask-image:var(--logo-mask-url);-webkit-mask-size:100% 100%;-webkit-mask-repeat:no-repeat;-webkit-mask-position:left center;
+  mask-image:var(--logo-mask-url);mask-size:100% 100%;mask-repeat:no-repeat;mask-position:left center;
+  mix-blend-mode:overlay;animation:logoShine 5.5s ease-in-out infinite;animation-delay:1.2s;
+}
+@keyframes logoShine{0%,18%{background-position:-80% 0;}45%,100%{background-position:180% 0;}}
+.hero-logo-reflection{
+  position:absolute;left:0;top:100%;width:100%;height:100%;object-fit:contain;object-position:left top;
+  transform:scaleY(-1);opacity:.28;pointer-events:none;z-index:0;
+  -webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,.5) 0%, transparent 65%);
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.5) 0%, transparent 65%);
+}
+@media (prefers-reduced-motion: reduce){ .hero-logo-wrap::before{animation:none;opacity:0;} }
 /* Video sekmesi: interaktif parçacık sahnesi */
 .video-interactive-hero{position:relative;height:260px;border-radius:8px;overflow:hidden;margin-bottom:32px;background:radial-gradient(circle at 50% 30%, var(--dark3), var(--dark2) 70%);border:1px solid rgba(var(--gold-rgb),.18);}
 .video-interactive-hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
@@ -825,7 +841,10 @@ footer { text-align:center; }
 <section class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow"><span>Edirne · Türkiye</span></div>
-    <div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="Enver Şengül"></div>
+    <div class="hero-logo-wrap">
+      <img class="hero-logo" src="logo.png" alt="Enver Şengül">
+      <img class="hero-logo-reflection" src="logo.png" alt="" aria-hidden="true">
+    </div>
     <p class="hero-titles" data-ek="hero_titles" data-ek-label="Hero · Unvanlar" data-ek-group="Hero">Fotoğraf Sanatçısı &nbsp;·&nbsp; Yazar &nbsp;·&nbsp; Kültür Yöneticisi &nbsp;·&nbsp; Eğitimci &nbsp;·&nbsp; Gazeteci</p>
     <span class="hero-quote-mark">"</span>
     <blockquote class="hero-quote" data-ek="hero_quote" data-ek-label="Hero · Alıntı" data-ek-group="Hero">Fotoğraf, kültür, tarih ve edebiyatla örülmüş bir yaşam yolculuğu.</blockquote>
@@ -3098,7 +3117,7 @@ async function preloadCounts() {
 // Drive'a yükleyeceğiniz dosyalar .webp uzantılı olmalı: hero.webp, hakkimda.webp, kart-foto.webp, kart-yazar.webp,
 // kart-kultur.webp, kart-egitim.webp, kart-gazete.webp, kitap-daruessifa.webp, kitap-kayipzaman.webp, kitap-kusatma.webp
 const ANASAYFA_IMAGES = {
-  'logo':              { selector:'.hero-logo',              type:'img', filename:'logo.png' },
+  'logo':              { selector:'.hero-logo, .hero-logo-reflection', type:'img', filename:'logo.png' },
   'hero':              { selector:'.hero-photo',            type:'img', filename:'hero.webp' },
   'hakkimda':          { selector:'.about-photo-frame img', type:'img', filename:'hakkimda.webp' },
   'kart-foto':         { selector:'.card-bg-1',              type:'bg',  filename:'kart-foto.webp' },
@@ -3155,6 +3174,10 @@ async function loadAnasayfaImages() {
         el.style.backgroundImage = `url('${imgUrl}')`;
       }
     });
+    if (key === 'logo') {
+      const wrap = document.querySelector('.hero-logo-wrap');
+      if (wrap) wrap.style.setProperty('--logo-mask-url', `url('${imgUrl}')`);
+    }
   });
 }
 
