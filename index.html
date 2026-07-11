@@ -708,7 +708,7 @@ footer { text-align:center; }
 .text-lightbox-panel { position:relative; max-width:760px; width:100%; max-height:86vh; overflow-y:auto; background:var(--dark3); border-radius:16px; box-shadow:0 30px 70px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06), inset 0 -20px 30px rgba(0,0,0,.3), 0 0 0 1px rgba(var(--gold-rgb),.3); padding:56px 48px 48px; }
 .text-lightbox-eyebrow { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; text-align:center; }
 .text-lightbox-title { font-family:var(--font-heading); font-size:26px; font-weight:700; color:var(--white); text-align:center; margin-bottom:30px; line-height:1.35; }
-.text-lightbox-body p { font-family:var(--font-serif); font-size:19px; line-height:1.75; color:var(--cream2); margin-bottom:16px; }
+.text-lightbox-body p { font-family:var(--font-serif); font-size:19px; line-height:1.75; color:var(--cream2); margin-bottom:16px; text-align:justify; text-justify:inter-word; }
 .text-lightbox-body p.tl-quote { font-style:italic; font-size:22px; color:var(--gold-light); text-align:center; margin:26px 0; }
 .text-lightbox-signature { text-align:right; font-family:var(--font-serif); font-size:14px; letter-spacing:1px; color:var(--gold); margin-top:24px; }
 @media (max-width:640px){
@@ -1274,7 +1274,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
       <p style="text-align:center;padding:80px 0;font-family:var(--font-serif);font-size:22px;font-style:italic;color:var(--muted);">TFSF yöneticilik çalışmaları ve organizasyonlar yakında…</p>
     </div>
     <div id="pt-yazi" style="display:none;">
-      <div class="gallery-cats two-col">
+      <div class="gallery-cats">
         <div class="gallery-cat-card" onclick="openGallery('fotograf-yazilari')">
           <img id="cover-fotograf-yazilari" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Fotoğraf Yazılarım">
           <div class="gallery-cat-arrow">→</div>
@@ -1288,6 +1288,30 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Keşfetme Merakı Olmayanlar Fotoğrafçı Olmasın!</div>
+            <div class="gallery-cat-count">Yazıyı Oku</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openTarihYazisi()" style="background:linear-gradient(135deg,#3a2c16,#0d0b08);display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:64px;opacity:.45;">🕰️</div>
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Fotoğraf Tarihi, İnsanlık ve Kültür Tarihinin Bir Yansımasıdır</div>
+            <div class="gallery-cat-count">Yazıyı Oku</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openYasamYazisi()" style="background:linear-gradient(135deg,#3a2c16,#0d0b08);display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:64px;opacity:.45;">🌿</div>
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Fotoğraf ve Yaşam Kalitesi</div>
+            <div class="gallery-cat-count">Yazıyı Oku</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openIhtimallerYazisi()" style="background:linear-gradient(135deg,#3a2c16,#0d0b08);display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:64px;opacity:.45;">♟️</div>
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Fotoğraf: Sayısız İhtimaller Sanatı</div>
             <div class="gallery-cat-count">Yazıyı Oku</div>
           </div>
         </div>
@@ -1938,11 +1962,12 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
         <h3 class="edu-title" data-ek="edu1_title" data-ek-label="Eğitim Kartı 1 · Başlık" data-ek-group="Eğitim & Atölyeler">Öğretmenlik</h3>
         <p class="edu-desc" data-ek="edu1_desc" data-ek-label="Eğitim Kartı 1 · Açıklama" data-ek-group="Eğitim & Atölyeler">Kariyer yolculuğunun ilk durağı olan öğretmenlik deneyimi, insanlara öğretme ve bilgi aktarma tutkusunun temelini oluşturdu. Bu köklü birikim, tüm çalışmalarına yansıyan pedagojik bir bakış açısı kazandırdı.</p>
       </div>
-      <div class="edu-card aos d1" style="background-image:url('edu-atolye.jpg');background-size:cover;background-position:center;">
+      <div class="edu-card aos d1" style="background-image:url('edu-atolye.jpg');background-size:cover;background-position:center;cursor:pointer;" onclick="openAtolyeler()">
         <div class="edu-num">02</div>
         <div class="edu-icon">📷</div>
         <h3 class="edu-title" data-ek="edu2_title" data-ek-label="Eğitim Kartı 2 · Başlık" data-ek-group="Eğitim & Atölyeler">Fotoğraf Atölyeleri</h3>
         <p class="edu-desc" data-ek="edu2_desc" data-ek-label="Eğitim Kartı 2 · Açıklama" data-ek-group="Eğitim & Atölyeler">Yurt içi ve yurt dışında düzenlenen fotoğraf atölyeleri ve seminerlerle binlerce fotoğraf meraklısına rehberlik etti. Kompozisyon, ışık kullanımı ve sanatsal anlatım üzerine kapsamlı eğitimler.</p>
+        <a class="card-link" style="margin-top:16px;" onclick="event.stopPropagation();openAtolyeler();">18 Atölyeyi İncele <span class="btn-arrow">→</span></a>
       </div>
       <div class="edu-card aos d2" style="background-image:url('edu-video.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">03</div>
@@ -2116,6 +2141,108 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
       <p>Canlıları, cansızları…</p>
       <p>Evet, fotoğrafçı makinesi elinde dolaşırken aslında hayatı keşfe çıkar.</p>
       <p class="tl-quote">Keşfetme merakı olmayanlar; tepelerin arkasını, duvarların ötesini merak etmeyenler sakın fotoğrafçı olmasın…</p>
+    </div>
+    <div class="text-lightbox-signature">Enver Şengül</div>
+  </div>
+</div>
+<div class="text-lightbox" id="tarihLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeTarihYazisi()">✕</button>
+    <div class="text-lightbox-eyebrow">Fotoğraf Yazılarım</div>
+    <h3 class="text-lightbox-title">Fotoğraf Tarihi, İnsanlık ve Kültür Tarihinin Bir Yansımasıdır</h3>
+    <div class="text-lightbox-body">
+      <p>Fotoğraf 1839 yılında icat edildi.</p>
+      <p>7 Ocak 1839'da Lois Degorre buluşunu Fransız Bilimler Akademisi'ne, 25 Ocak 1839 tarihinde ise Fox Talbot İngiliz Kraliyet Enstitüsü'ne sunduğunda dünya artık eski dünya olmayacaktı.</p>
+      <p>O zamana kadar ellerine aldıkları Camera Obscuralarla İtalya Como Gölü'ndeki manzaranın eskizlerini çizmeye koşan İngiliz asilzadeleri artık görüntünün gerçeğini tespit etmek heyecanıyla bir fotoğraf makinesi edinme telaşına düşmüşlerdi.</p>
+      <p>O zamana kadar her şey bir kitapta ya da resimde yer almak için varken, artık dünyada her şey bir fotoğrafa girmek için var olmaya başlamıştı.</p>
+      <p>Sıkı durun, fotoğrafın icadından sadece 2 yıl sonra, yani 1841'de fotoğrafın mucitlerinden Daguerre'nin "Vues et Monuments Les Plus Remarquables du Globe" (Yeryüzünün En Kayda Değer Görünümleri ve Anıtları) albümü Paris'te yayınlanmıştı bile.</p>
+      <p>Zamanın şartlarında bu kadar kısa sürede oluşturulan bu albüm, insanoğlunun fotoğraf heyecanının en üst düzeyde ifadesi olsa gerekti.</p>
+      <p>Bu kitabın yayınlandığı tarihlerde birçok Fransız daguerrotip kameraları ile Pasifik'te cirit atmaya başlamışlardı.</p>
+      <p>Fotoğrafın diğer mucidi Fox Talbot'un "The Pencil of Nature" (Doğanın Kalemi) albümü de yine fotoğrafın icadından çok kısa bir süre sonra (1844-46) yayınlanmıştı.</p>
+      <p>Fotoğrafın Oryantalist çağı olarak kabul edilen 1850'ler dünyanın fotografik keşfinin de yıllarıydı aynı zamanda.</p>
+      <p>1849-51 yılları arasında Flaubert ile birlikte Büyük Ortadoğu Turu'na çıkan Maxime Du Camp, insan yaşamlarından öte Ebu Simbel Anıtı ve Baalbek Tapınağı gibi görülmeye değer yerlere yoğunlaştılar.</p>
+      <p>Kısa süre sonra da birçok gezgin ve fotoğrafçı, boyunlarında fotoğraf makineleri ile bu coğrafyaların anıt eserlerinin yanında insan ve doğa gibi diğer ayrıntılarına da girdiler.</p>
+      <p>Başta İstanbul olmak üzere Anadolu toprakları da bir uçtan bir uca işte bu gezgin fotoğrafçıların sayesinde fotoğraflandı ve kayda geçti.</p>
+      <p>Doğanın ve çevrenin birebir taklit edilemez güzelliği kartların üzerine kalıcı olarak istiflenmeye başlayınca çok kısa bir süre içinde onlarca fotoğrafçı bir anda dünyayı belgeleme yarışı içine girdi.</p>
+      <p>İşte dünya, fotoğrafın bu sihirli büyüsüne kapılıp çekerken ve belgelerken bizler hâlâ fotoğrafın insan suretini çıkarmak olduğunu varsayarak günah olup olmadığını tartışıyorduk.</p>
+      <p>Fotoğraf çekmek de, çektirmek de günahtı. Bu nedenle tarihimizi, kültürümüzü, coğrafyamızı ve kimliklerimizi çok fazla fotoğraflayamadık, yazık da ettik doğrusu.</p>
+      <p>Kendi fotoğrafçılarımız da olmadı. Hep yabancı fotoğrafçılar geldiler, çektiler ve gittiler.</p>
+      <p>Dikkat edin, İstanbul'un ve Batı tarafından ilgi çeken birçok şehrin eskiye dair bütün fotoğrafları yabancılara aittir. Kültürel mirasımızı, şehirlerimizin eski hallerini yabancılara ait kartpostallarda ya da albümlerde görebiliyoruz.</p>
+      <p>Osmanlı'da ilk fotoğrafhane açan da yabancı fotoğrafçılardı, bu işi öğretenler de…</p>
+      <p>Osmanlı'nın ilk fotoğrafçıları kabul edilen Abdullah Biraderler (Vicken ve Kevork kardeşler) sonradan Müslüman olan Ermeni iki kardeşti. Yine Alman Rabach'ın yanında çırak olarak fotoğrafçılığı öğrenmişlerdi. Abdullah Biraderler'in çırağı kim diye soracak olursanız, o da Aşil Samancılar adlı bir gayrimüslim idi. Atatürk'ün annesi Zübeyde Hanım'ın ünlü fotoğrafını da o çekti.</p>
+      <p>Bizde fotoğrafla ilgili albümler, kitaplar ne zaman basıldı diye soracak olursanız onlar da ancak Cumhuriyet'ten çok sonraya tarihlendirilebilir.</p>
+      <p>Şimdi bazen Türk fotoğrafı dünya fotoğrafının neresinde diye soruluyor. Buna açık cevap verebilmek için fotoğraf tarihini gerçekten iyi bilmek gerekir.</p>
+      <p class="tl-quote">Fotoğraf tarihi aslında insanlık tarihinin bir yansımasıdır, kültür tarihinin de.</p>
+      <p>Ellerine aldıkları ilk makinelerle meşakkatli yolculuklara çıkmaya, keşfetmeye, belgelemeye ve çektiklerini kitaplaştırmaya koşanlar, şu an dünyanın kaderini çiziyorlar.</p>
+      <p>Bizler de onların arkasından bakmaya ve ağır aksak gitmeye devam ediyoruz.</p>
+    </div>
+    <div class="text-lightbox-signature">Enver Şengül</div>
+  </div>
+</div>
+<div class="text-lightbox" id="yasamLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeYasamYazisi()">✕</button>
+    <div class="text-lightbox-eyebrow">Fotoğraf Yazılarım</div>
+    <h3 class="text-lightbox-title">Fotoğraf ve Yaşam Kalitesi</h3>
+    <div class="text-lightbox-body">
+      <p>Fotografik anlayışın ve fotografik görüşün yaşam kalitemize büyük katkılar sağladığını savunanlardanım.</p>
+      <p>Fotoğrafı görmek ya da çekmek için gösterdiğimiz çabaların tümü aslında hayatı daha kaliteli görüp yaşamanın ipuçlarını verir bizlere.</p>
+      <p>İyi bir fotoğraf elde etmek için gösterdiğimiz çabaları ve bu çabalar sonucu yıllar içinde oluşan altyapıyı bir düşünün.</p>
+      <p>İyi eğitim, iyi donanım, merak, araştırma, inceleme, görme, algılama, ifade etme ve iyi bir kültürel birikim…</p>
+      <p>Evet, iyi bir fotoğraf, daha doğrusu disiplinli bir fotoğrafçılık için bunların olması gerekiyor değil mi?</p>
+      <p>Biz fotoğrafçılar aslında fotoğraf çekmeye çalışırken hem eğitiliyoruz hem de çoğu kez farkında bile olmadan hayatımızı çok iyi yönlendiriyor ve yaşam kalitemizi alabildiğince yükseltiyoruz.</p>
+      <p>Fotoğrafla ilgilenen kişi öncelikle ayıklamayı öğrenir. İyi ve temiz bir görüntüyü elde etmenin en iyi yolu iyi bir ayıklama yapmamızdır. İlgi merkezimizin çevresinde, onu olumsuz yönde etkileyen ne varsa fotoğraf çerçevemizin dışında bırakırız.</p>
+      <p>Gözümüzü tırmalayan lekeler, anlamsız objeler, bütünlüğü bozan diğer unsurlar… Yıllara varan süre içinde ve on binlere varan fotoğraf arayışında bunu yaptığımızı düşünün.</p>
+      <p>Gözümüzün ve beynimizin ne düzeyde eğitilmiş olduğunu tahmin edebiliyor musunuz?</p>
+      <p>Buyurun size öncelikle kazandığımız bir görme kalitesi.</p>
+      <p>İyi, doğru, temiz ve ayrıcalıklı görmek ve hayatı buna göre yorumlayıp düzenleyebilmek yaşam kalitesinin önemli bir aşaması değil midir?</p>
+      <p>Herkesten daha farklı görebilmek ve gördüklerini rengi, ışığı, düzeni ve mesajıyla doğru algılayabilmek her insana doğuştan verilen bir yetenek değildir. Fotoğrafçılar fotoğraf çekme arayışında bunları kazanırlar.</p>
+      <p>Fotoğrafçı, fotoğraf karesindeki seçiciliğini farkında olmadan hayatına da yansıtır.</p>
+      <p>İyi ışıkla kötü ışığın farkında olduğu gibi, iyi insanla kötü insan arasındaki farkı da hisseder.</p>
+      <p>İyi şehirle kötü şehri, güzel sokakla kötü sokağı, iyi mimariyle kötü mimariyi hemen ayırt eder.</p>
+      <p>Fotoğrafındaki göze hoş gelmeyen düzenlemeleri hayatındaki ayrıntılara da katmaz.</p>
+      <p>Evi ve masasının üzeri gereksiz ayrıntılardan ayıklanmıştır. Kıyafetinde bir uyum vardır. Estetiği hayatının her noktasına farkında olmadan serpiştiriverir.</p>
+      <p>Fotoğrafçı daha çok güzeli bulma arayışında olduğu için; güzeli görür, güzeli bulur, güzelle olmaktan zevk alır, güzel dostluklar edinir ve güzel konuşur.</p>
+      <p class="tl-quote">Güzelin peşinde olma istek ve merakı, farkında olmadan ruhunu da güzelleştirir.</p>
+      <p>Siz hiç kötü, kavgacı, geçimsiz, huysuz, sevimsiz bir fotoğrafçı gördünüz mü?</p>
+      <p>Fotoğraf çekme, insanlara çevresiyle barışık olma duygusu kazandırır, yaşama pozitif bakmayı öğretir.</p>
+      <p>O nedenle insanları ve doğayı sevmeyenler, kendisiyle barışık olmayanlar fotoğrafçı olamazlar.</p>
+      <p>Fotoğrafçı doğayı sever, fotoğrafçı çevrecidir, fotoğrafçı gezgindir, fotoğrafçı meraklıdır.</p>
+      <p>Siz hiç avcı ile fotoğrafçı arasındaki farkı düşündünüz mü? Kuş avlamanın peşinde olmakla, görüntü avlamanın peşinde olmak… Avcı elinde tüfek dağ bayır dolaşarak öldürdüğü bıldırcın sayısı ile övünür, fotoğrafçı gelecek kuşaklara bırakacağı belgesel değerdeki görüntü sayısıyla…</p>
+      <p>Fotoğrafçı keşfetmeyi sever.</p>
+      <p>Bulunduğu kentte fotoğrafçı kadar her sokağı kaç kişi bilir? Kaç kişi kültürel mirasla bu kadar ilgilidir, kaç kişi kenar mahalledeki bir çocuğun gülen gözleri ile bu kadar haşır neşir olmuştur?</p>
+      <p>Kaç kişi karın beyazlığına, sonbahardaki yaprağın sarısına, gökyüzünün mavisine ve çiçeklerin alına fotoğrafçı kadar tutkundur?</p>
+      <p class="tl-quote">Kaliteli fotoğrafa giden yol, kaliteli yaşamın adıdır.</p>
+      <p>Ve biz fotoğrafçılar, iyi ve kaliteli fotoğraflar görmeye ve çekmeye devam edelim.</p>
+      <p>Hayatımızdaki kalitenin çıtasını biraz daha yükseltelim.</p>
+    </div>
+    <div class="text-lightbox-signature">Enver Şengül</div>
+  </div>
+</div>
+<div class="text-lightbox" id="ihtimallerLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeIhtimallerYazisi()">✕</button>
+    <div class="text-lightbox-eyebrow">Fotoğraf Yazılarım</div>
+    <h3 class="text-lightbox-title">Fotoğraf: Sayısız İhtimaller Sanatı</h3>
+    <div class="text-lightbox-body">
+      <p class="tl-quote">"Fotoğraf bir görsel kurgu sistemidir. Özüne indiğimizde bir insanın doğru zamanda ve doğru yerde dururken görüş ufkunun bir kısmını bir çerçeveye alma meselesidir. Satranç ya da yazmak gibi fotoğraf da verili ihtimaller arasında seçim yapmakla ilgili bir konudur. Sadece fotoğraf söz konusu olduğunda bu ihtimaller sayılı değil sonsuzdur."</p>
+      <p>Susan Sontag'ın "Fotoğraf Üzerine" adlı kitabında John Szarkowski'den yapmış olduğu bu alıntı aslında fotoğraf üzerine çok derin ipuçları vermektedir.</p>
+      <p>Bu tanımdan yola çıkarak, fotoğrafa sonsuz ihtimaller sanatıdır da diyebiliriz. Çevremize durup baktığımızda hızla akan hayatın içinden yeri zamanı, açıyı, rengi, biçimi, estetiği seçmek sonsuz ihtimallere açık bir konudur.</p>
+      <p>Çekim anında birden çok açı vardır, ama doğru olan hangi açıdır?</p>
+      <p>Birden çok biçim vardır, hangi biçim daha çok dikkat çeker?</p>
+      <p>Birden çok renk vardır, hangi renk daha çarpıcıdır?</p>
+      <p>İfadenin ya da hareketin hangi anı çok daha belirgindir?</p>
+      <p>Hangi zaman, hangi mekân fotoğraf için daha uygundur?</p>
+      <p>Hangi ışık konumuzu daha iyi aydınlatarak daha farklı hale getirir?</p>
+      <p>Satrançta taşları sayısız ihtimallerle oynamak mümkündür. Her hamle sizi başka mecraların içine çeker. Yanlış bir hamle hiç ummadığınız bir anda mat olmanıza yol açabileceği gibi, doğru hamleler sizi unutulmaz zaferlere götürür. Sayısız hamle ihtimallerinin içinde en doğrusunu düşünüp karar vermeniz gerekir.</p>
+      <p>Fotoğraf için de öyle değil mi? Görüntüyü almanın sayısız ihtimallerinin içinden en doğrusuna karar verebiliyorsanız iyi fotoğrafı elde etmiş olursunuz. Yoksa çektiğiniz fotoğrafın o an çekilmekte olan milyonlarca sıradan ve benzer fotoğrafla hiçbir farkı kalmaz.</p>
+      <p>Mademki fotoğraf bir "görsel kurgu sistemi"dir, o hâlde bu sistem kurgusal akış doğrultusunda içinde sayısız ihtimalleri de barındırır.</p>
+      <p>Yazmak da öyle değil mi? O da sayısız ihtimaller üzerine kuruludur. Bu durum aslında sanatı tekdüze olmaktan da çıkarır ve sonsuz seçenekler içine sokar. Eğer böyle olmasaydı yapılan işler, yazılan yazılar ve çekilen fotoğraflar birbirinin birer kopyası olmaz mıydı?</p>
+      <p>Fotoğrafı birbirinin çok benzeri olmaktan çıkaran da sayısız ihtimallere çok açık olmasıdır. Hiç kimse bir başka fotoğrafın aynısını çekemez. Hiçbir fotoğraf diğerinin benzeri değildir. Çünkü her şeyden önce fotoğrafın diğer boyutu zaman işin içine girer. O artık başka zamanda çekilmiş bir fotoğraftır. Benzediği sanılan fotoğraflarda bile küçük ayrıntılar ve nüanslar vardır. Bu durum onları farklı kılar.</p>
+      <p>Nasıl ki satrançta her kişinin kendine has sayısız hamle alternatifi varsa, her fotoğrafçının da kendine has görüntü seçme biçimi, tarzı, beğenisi ve bu doğrultuda ihtimalleri vardır. Bu ihtimallerin çokluğu da görsel ufkumuzu zenginleştirir, fotoğrafçılarda farklı akımların doğmasına yol açar.</p>
+      <p class="tl-quote">Fotoğrafı farklı kılan belki de bu ihtimallerin sonsuzluğudur. Çünkü bu ihtimallerdeki seçicilik fotoğrafçının tarzını da oluşturur.</p>
+      <p>Fotoğrafçı; dijital dünyanın, fotoğraf dünyasını alabildiğine yaygınlaştırdığı günümüzde bakanın duygularını mat edecek görsel arayışlar içinde olmak zorundadır.</p>
+      <p>Sabırlı, araştırmacı, farklı, dikkatli ve ihtimallerle dolu bir gözlem gücü deklanşöre basma anını, sonu zaferle sonuçlanacak keyifli ve heyecan verici bir "şah" çekmeye dönüştüreceği de unutulmamalıdır.</p>
     </div>
     <div class="text-lightbox-signature">Enver Şengül</div>
   </div>
@@ -2741,6 +2868,63 @@ document.getElementById('kesifLightbox').addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('kesifLightbox');
   if (modal.classList.contains('open') && e.key === 'Escape') closeKesifYazisi();
+});
+
+// ══════ Fotoğraf Tarihi, İnsanlık ve Kültür Tarihinin Bir Yansımasıdır (yazı) ══════
+function openTarihYazisi() {
+  const modal = document.getElementById('tarihLightbox');
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeTarihYazisi() {
+  document.getElementById('tarihLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('tarihLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeTarihYazisi();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('tarihLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeTarihYazisi();
+});
+
+// ══════ Fotoğraf ve Yaşam Kalitesi (yazı) ══════
+function openYasamYazisi() {
+  const modal = document.getElementById('yasamLightbox');
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeYasamYazisi() {
+  document.getElementById('yasamLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('yasamLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeYasamYazisi();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('yasamLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeYasamYazisi();
+});
+
+// ══════ Fotoğraf: Sayısız İhtimaller Sanatı (yazı) ══════
+function openIhtimallerYazisi() {
+  const modal = document.getElementById('ihtimallerLightbox');
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeIhtimallerYazisi() {
+  document.getElementById('ihtimallerLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('ihtimallerLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeIhtimallerYazisi();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('ihtimallerLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeIhtimallerYazisi();
 });
 
 // ══════ Yazarlığım: kitap tanıtım yazıları (yazılış animasyonlu) ══════
