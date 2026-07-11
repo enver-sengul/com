@@ -197,24 +197,24 @@ nav{
 .hero-eyebrow span{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
 .hero-logo-wrap{position:relative;width:100%;max-width:520px;aspect-ratio:1497/326;margin-bottom:14px;--logo-mask-url:linear-gradient(#000,#000);}
 @property --logo-angle{syntax:'<angle>';inherits:false;initial-value:0deg;}
-.hero-logo{width:100%;height:100%;object-fit:contain;object-position:left center;display:block;position:relative;z-index:1;animation:logoGoldPulse 3.2s ease-in-out infinite;}
+.hero-logo{width:100%;height:100%;object-fit:contain;object-position:left center;display:block;position:relative;z-index:1;animation:logoGoldPulse 3.6s ease-in-out infinite;}
 @keyframes logoGoldPulse{
-  0%,100%{filter:drop-shadow(0 6px 16px rgba(0,0,0,.5)) drop-shadow(0 0 6px rgba(255,200,90,.3)) drop-shadow(0 0 2px rgba(255,215,140,.35));}
-  50%{filter:drop-shadow(0 6px 16px rgba(0,0,0,.5)) drop-shadow(0 0 20px rgba(255,196,70,.8)) drop-shadow(0 0 38px rgba(255,170,50,.45));}
+  0%,100%{filter:drop-shadow(0 6px 16px rgba(0,0,0,.5)) drop-shadow(0 0 1px rgba(255,200,90,.2));}
+  50%{filter:drop-shadow(0 6px 16px rgba(0,0,0,.5)) drop-shadow(0 0 3px rgba(255,196,70,.45)) drop-shadow(0 0 6px rgba(255,170,50,.2));}
 }
 .hero-logo-wrap::before{
   content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
   background:conic-gradient(from var(--logo-angle),
     rgba(255,215,120,0) 0deg,
-    rgba(255,205,90,1) 18deg,
+    rgba(255,205,90,.45) 18deg,
     rgba(255,215,120,0) 55deg,
     rgba(255,215,120,0) 175deg,
-    rgba(255,180,60,.9) 200deg,
+    rgba(255,180,60,.4) 200deg,
     rgba(255,215,120,0) 240deg,
     rgba(255,215,120,0) 360deg);
   -webkit-mask-image:var(--logo-mask-url);-webkit-mask-size:100% 100%;-webkit-mask-repeat:no-repeat;-webkit-mask-position:left center;
   mask-image:var(--logo-mask-url);mask-size:100% 100%;mask-repeat:no-repeat;mask-position:left center;
-  mix-blend-mode:screen;animation:logoNeonSpin 4.5s linear infinite;
+  mix-blend-mode:overlay;animation:logoNeonSpin 6s linear infinite;opacity:.7;
 }
 @keyframes logoNeonSpin{ to{ --logo-angle:360deg; } }
 @media (prefers-reduced-motion: reduce){ .hero-logo-wrap::before{animation:none;} .hero-logo{animation:none;filter:drop-shadow(0 6px 16px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(255,200,90,.4));} }
