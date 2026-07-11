@@ -3883,29 +3883,31 @@ function ekSetFont(f){
     io.observe(bar);
   })();
 
-  // --- Ana kartlar: fare ile 3D eğim (tilt) efekti ---
+  // --- Kartlar: fare ile 3D eğim (tilt) efekti ---
   (function(){
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(reduced) return;
-    var tiltCards = document.querySelectorAll('.cards-section .card');
-    var maxTilt = 7;
-    tiltCards.forEach(function(card){
-      card.addEventListener('mousemove', function(e){
-        var rect = card.getBoundingClientRect();
-        var px = (e.clientX - rect.left) / rect.width - 0.5;
-        var py = (e.clientY - rect.top) / rect.height - 0.5;
-        var rotY = (px * maxTilt * 2).toFixed(2);
-        var rotX = (-py * maxTilt * 2).toFixed(2);
-        card.style.transition = 'transform .06s linear, box-shadow .35s';
-        card.style.transform = 'perspective(900px) translateY(-10px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) scale(1.015)';
-        card.style.boxShadow = 'var(--emboss-hover)';
+    function applyTilt(selector, maxTilt, hoverShadowVar, lift){
+      document.querySelectorAll(selector).forEach(function(card){
+        card.addEventListener('mousemove', function(e){
+          var rect = card.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width - 0.5;
+          var py = (e.clientY - rect.top) / rect.height - 0.5;
+          var rotY = (px * maxTilt * 2).toFixed(2);
+          var rotX = (-py * maxTilt * 2).toFixed(2);
+          card.style.transition = 'transform .06s linear, box-shadow .35s';
+          card.style.transform = 'perspective(900px) translateY(' + lift + 'px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) scale(1.015)';
+          card.style.boxShadow = 'var(' + hoverShadowVar + ')';
+        });
+        card.addEventListener('mouseleave', function(){
+          card.style.transition = 'transform .45s cubic-bezier(.22,.85,.3,1), box-shadow .45s';
+          card.style.transform = '';
+          card.style.boxShadow = '';
+        });
       });
-      card.addEventListener('mouseleave', function(){
-        card.style.transition = 'transform .45s cubic-bezier(.22,.85,.3,1), box-shadow .45s';
-        card.style.transform = '';
-        card.style.boxShadow = '';
-      });
-    });
+    }
+    applyTilt('.cards-section .card', 7, '--emboss-hover', -10);
+    applyTilt('.gallery-cat-card', 6, '--emboss-sm-hover', -6);
   })();
 
   // --- Hero alıntısı: daktilo efekti (Firebase içerik yüklendikten sonra çalışır) ---
