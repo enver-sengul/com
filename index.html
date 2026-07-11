@@ -166,6 +166,11 @@ body{font-family:var(--font-body);background:var(--dark);color:var(--cream);over
 ::-webkit-scrollbar-thumb{background:var(--gold-dark);}
 .scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:1200;background:rgba(0,0,0,.25);pointer-events:none;}
 .scroll-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold-light),var(--gold) 60%,#fff6d8);box-shadow:0 0 8px rgba(var(--gold-rgb),.7),0 0 18px rgba(var(--gold-rgb),.4);transition:width .12s linear;}
+.scroll-top-btn{position:fixed;bottom:28px;right:28px;z-index:900;width:52px;height:52px;border-radius:50%;background:var(--dark2);border:none;color:var(--gold);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(16px) scale(.8);transition:opacity .35s,transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.3);}
+.scroll-top-btn.visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
+.scroll-top-btn:hover{transform:translateY(-4px) scale(1.06) rotate(-10deg);box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.55);}
+.scroll-top-btn:active{transform:translateY(-1px) scale(.94) rotate(-10deg);box-shadow:inset 0 3px 8px rgba(0,0,0,.5);}
+@media(max-width:768px){.scroll-top-btn{width:46px;height:46px;bottom:20px;right:20px;font-size:17px;}}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
   display:flex;align-items:center;justify-content:space-between;
@@ -179,6 +184,8 @@ nav{
 .nav-links a{position:relative;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream2);text-decoration:none;text-shadow:0 1px 2px rgba(0,0,0,.4);transition:color .3s;padding:8px 4px;}
 .nav-links a::after{content:'';position:absolute;left:4px;right:4px;bottom:0;height:2px;border-radius:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;box-shadow:0 1px 3px rgba(var(--gold-rgb),.5);}
 .nav-links a:hover{color:var(--gold);}
+.nav-links a.active{color:var(--gold);}
+.nav-links a.active::after{transform:scaleX(1);}
 .nav-links a:hover::after{transform:scaleX(1);}
 .nav-social{display:flex;gap:10px;}
 .nav-social a{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream2);text-decoration:none;font-size:13px;transition:all .3s;box-shadow:0 4px 10px rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.2);}
@@ -821,6 +828,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
 </head>
 <body>
 <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarı çık">↑</button>
 <nav id="mainNav">
   <a href="#" class="nav-logo" id="ekTrigger">Enver Şengül</a>
   <ul class="nav-links">
@@ -3797,6 +3805,107 @@ function ekSetFont(f){
     window.addEventListener('scroll', update, { passive:true });
     window.addEventListener('resize', update);
     update();
+  })();
+
+  // --- Yukarı çık butonu ---
+  (function(){
+    var btn = document.getElementById('scrollTopBtn');
+    if(!btn) return;
+    function toggle(){
+      if(window.scrollY > 500) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    }
+    btn.addEventListener('click', function(){
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+    window.addEventListener('scroll', toggle, { passive:true });
+    toggle();
+  })();
+
+  // --- Nav scroll-spy: aktif bölüm linki altın renkte vurgulansın ---
+  (function(){
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+    var sections = [];
+    navLinks.forEach(function(link){
+      var id = link.getAttribute('href').slice(1);
+      var sec = document.getElementById(id);
+      if(sec) sections.push({ el:sec, link:link });
+    });
+    if(!sections.length) return;
+    function onScroll(){
+      var scrollPos = window.scrollY + window.innerHeight * 0.35;
+      var current = sections[0];
+      sections.forEach(function(s){
+        if(s.el.offsetTop <= scrollPos) current = s;
+      });
+      navLinks.forEach(function(l){ l.classList.remove('active'); });
+      current.link.classList.add('active');
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  })();
+
+  // --- İstatistik sayıları: görünüme girince sayarak yükselme ---
+  (function(){
+    var bar = document.querySelector('.stats-bar');
+    var statEls = document.querySelectorAll('.stat-main');
+    if(!bar || !statEls.length) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function animateCount(el){
+      var text = el.textContent;
+      var match = text.match(/^(\d+)(.*)$/);
+      if(!match) return;
+      if(reduced) return;
+      var target = parseInt(match[1], 10);
+      var suffix = match[2];
+      var duration = 1200;
+      var startTime = null;
+      function step(ts){
+        if(!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if(progress < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(step);
+    }
+    var done = false;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !done){
+          done = true;
+          statEls.forEach(animateCount);
+          io.disconnect();
+        }
+      });
+    }, { threshold:0.4 });
+    io.observe(bar);
+  })();
+
+  // --- Ana kartlar: fare ile 3D eğim (tilt) efekti ---
+  (function(){
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced) return;
+    var tiltCards = document.querySelectorAll('.cards-section .card');
+    var maxTilt = 7;
+    tiltCards.forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var rect = card.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width - 0.5;
+        var py = (e.clientY - rect.top) / rect.height - 0.5;
+        var rotY = (px * maxTilt * 2).toFixed(2);
+        var rotX = (-py * maxTilt * 2).toFixed(2);
+        card.style.transition = 'transform .06s linear, box-shadow .35s';
+        card.style.transform = 'perspective(900px) translateY(-10px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) scale(1.015)';
+        card.style.boxShadow = 'var(--emboss-hover)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transition = 'transform .45s cubic-bezier(.22,.85,.3,1), box-shadow .45s';
+        card.style.transform = '';
+        card.style.boxShadow = '';
+      });
+    });
   })();
 
   // --- Hero alıntısı: daktilo efekti (Firebase içerik yüklendikten sonra çalışır) ---
