@@ -2850,31 +2850,6 @@ window.addEventListener('resize', function(){
   });
 });
 
-// ══════ Chrome/tarayıcı "geri" tuşuyla açık pencere/galeri/görselleri kapatma ══════
-// Her "aç" işlemi tarayıcı geçmişine bir kayıt ekler; geri tuşuna basıldığında
-// sayfadan çıkmak yerine en üstteki açık pencere kapanır (iç içe pencerelerde sırayla).
-var ekModalStack = [];
-var ekPoppingModal = false;
-function ekPushModal(actualCloseFn){
-  ekModalStack.push(actualCloseFn);
-  history.pushState({ ekModal: ekModalStack.length }, '');
-}
-function ekPopModalAndClose(){
-  // "✕" butonuna, dışına tıklamaya veya Escape'e basıldığında çağrılır.
-  if(ekPoppingModal) return;
-  if(ekModalStack.length){
-    history.back();
-  }
-}
-window.addEventListener('popstate', function(){
-  if(ekModalStack.length){
-    ekPoppingModal = true;
-    var fn = ekModalStack.pop();
-    if(fn) fn();
-    ekPoppingModal = false;
-  }
-});
-
 // ══════ Fotoğraf Atölyeleri ══════
 const ATOLYELER = [
   { num:1,  name:'Demiryolu', year:2008 },
@@ -4632,6 +4607,62 @@ function ekSetFont(f){
   }catch(err){
     console.error('Özel imleç başlatılamadı:', err);
   }
+})();
+</script>
+
+<!-- ═══════ Geri/İleri tuşu ile lightbox/galeri pencerelerini kapatma ═══════ -->
+<script>
+(function(){
+  var EK_MODAL_MAP = {
+    lightbox:              function(){ closeLightbox(); },
+    inanclarLightbox:      function(){ closeInanclarLightbox(); },
+    galleryPage:           function(){ closeGallery(); },
+    inanclarPage:          function(){ closeInanclarGallery(); },
+    atolyeLightbox:        function(){ closeAtolyePage(); },
+    kirkpinarVideoLightbox:function(){ closeKirkpinarVideo(); },
+    bookLightbox:          function(){ closeBookLightbox(); },
+    kesifLightbox:         function(){ closeKesifYazisi(); },
+    tarihLightbox:         function(){ closeTarihYazisi(); },
+    yasamLightbox:         function(){ closeYasamYazisi(); },
+    ihtimallerLightbox:    function(){ closeIhtimallerYazisi(); }
+  };
+
+  var ekModalStack = [];
+  var ekPoppingFromHistory = false;
+
+  Object.keys(EK_MODAL_MAP).forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var wasOpen = el.classList.contains('open');
+    var obs = new MutationObserver(function(){
+      var nowOpen = el.classList.contains('open');
+      if(nowOpen && !wasOpen){
+        // Modal açıldı → sahte bir geçmiş kaydı ekle
+        if(!ekPoppingFromHistory){
+          history.pushState({ ekModal:id }, '');
+          ekModalStack.push(id);
+        }
+      } else if(!nowOpen && wasOpen){
+        // Modal kapandı
+        var idx = ekModalStack.lastIndexOf(id);
+        if(idx !== -1) ekModalStack.splice(idx, 1);
+        // Kullanıcı X'e bastıysa (geri tuşuyla değil) eklediğimiz sahte kaydı temizle
+        if(!ekPoppingFromHistory) history.back();
+      }
+      wasOpen = nowOpen;
+    });
+    obs.observe(el, { attributes:true, attributeFilter:['class'] });
+  });
+
+  window.addEventListener('popstate', function(){
+    if(ekModalStack.length > 0){
+      var topId = ekModalStack[ekModalStack.length - 1];
+      var fn = EK_MODAL_MAP[topId];
+      ekPoppingFromHistory = true;
+      if(typeof fn === 'function') fn();
+      Promise.resolve().then(function(){ ekPoppingFromHistory = false; });
+    }
+  });
 })();
 </script>
 </body>
