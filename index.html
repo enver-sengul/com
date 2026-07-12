@@ -697,12 +697,13 @@ footer { text-align:center; }
 .shutter-curtain.closed { transform:scaleY(1); }
 .lightbox-img { max-height:86vh; max-width:92vw; width:auto; height:auto; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border-radius:6px; box-shadow:0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(var(--gold-rgb),.25), inset 0 1px 0 rgba(255,255,255,.06), 0 0 80px rgba(0,0,0,.6); position:relative; display:block; }
 .lightbox-watermark { position:absolute; bottom:24px; right:28px; z-index:5; font-family:var(--font-serif); font-size:13px; font-style:italic; line-height:1.5; color:rgba(255,255,255,.5); text-shadow:0 2px 8px rgba(0,0,0,1); text-align:right; pointer-events:none; }
-.lightbox-stats { position:absolute; bottom:24px; left:24px; z-index:6; display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
+.lightbox-photo-col { display:flex; flex-direction:column; align-items:stretch; }
+.lightbox-stats { display:flex; flex-direction:column; gap:6px; align-items:flex-start; margin-top:14px; padding-top:10px; border-top:1px solid rgba(var(--gold-rgb),.25); }
 .ls-stars { display:flex; gap:3px; }
 .ls-star { font-size:17px; line-height:1; color:rgba(255,255,255,.28); cursor:pointer; transition:color .15s, transform .15s; text-shadow:0 1px 4px rgba(0,0,0,.9); user-select:none; }
 .ls-star:hover { transform:scale(1.15); }
 .ls-star.filled { color:var(--gold); }
-.ls-info { font-family:var(--font-body); font-size:10.5px; font-weight:600; letter-spacing:1px; color:rgba(255,255,255,.7); text-shadow:0 1px 4px rgba(0,0,0,.9); white-space:nowrap; }
+.ls-info { font-family:var(--font-body); font-size:10.5px; font-weight:600; letter-spacing:1px; color:var(--cream2); text-shadow:none; white-space:nowrap; }
 .lightbox-frame { position:absolute; inset:0; pointer-events:none; border:2px solid rgba(var(--gold-rgb),.4); box-shadow: inset 0 0 0 6px rgba(13,11,8,.8), inset 0 0 0 8px rgba(var(--gold-rgb),.15), 0 0 40px rgba(var(--gold-rgb),.15); }
 .lightbox-frame::before,.lightbox-frame::after { content:'';position:absolute; width:32px; height:32px; border-color:var(--gold); border-style:solid; }
 .lightbox-frame::before { top:-2px; left:-2px; border-width:3px 0 0 3px; }
@@ -822,7 +823,7 @@ footer { text-align:center; }
   .lb-close, .lb-music-toggle { width:38px; height:38px; }
   .lb-music-toggle { right:56px; }
   .lightbox-watermark { font-size:10px; bottom:14px; right:16px; }
-  .lightbox-stats { bottom:14px; left:14px; }
+  .lightbox-stats { margin-top:10px; padding-top:8px; gap:4px; }
 }
 .btn-buy { display:inline-flex;align-items:center;gap:8px; margin-top:16px;padding:11px 22px; background:transparent; border:none; border-radius:9px; color:var(--gold); font-family:var(--font-body); font-size:10px;font-weight:700;letter-spacing:2px; text-transform:uppercase;text-decoration:none; transition:all .3s; box-shadow:0 6px 14px rgba(0,0,0,.35),inset 0 0 0 1px rgba(var(--gold-rgb),.4); }
 .btn-buy:hover{background:linear-gradient(180deg,var(--gold-light),var(--gold));color:var(--dark);transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);}
@@ -2359,13 +2360,15 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <div class="shutter-curtain shutter-curtain-top" id="lbCurtainTop"></div>
     <div class="shutter-curtain shutter-curtain-bottom" id="lbCurtainBottom"></div>
     <button class="lb-btn lb-prev" onclick="lbNav(-1)">&#8249;</button>
-    <div style="position:relative;">
-      <img class="lightbox-img" id="lbImg" src="" alt="">
-      <div class="lightbox-frame">
-        <div class="lb-corner-tr"></div>
-        <div class="lb-corner-bl"></div>
+    <div class="lightbox-photo-col">
+      <div style="position:relative;">
+        <img class="lightbox-img" id="lbImg" src="" alt="">
+        <div class="lightbox-frame">
+          <div class="lb-corner-tr"></div>
+          <div class="lb-corner-bl"></div>
+        </div>
+        <div class="lightbox-watermark">Enver ŞENGÜL<br>© Tüm Hakları Saklıdır</div>
       </div>
-      <div class="lightbox-watermark">Enver ŞENGÜL<br>© Tüm Hakları Saklıdır</div>
       <div class="lightbox-stats">
         <div class="ls-stars" id="lbRatingStars"></div>
         <div class="ls-info" id="lbInfo"></div>
@@ -2406,13 +2409,15 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <div class="shutter-curtain shutter-curtain-top" id="inanclarLbCurtainTop"></div>
     <div class="shutter-curtain shutter-curtain-bottom" id="inanclarLbCurtainBottom"></div>
     <button class="lb-btn lb-prev" onclick="inanclarLbNav(-1)">&#8249;</button>
-    <div style="position:relative;">
-      <img class="lightbox-img" id="inanclarLbImg" src="" alt="">
-      <div class="lightbox-frame">
-        <div class="lb-corner-tr"></div>
-        <div class="lb-corner-bl"></div>
+    <div class="lightbox-photo-col">
+      <div style="position:relative;">
+        <img class="lightbox-img" id="inanclarLbImg" src="" alt="">
+        <div class="lightbox-frame">
+          <div class="lb-corner-tr"></div>
+          <div class="lb-corner-bl"></div>
+        </div>
+        <div class="lightbox-watermark">Enver ŞENGÜL<br>© Tüm Hakları Saklıdır</div>
       </div>
-      <div class="lightbox-watermark">Enver ŞENGÜL<br>© Tüm Hakları Saklıdır</div>
       <div class="lightbox-stats">
         <div class="ls-stars" id="inanclarLbRatingStars"></div>
         <div class="ls-info" id="inanclarLbInfo"></div>
@@ -4091,73 +4096,49 @@ function ekApplyStoredContent(){
 window.addEventListener('load', ekApplyStoredContent);
 </script>
 <style>
-.theme-switcher{position:fixed;bottom:22px;right:22px;z-index:900;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
-.theme-toggle-btn{width:46px;height:46px;border-radius:50%;background:rgba(var(--dark-rgb),.9);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.3);transition:all .25s;backdrop-filter:blur(8px);}
-.theme-toggle-btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.45),0 3px 10px rgba(var(--gold-rgb),.3),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.55);}
-.theme-toggle-btn:active{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.4),inset 0 3px 7px rgba(0,0,0,.4);}
-.theme-panel{display:none;flex-direction:column;gap:6px;background:rgba(var(--dark-rgb),.96);border-radius:14px;padding:10px;backdrop-filter:blur(10px);box-shadow:0 16px 40px rgba(0,0,0,.45),0 4px 12px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(var(--gold-rgb),.25);max-height:70vh;overflow-y:auto;}
-.theme-panel.open{display:flex;}
-.theme-opt{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:none;border:none;cursor:pointer;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--cream2);transition:all .2s;white-space:nowrap;}
-.theme-opt:hover{background:rgba(var(--gold-rgb),.08);}
-.theme-opt.active{color:var(--gold);background:rgba(var(--gold-rgb),.1);box-shadow:inset 0 1px 4px rgba(0,0,0,.3),inset 0 0 0 1px rgba(var(--gold-rgb),.35);}
-.theme-panel-divider{height:1px;background:rgba(var(--gold-rgb),.15);margin:4px 2px;}
-.theme-panel-label{font-family:var(--font-body);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:2px 12px;}
-.font-opt{font-size:13px;}
-.font-opt .font-preview{font-size:15px;width:auto;}
+.theme-switcher{position:fixed;bottom:92px;right:28px;z-index:900;}
+.theme-toggle-btn{width:52px;height:52px;border-radius:50%;background:var(--dark2);border:none;color:var(--gold);font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.3);transition:opacity .35s,transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;}
+.theme-toggle-btn:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.55);}
+.theme-toggle-btn:active{transform:translateY(-1px) scale(.94);box-shadow:inset 0 3px 8px rgba(0,0,0,.5);}
+@media(max-width:768px){.theme-switcher{bottom:74px;right:20px;}.theme-toggle-btn{width:46px;height:46px;font-size:16px;}}
 </style>
 <div class="theme-switcher">
-  <div class="theme-panel" id="themePanel">
-    <div class="theme-panel-label">Tema</div>
-    <button class="theme-opt" data-theme-id="gece" onclick="ekSetTheme('gece')"><span class="theme-swatch" style="background:#0B0E11"></span>Gece · koyu</button>
-    <button class="theme-opt" data-theme-id="karbon" onclick="ekSetTheme('karbon')"><span class="theme-swatch" style="background:#111010"></span>Karbon · koyu</button>
-    <button class="theme-opt" data-theme-id="orijinal" onclick="ekSetTheme('orijinal')"><span class="theme-swatch" style="background:#0D0B08"></span>Orijinal · koyu</button>
-    <button class="theme-opt" data-theme-id="antrasit" onclick="ekSetTheme('antrasit')"><span class="theme-swatch" style="background:#121417;border-color:#D4A64F"></span>Antrasit · koyu</button>
-    <button class="theme-opt" data-theme-id="gunduz" onclick="ekSetTheme('gunduz')"><span class="theme-swatch" style="background:#FAF6F0"></span>Gündüz · açık</button>
-    <button class="theme-opt" data-theme-id="bulut" onclick="ekSetTheme('bulut')"><span class="theme-swatch" style="background:#F4F5F7"></span>Bulut · açık</button>
-    <button class="theme-opt" data-theme-id="turuncu" onclick="ekSetTheme('turuncu')"><span class="theme-swatch" style="background:#FAF8F4"></span>Turuncu · açık</button>
-    <button class="theme-opt" data-theme-id="sedef" onclick="ekSetTheme('sedef')"><span class="theme-swatch" style="background:#F7F7F5"></span>Sedef · açık</button>
-    <button class="theme-opt" data-theme-id="kehribar" onclick="ekSetTheme('kehribar')"><span class="theme-swatch" style="background:#FCFAF7;border-color:#E57C23"></span>Kehribar · açık</button>
-    <button class="theme-opt" data-theme-id="gokyuzu" onclick="ekSetTheme('gokyuzu')"><span class="theme-swatch" style="background:#F7FAFC;border-color:#4F8EF7"></span>Gökyüzü · açık</button>
-    <button class="theme-opt" data-theme-id="zeytin" onclick="ekSetTheme('zeytin')"><span class="theme-swatch" style="background:#FAF8F4;border-color:#7A8F78"></span>Zeytin · açık</button>
-    <div class="theme-panel-divider"></div>
-    <div class="theme-panel-label">Yazı tipi</div>
-    <button class="theme-opt font-opt" data-font-id="klasik" onclick="ekSetFont('klasik')" style="font-family:'Playfair Display',serif;">Klasik</button>
-    <button class="theme-opt font-opt" data-font-id="modern-sans" onclick="ekSetFont('modern-sans')" style="font-family:'Poppins',sans-serif;">Modern</button>
-    <button class="theme-opt font-opt" data-font-id="editoryel" onclick="ekSetFont('editoryel')" style="font-family:'Fraunces',serif;">Editöryel</button>
-    <button class="theme-opt font-opt" data-font-id="cagdas" onclick="ekSetFont('cagdas')" style="font-family:'DM Serif Display',serif;">Çağdaş</button>
-    <button class="theme-opt font-opt" data-font-id="zarif" onclick="ekSetFont('zarif')" style="font-family:'Cormorant Garamond',serif;">Zarif</button>
-    <button class="theme-opt font-opt" data-font-id="gazete" onclick="ekSetFont('gazete')" style="font-family:'Libre Baskerville',serif;">Gazete</button>
-    <button class="theme-opt font-opt" data-font-id="gecis" onclick="ekSetFont('gecis')" style="font-family:'Geist',sans-serif;">Geist</button>
-    <button class="theme-opt font-opt" data-font-id="jakarta" onclick="ekSetFont('jakarta')" style="font-family:'Plus Jakarta Sans',sans-serif;">Jakarta</button>
-    <button class="theme-opt font-opt" data-font-id="syne" onclick="ekSetFont('syne')" style="font-family:'Syne',sans-serif;">Syne</button>
-  </div>
-  <button class="theme-toggle-btn" id="themeToggleBtn" onclick="document.getElementById('themePanel').classList.toggle('open')" aria-label="Tema ve yazı tipi seç">◐</button>
+  <button class="theme-toggle-btn" id="themeToggleBtn" onclick="ekToggleTheme()" aria-label="Açık/Koyu tema değiştir" title="Tema değiştir">
+    <span id="themeToggleIcon">☀</span>
+  </button>
 </div>
 <script>
+function ekApplyThemeIcon(t){
+  var icon = document.getElementById('themeToggleIcon');
+  var btn = document.getElementById('themeToggleBtn');
+  if(!icon) return;
+  if(t === 'antrasit'){
+    icon.textContent = '☾';
+    if(btn){ btn.setAttribute('aria-label','Açık temaya geç'); btn.title = 'Açık temaya geç'; }
+  } else {
+    icon.textContent = '☀';
+    if(btn){ btn.setAttribute('aria-label','Koyu temaya geç'); btn.title = 'Koyu temaya geç'; }
+  }
+}
 function ekSetTheme(t){
   document.documentElement.setAttribute('data-theme', t);
   try{ localStorage.setItem('ek-theme', t); }catch(e){}
-  document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active', b.dataset.themeId === t));
+  ekApplyThemeIcon(t);
   const n = document.querySelector('nav');
   if(n){
     const dr = getComputedStyle(document.documentElement).getPropertyValue('--dark-rgb').trim();
     n.style.background = window.scrollY > 30 ? `rgba(${dr},0.97)` : `rgba(${dr},0.92)`;
   }
 }
-  
-function ekSetFont(f){
-  document.documentElement.setAttribute('data-font', f);
-  try{ localStorage.setItem('ek-font', f); }catch(e){}
-  document.querySelectorAll('.font-opt').forEach(b=>b.classList.toggle('active', b.dataset.fontId === f));
+function ekToggleTheme(){
+  var current = document.documentElement.getAttribute('data-theme');
+  ekSetTheme(current === 'antrasit' ? 'zeytin' : 'antrasit');
 }
 (function(){
-  let savedFont = 'klasik';
-  try{ savedFont = localStorage.getItem('ek-font') || 'klasik'; }catch(e){}
-  ekSetFont(savedFont);
-})();
-(function(){
-  let saved = 'gunduz';
-  try{ saved = localStorage.getItem('ek-theme') || 'gunduz'; }catch(e){}
+  document.documentElement.setAttribute('data-font', 'klasik');
+  let saved = 'zeytin';
+  try{ saved = localStorage.getItem('ek-theme') || 'zeytin'; }catch(e){}
+  if(saved !== 'antrasit' && saved !== 'zeytin') saved = 'zeytin';
   ekSetTheme(saved);
 })();
 </script>
