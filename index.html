@@ -209,6 +209,32 @@ html.cc-active .custom-cursor{opacity:1;}
 .custom-cursor.cc-down .cc-blade{transform:rotate(33deg);transition:transform .12s cubic-bezier(.55,0,.75,.1);}
 .custom-cursor.cc-hover{--cc-scale:1.16;}
 @media(prefers-reduced-motion:reduce){.cc-blade{transition:none;}}
+/* ── üç bağlamsal imleç: diyafram · tüy kalem · cami ── */
+.custom-cursor .cc-svg{position:absolute;inset:0;width:100%;height:100%;}
+.custom-cursor .cc-feather,.custom-cursor .cc-mosque{display:none;}
+.custom-cursor.cc-quill .cc-dia,.custom-cursor.cc-mq .cc-dia{display:none;}
+.custom-cursor.cc-quill .cc-feather{display:block;}
+.custom-cursor.cc-mq .cc-mosque{display:block;}
+.custom-cursor.cc-quill{width:52px;height:52px;transform:translate(var(--cx),var(--cy)) translate(-14%,-88%) scale(var(--cc-scale));}
+.custom-cursor.cc-quill.cc-hover{--cc-scale:1.08;}
+.cc-feather{transform-box:view-box;transform-origin:14px 88px;transition:transform .18s cubic-bezier(.34,1.4,.5,1);}
+.custom-cursor.cc-quill.cc-down .cc-feather{transform:rotate(-6deg) translate(1px,2px);transition:transform .1s ease;}
+.cc-fvane{fill:url(#ccFeatherGrad);stroke:#4a3007;stroke-width:0.7;stroke-linejoin:round;}
+.cc-fbarb{fill:none;stroke:#5a3d0c;stroke-width:0.75;stroke-linecap:round;opacity:.6;}
+.cc-fshaft{fill:none;stroke:#6a4810;stroke-width:1.8;stroke-linecap:round;}
+.cc-fshafthi{fill:none;stroke:#fff6d2;stroke-width:0.7;stroke-linecap:round;opacity:.6;}
+.cc-nib{fill:url(#ccNibGrad);stroke:#3a2708;stroke-width:0.8;stroke-linejoin:round;}
+.cc-nibline{fill:none;stroke:#2a1c05;stroke-width:0.7;stroke-linecap:round;}
+.custom-cursor.cc-mq{width:50px;height:50px;transform:translate(var(--cx),var(--cy)) translate(-50%,-56%) scale(var(--cc-scale));}
+.custom-cursor.cc-mq.cc-hover{--cc-scale:1.06;}
+.cc-mosque{transform-box:view-box;transform-origin:50px 92px;transition:transform .18s cubic-bezier(.34,1.4,.5,1);}
+.custom-cursor.cc-mq.cc-down .cc-mosque{transform:translateY(1.5px) scale(.95);transition:transform .1s ease;}
+.mq-body,.mq-drum{fill:url(#ccMqGrad);stroke:#5a3d0c;stroke-width:0.8;stroke-linejoin:round;}
+.mq-dome,.mq-dome2{fill:url(#ccMqDome);stroke:#5a3d0c;stroke-width:0.8;stroke-linejoin:round;}
+.mq-edge{fill:#8a5f16;stroke:#5a3d0c;stroke-width:0.5;}
+.mq-ribs{fill:none;stroke:#9a6c1c;stroke-width:0.5;opacity:.55;}
+.mq-fin{stroke:#6a4810;stroke-width:1.2;} .mq-finb{fill:#FFF3C8;stroke:#5a3d0c;stroke-width:0.5;}
+.mq-win{fill:#3a2708;stroke:#5a3d0c;stroke-width:0.6;stroke-linejoin:round;}
 @media(max-width:1100px){.side-nav{display:none;}}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
@@ -891,7 +917,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
   <a href="#iletisim" class="side-nav-dot" data-label="İletişim"></a>
 </nav>
 <div class="custom-cursor" id="customCursor" aria-hidden="true">
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <svg class="cc-svg cc-dia" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="ccGoldGrad" x1="18%" y1="6%" x2="82%" y2="94%">
         <stop offset="0%" stop-color="#FFF0BE"/>
@@ -926,6 +952,24 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     </g>
     <circle cx="50" cy="50" r="46.5" fill="none" stroke="rgba(255,240,205,.10)" stroke-width="1"/>
     <circle cx="50" cy="50" r="49" fill="none" stroke="rgba(0,0,0,.55)" stroke-width="1"/>
+  </svg>
+  <svg class="cc-svg cc-feather" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ccNibGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A5C16"/><stop offset="45%" stop-color="#E9C25E"/><stop offset="100%" stop-color="#FFF3C8"/></linearGradient>
+      <linearGradient id="ccFeatherGrad" x1="8%" y1="92%" x2="92%" y2="8%"><stop offset="0%" stop-color="#B27B26"/><stop offset="40%" stop-color="#E7BD52"/><stop offset="74%" stop-color="#F9DE8E"/><stop offset="100%" stop-color="#FFF4CC"/></linearGradient>
+    </defs>
+    <path class="cc-fvane" d="M 30.0,74.0 L 32.8,74.3 L 35.3,74.3 L 36.3,73.2 L 38.8,73.3 L 39.4,71.9 L 42.0,72.1 L 42.3,70.4 L 45.0,70.8 L 45.0,68.8 L 47.8,69.3 L 47.6,67.2 L 50.5,67.7 L 50.1,65.4 L 53.1,66.1 L 52.5,63.7 L 55.6,64.4 L 54.9,61.8 L 58.0,62.6 L 57.1,59.9 L 60.3,60.7 L 59.4,57.9 L 62.6,58.8 L 61.5,55.9 L 64.7,56.7 L 63.6,53.8 L 66.8,54.6 L 65.7,51.6 L 68.8,52.5 L 67.6,49.4 L 70.7,50.2 L 69.6,47.1 L 72.6,47.9 L 71.4,44.8 L 74.3,45.4 L 73.3,42.3 L 76.0,42.9 L 75.0,39.8 L 77.7,40.3 L 76.8,37.2 L 79.3,37.6 L 78.4,34.6 L 80.8,34.8 L 80.0,31.8 L 82.2,31.9 L 81.6,29.0 L 83.5,28.8 L 83.0,26.0 L 84.8,25.6 L 84.4,22.9 L 85.8,22.2 L 85.6,19.6 L 86.6,18.4 L 86.4,15.8 L 86.0,13.0 L 86.0,13.0 L 83.2,12.3 L 80.7,11.9 L 79.4,12.9 L 76.8,12.5 L 75.9,13.9 L 73.2,13.4 L 72.7,15.1 L 69.9,14.5 L 69.6,16.5 L 66.7,15.8 L 66.6,18.0 L 63.6,17.3 L 63.7,19.7 L 60.6,18.9 L 60.9,21.4 L 57.8,20.6 L 58.3,23.3 L 55.1,22.4 L 55.7,25.2 L 52.5,24.3 L 53.2,27.3 L 50.0,26.4 L 50.8,29.4 L 47.6,28.5 L 48.5,31.6 L 45.3,30.8 L 46.3,33.9 L 43.2,33.1 L 44.2,36.2 L 41.1,35.6 L 42.3,38.7 L 39.2,38.1 L 40.4,41.2 L 37.4,40.7 L 38.6,43.8 L 35.8,43.4 L 36.9,46.5 L 34.2,46.2 L 35.4,49.3 L 32.8,49.1 L 34.0,52.1 L 31.6,52.1 L 32.7,55.0 L 30.5,55.2 L 31.5,58.0 L 29.6,58.4 L 30.5,61.1 L 28.8,61.7 L 29.6,64.3 L 28.4,65.2 L 29.1,67.7 L 28.3,69.0 L 29.0,71.4 L 30.0,74.0 Z"/>
+    <g class="cc-fbarb"><path d="M33.0,70.0 L38.3,70.7"/><path d="M33.0,70.0 L31.0,65.1"/><path d="M34.6,68.0 L41.6,69.0"/><path d="M34.6,68.0 L31.9,61.4"/><path d="M36.1,66.1 L44.6,67.3"/><path d="M36.1,66.1 L32.9,58.1"/><path d="M37.7,64.1 L47.4,65.6"/><path d="M37.7,64.1 L34.0,54.9"/><path d="M39.2,62.2 L50.1,63.9"/><path d="M39.2,62.2 L35.3,51.9"/><path d="M40.8,60.2 L52.7,62.2"/><path d="M40.8,60.2 L36.6,49.0"/><path d="M42.4,58.3 L55.1,60.4"/><path d="M42.4,58.3 L37.9,46.2"/><path d="M44.0,56.3 L57.5,58.7"/><path d="M44.0,56.3 L39.4,43.5"/><path d="M45.7,54.4 L59.8,57.0"/><path d="M45.7,54.4 L40.8,40.9"/><path d="M47.3,52.5 L62.0,55.2"/><path d="M47.3,52.5 L42.4,38.4"/><path d="M49.0,50.6 L64.1,53.5"/><path d="M49.0,50.6 L44.0,36.0"/><path d="M50.7,48.7 L66.1,51.8"/><path d="M50.7,48.7 L45.6,33.7"/><path d="M52.4,46.8 L68.1,50.0"/><path d="M52.4,46.8 L47.3,31.5"/><path d="M54.1,44.9 L69.9,48.2"/><path d="M54.1,44.9 L49.1,29.4"/><path d="M55.8,43.0 L71.7,46.5"/><path d="M55.8,43.0 L50.9,27.4"/><path d="M57.5,41.1 L73.5,44.7"/><path d="M57.5,41.1 L52.7,25.5"/><path d="M59.3,39.2 L75.1,42.9"/><path d="M59.3,39.2 L54.6,23.7"/><path d="M61.1,37.3 L76.7,41.0"/><path d="M61.1,37.3 L56.5,21.9"/><path d="M62.9,35.4 L78.2,39.2"/><path d="M62.9,35.4 L58.5,20.3"/><path d="M64.7,33.6 L79.6,37.3"/><path d="M64.7,33.6 L60.5,18.8"/><path d="M66.5,31.7 L80.9,35.4"/><path d="M66.5,31.7 L62.5,17.4"/><path d="M68.3,29.9 L82.2,33.5"/><path d="M68.3,29.9 L64.5,16.0"/><path d="M70.2,28.0 L83.4,31.6"/><path d="M70.2,28.0 L66.7,14.8"/><path d="M72.0,26.2 L84.5,29.6"/><path d="M72.0,26.2 L68.8,13.7"/><path d="M73.9,24.3 L85.5,27.6"/><path d="M73.9,24.3 L71.0,12.7"/><path d="M75.8,22.5 L86.4,25.5"/><path d="M75.8,22.5 L73.2,11.8"/><path d="M77.7,20.7 L87.2,23.5"/><path d="M77.7,20.7 L75.4,11.1"/><path d="M79.7,18.9 L87.9,21.3"/><path d="M79.7,18.9 L77.7,10.5"/><path d="M81.6,17.0 L88.4,19.1"/><path d="M81.6,17.0 L80.0,10.1"/><path d="M83.6,15.2 L88.7,16.8"/><path d="M83.6,15.2 L82.4,10.0"/></g>
+    <path class="cc-fshaft" d="M30.0,74.0 Q54.0,42.0 86.0,13.0"/><path class="cc-fshafthi" d="M30.0,74.0 Q54.0,42.0 86.0,13.0"/>
+    <path class="cc-nib" d="M14,88 L27.5,72.5 L33.5,77.5 Z"/>
+    <path class="cc-nibline" d="M15.6,86.2 L30.4,74.7"/><path class="cc-nibline" d="M26.6,71.2 L34.3,78.2"/>
+  </svg>
+  <svg class="cc-svg cc-mosque" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ccMqGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFF0BE"/><stop offset="45%" stop-color="#E7BD52"/><stop offset="100%" stop-color="#A9741F"/></linearGradient>
+      <linearGradient id="ccMqDome" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF6D2"/><stop offset="50%" stop-color="#EAC25C"/><stop offset="100%" stop-color="#B98327"/></linearGradient>
+    </defs>
+    <path class="mq-body" d="M16,92 L16,60 L20,57 L80,57 L84,60 L84,92 Z"/><path class="mq-edge" d="M14,60 L86,60 L84,63 L16,63 Z"/><path class="mq-drum" d="M19,60 L19,55 L37,55 L37,60 Z"/><path class="mq-dome2" d="M19,55 C19,46.0 23.5,44 28,44 C32.5,44 37,46.0 37,55 Z"/><circle class="mq-finb" cx="28" cy="42.6" r="1.0"/><path class="mq-drum" d="M63,60 L63,55 L81,55 L81,60 Z"/><path class="mq-dome2" d="M63,55 C63,46.0 67.5,44 72,44 C76.5,44 81,46.0 81,55 Z"/><circle class="mq-finb" cx="72" cy="42.6" r="1.0"/><path class="mq-drum" d="M37,60 L37,44 L63,44 L63,60 Z"/><path class="mq-dome" d="M34,44 C34,27.6 42.0,24 50,24 C58.0,24 66,27.6 66,44 Z"/><path class="mq-ribs" d="M50,25 L50,44 M43,26 Q42,38 41,44 M57,26 Q58,38 59,44"/><path class="mq-fin" d="M50,24 L50,17"/><circle class="mq-finb" cx="50" cy="15.3" r="2.0"/><path class="mq-win" d="M46,60 L46,52.5 A4,4 0 0 1 54,52.5 L54,60 Z"/><path class="mq-win" d="M23.0,86 L23.0,75.0 A5.0,5.0 0 0 1 33.0,75.0 L33.0,86 Z"/><path class="mq-win" d="M45.0,86 L45.0,75.0 A5.0,5.0 0 0 1 55.0,75.0 L55.0,86 Z"/><path class="mq-win" d="M67.0,86 L67.0,75.0 A5.0,5.0 0 0 1 77.0,75.0 L77.0,86 Z"/>
   </svg>
 </div>
 <nav id="mainNav">
@@ -4775,9 +4819,39 @@ function ekToggleTheme(){
       o.connect(g2); g2.connect(ctx.destination); o.start(t0); o.stop(t0+0.09);
     }
   }
+  function scratch(open){
+    init(); if(!ctx) return;
+    if(ctx.state==='suspended'){ ctx.resume(); }
+    var t=ctx.currentTime;
+    var src=ctx.createBufferSource(); src.buffer=noiseBuf;
+    var lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=open?2400:1500; lp.Q.value=0.6;
+    var hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=520;
+    var g=ctx.createGain();
+    var dur=open?0.05:0.10, vol=open?0.09:0.15;
+    g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(vol,t+0.005);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(ctx.destination);
+    src.start(t); src.stop(t+dur+0.03);
+  }
+  function tone(f,t,dur,vol){
+    var o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+    var g=ctx.createGain();
+    g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t+dur+0.05);
+  }
+  function heritage(open){
+    init(); if(!ctx) return;
+    if(ctx.state==='suspended'){ ctx.resume(); }
+    var t=ctx.currentTime;
+    if(open){ tone(660,t,0.28,0.05); }
+    else { tone(330,t,0.6,0.09); tone(495,t,0.5,0.045); }
+  }
   function fire(open){
     init(); if(!ctx) return;
     if(ctx.state==='suspended'){ ctx.resume(); }
+    if(window.__ccMosque){ heritage(open); return; }
+    if(window.__ccQuill){ scratch(open); return; }
     var t=ctx.currentTime;
     if(open){                       // birakinca: bicaklar acilir - tek hafif tik
       tick(t, 3300, 1.3, 0.022, 0.16, 0);
@@ -4857,6 +4931,20 @@ function ekToggleTheme(){
       setTimeout(function() { document.body.classList.remove('shutter-click'); }, 600);
     }
   });
+})();
+</script>
+<script>
+(function(){
+  var cursor=document.getElementById('customCursor');
+  if(!cursor) return;
+  window.__ccQuill=false; window.__ccMosque=false;
+  window.addEventListener('mousemove', function(e){
+    var el=(e.target&&e.target.closest)?e.target:null;
+    var q=!!(el&&el.closest('#yazarlik'));
+    var m=!!(el&&el.closest('#kulturel'));
+    if(q!==window.__ccQuill){ window.__ccQuill=q; cursor.classList.toggle('cc-quill',q); }
+    if(m!==window.__ccMosque){ window.__ccMosque=m; cursor.classList.toggle('cc-mq',m); }
+  }, {passive:true});
 })();
 </script>
 </body>
