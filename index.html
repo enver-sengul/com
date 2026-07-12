@@ -2785,6 +2785,27 @@ function attachCoverFadeIn(img) {
   };
   img.addEventListener('load', onLoaded);
 }
+function fitLightboxImage(imgEl){
+  function apply(){
+    if (!imgEl.naturalWidth || !imgEl.naturalHeight) return;
+    const maxH = window.innerHeight * 0.86;
+    const maxW = window.innerWidth * 0.92;
+    const ar = imgEl.naturalWidth / imgEl.naturalHeight;
+    let w, h;
+    if (maxW / maxH > ar) { h = maxH; w = maxH * ar; }
+    else { w = maxW; h = maxW / ar; }
+    imgEl.style.width = w + 'px';
+    imgEl.style.height = h + 'px';
+  }
+  imgEl.onload = apply;
+  if (imgEl.complete && imgEl.naturalWidth) apply();
+}
+window.addEventListener('resize', function(){
+  ['lbImg','inanclarLbImg','atolyePageImg'].forEach(function(id){
+    const el = document.getElementById(id);
+    if (el && el.naturalWidth) fitLightboxImage(el);
+  });
+});
 
 // ══════ Fotoğraf Atölyeleri ══════
 const ATOLYELER = [
@@ -2868,6 +2889,7 @@ function showAtolyePage() {
   const file = atolyeFileMap[atolyeCurrentIdx];
   document.getElementById('atolyeLbTitle').textContent = a.name + (a.year ? ' · ' + a.year : '');
   document.getElementById('atolyePageImg').src = file ? driveImgUrl(file.id, 'w1920-h1280') : '';
+  fitLightboxImage(document.getElementById('atolyePageImg'));
   document.getElementById('atolyeLbCounter').textContent = (atolyeCurrentIdx + 1) + ' / ' + ATOLYELER.length;
 }
 function openAtolyePage(idx) {
@@ -3453,6 +3475,7 @@ function openLightbox(idx) {
   const photo = currentPhotos[idx];
   const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1920-h1280';
   document.getElementById('lbImg').src = driveImgUrl(photo.id, lbSize);
+  fitLightboxImage(document.getElementById('lbImg'));
   document.getElementById('lbTitle').textContent = GALLERY_CATS[currentCatKey]?.title || '';
   document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + currentPhotos.length;
   document.getElementById('lightbox').classList.add('open');
@@ -3767,6 +3790,7 @@ function openInanclarLightbox(idx){
   inanclarLbIndex = idx;
   const photo = inanclarPhotos[idx];
   document.getElementById('inanclarLbImg').src = driveImgUrl(photo.id, 'w1920-h1280');
+  fitLightboxImage(document.getElementById('inanclarLbImg'));
   document.getElementById('inanclarLbCounter').textContent = (idx + 1) + ' / ' + inanclarPhotos.length;
   document.getElementById('inanclarLightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
