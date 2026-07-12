@@ -171,6 +171,13 @@ body{font-family:var(--font-body);background:var(--dark);color:var(--cream);over
 .scroll-top-btn:hover{transform:translateY(-4px) scale(1.06) rotate(-10deg);box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.55);}
 .scroll-top-btn:active{transform:translateY(-1px) scale(.94) rotate(-10deg);box-shadow:inset 0 3px 8px rgba(0,0,0,.5);}
 @media(max-width:768px){.scroll-top-btn{width:46px;height:46px;bottom:20px;right:20px;font-size:17px;}}
+.side-nav{position:fixed;top:50%;right:22px;left:auto;bottom:auto;transform:translateY(-50%);z-index:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0;margin:0;background:none;box-shadow:none;backdrop-filter:none;width:auto;height:auto;}
+.side-nav-dot{position:relative;width:10px;height:10px;border-radius:50%;background:rgba(var(--gold-rgb),.28);box-shadow:0 2px 6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);transition:all .3s cubic-bezier(.34,1.56,.64,1);}
+.side-nav-dot::before{content:attr(data-label);position:absolute;right:22px;top:50%;transform:translateY(-50%);white-space:nowrap;background:rgba(var(--dark-rgb),.95);color:var(--gold-light);font-size:10.5px;font-weight:600;letter-spacing:1px;padding:7px 12px;border-radius:7px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 8px 18px rgba(0,0,0,.4),0 0 0 1px rgba(var(--gold-rgb),.25);transform:translateY(-50%) translateX(6px);}
+.side-nav-dot:hover::before{opacity:1;transform:translateY(-50%) translateX(0);}
+.side-nav-dot:hover{background:rgba(var(--gold-rgb),.6);transform:scale(1.3);}
+.side-nav-dot.active{background:linear-gradient(180deg,var(--gold-light),var(--gold));transform:scale(1.45);box-shadow:0 0 0 4px rgba(var(--gold-rgb),.18),0 3px 10px rgba(0,0,0,.4);}
+@media(max-width:1100px){.side-nav{display:none;}}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
   display:flex;align-items:center;justify-content:space-between;
@@ -179,7 +186,8 @@ nav{
   box-shadow:0 10px 26px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.07),inset 0 -1px 0 rgba(var(--gold-rgb),.16);
   backdrop-filter:blur(12px);
 }
-.nav-logo{font-family:var(--font-serif);font-size:28px;font-style:italic;color:var(--gold);text-decoration:none;text-shadow:0 2px 4px rgba(0,0,0,.5),0 -1px 0 rgba(255,255,255,.12);}
+.nav-logo{display:flex;align-items:center;font-family:var(--font-serif);font-size:28px;font-style:italic;color:var(--gold);text-decoration:none;text-shadow:0 2px 4px rgba(0,0,0,.5),0 -1px 0 rgba(255,255,255,.12);}
+.nav-logo-img{height:38px;width:auto;max-width:220px;object-fit:contain;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));}
 .nav-links{display:flex;gap:32px;list-style:none;}
 .nav-links a{position:relative;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream2);text-decoration:none;text-shadow:0 1px 2px rgba(0,0,0,.4);transition:color .3s;padding:8px 4px;}
 .nav-links a::after{content:'';position:absolute;left:4px;right:4px;bottom:0;height:2px;border-radius:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;box-shadow:0 1px 3px rgba(var(--gold-rgb),.5);}
@@ -338,9 +346,9 @@ nav{
 .w-flag{font-size:26px;margin-bottom:6px;}
 .w-city{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--cream2);}
 .books-bg{background:var(--dark);}
-.books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-bottom:56px;}
-.book-card{background:var(--dark2);border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s;box-shadow:var(--emboss);}
-.book-card:hover{transform:translateY(-8px);box-shadow:var(--emboss-hover);}
+.books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-bottom:56px;perspective:1200px;}
+.book-card{background:var(--dark2);border-radius:16px;overflow:hidden;transition:transform .4s cubic-bezier(.22,.85,.3,1),box-shadow .4s;box-shadow:var(--emboss),3px 4px 0 -1px var(--dark2),3px 4px 0 0 rgba(var(--gold-rgb),.14),6px 8px 0 -1px var(--dark3),6px 8px 0 0 rgba(var(--gold-rgb),.09),9px 12px 14px -4px rgba(0,0,0,.4);transform-style:preserve-3d;}
+.book-card:hover{transform:translateY(-8px) rotateY(-7deg);box-shadow:var(--emboss-hover),4px 5px 0 -1px var(--dark2),4px 5px 0 0 rgba(var(--gold-rgb),.2),8px 10px 0 -1px var(--dark3),8px 10px 0 0 rgba(var(--gold-rgb),.13),14px 18px 22px -4px rgba(0,0,0,.5);}
 .book-cover{aspect-ratio:2/3;position:relative;display:flex;align-items:center;justify-content:center;padding:40px 32px;cursor:pointer;overflow:hidden;}
 .book-cover::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 48%,rgba(255,255,255,.06) 52%,transparent 65%);background-size:220% 100%;background-position:-60% 0;transition:background-position .9s ease;}
 .book-card:hover .book-cover::before{background-position:160% 0;}
@@ -576,7 +584,7 @@ footer{background:var(--dark);padding:44px 72px;display:flex;align-items:center;
   .footer-links{flex-wrap:wrap;justify-content:center;gap:16px;}
 }
 @media(max-width:480px){
-  .nav-logo{font-size:22px;}
+  .nav-logo-img{height:30px;max-width:160px;}
   .section-inner{padding:40px 16px;}
   .hero-left{padding:80px 16px 48px;}
   .hero-quote{font-size:15px;}
@@ -629,9 +637,11 @@ nav, .nav-links, .nav-logo,
 footer { text-align:center; }
 .gallery-cats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; position:relative; z-index:1; }
 .gallery-cats.two-col { grid-template-columns:repeat(2,1fr); }
-.gallery-cat-card { position:relative; aspect-ratio:3/2; overflow:hidden; cursor:pointer; background:var(--dark3); z-index:1; isolation:isolate; border-radius:14px; box-shadow:var(--emboss-sm); transition:transform .3s,box-shadow .3s; }
+.gallery-cat-card { position:relative; aspect-ratio:3/2; overflow:hidden; cursor:pointer; background:var(--dark3); background-image:linear-gradient(100deg, var(--dark3) 30%, rgba(var(--gold-rgb),.1) 50%, var(--dark3) 70%); background-size:220% 100%; animation:skeletonShimmer 2.4s ease-in-out infinite; z-index:1; isolation:isolate; border-radius:14px; box-shadow:var(--emboss-sm); transition:transform .3s,box-shadow .3s; }
+@keyframes skeletonShimmer{ 0%{background-position:160% 0;} 100%{background-position:-60% 0;} }
 .gallery-cat-card:hover { transform:translateY(-6px); box-shadow:var(--emboss-sm-hover); }
-.gallery-cat-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease, filter .4s; filter:brightness(.75) sepia(10%); pointer-events:none; user-select:none; -webkit-user-drag:none; }
+.gallery-cat-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease, filter .4s, opacity .5s ease; filter:brightness(.75) sepia(10%); pointer-events:none; user-select:none; -webkit-user-drag:none; opacity:0; }
+.atolye-card-img{ transition:transform .5s ease, filter .5s ease, opacity .5s ease; opacity:0; }
 .gallery-cat-card:hover img { transform:scale(1.06); filter:brightness(.55) sepia(20%); }
 .gallery-cat-card img.portrait-cover { object-fit:contain; background:var(--dark); }
 .gallery-cat-card .video-play-badge { position:absolute; top:14px; left:14px; z-index:2; display:flex; align-items:center; gap:6px; padding:6px 12px; background:rgba(13,11,8,.75); border-radius:8px; color:var(--gold-light); font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(var(--gold-rgb),.35); }
@@ -736,6 +746,20 @@ footer { text-align:center; }
 .gallery-page-indicator { font-family:var(--font-serif); font-size:16px; font-style:italic; color:var(--cream2); min-width:80px; text-align:center; }
 .gallery-page-close { display:flex; align-items:center; gap:10px; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); cursor:pointer; background:none; border:none; font-family:var(--font-body); padding:8px 14px; border-radius:8px; transition:all .3s; }
 .gallery-page-close:hover { color:var(--gold-light); background:rgba(var(--gold-rgb),.08); box-shadow:inset 0 1px 3px rgba(0,0,0,.25); }
+.atolye-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.atolye-card{position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;cursor:pointer;background:var(--dark3);background-image:linear-gradient(100deg, var(--dark3) 30%, rgba(var(--gold-rgb),.1) 50%, var(--dark3) 70%);background-size:220% 100%;animation:skeletonShimmer 2.4s ease-in-out infinite;box-shadow:var(--emboss-sm);transition:transform .3s,box-shadow .3s;}
+.atolye-card:hover{transform:translateY(-6px);box-shadow:var(--emboss-sm-hover);}
+.atolye-card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s;}
+.atolye-card:hover .atolye-card-img{transform:scale(1.07);filter:brightness(.75);}
+.atolye-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,3,.92) 0%,rgba(8,6,3,.35) 55%,rgba(8,6,3,.05) 100%);pointer-events:none;}
+.atolye-card-num{position:absolute;top:12px;left:12px;z-index:2;width:32px;height:32px;border-radius:50%;background:rgba(13,11,8,.6);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:13px;color:var(--gold);box-shadow:0 4px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(var(--gold-rgb),.3);}
+.atolye-card-info{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;}
+.atolye-card-name{font-family:var(--font-heading);font-size:14.5px;font-weight:700;color:var(--white);line-height:1.3;text-shadow:0 2px 6px rgba(0,0,0,.6);}
+.atolye-card-year{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--gold-light);margin-top:3px;}
+.atolye-lb-caption{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:5;}
+.atolye-lb-caption .alc-name{font-family:var(--font-serif);font-size:20px;font-style:italic;color:var(--gold-light);text-shadow:0 2px 8px rgba(0,0,0,.8);}
+.atolye-lb-caption .alc-year{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-top:4px;}
+@media(max-width:768px){ .atolye-grid{grid-template-columns:repeat(2,1fr);gap:10px;} }
 .gallery-page-x { width:44px; height:44px; background:var(--dark2); border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--cream2); transition:all .3s; flex-shrink:0; box-shadow:0 6px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.22); }
 .gallery-page-x{ transition:all .35s cubic-bezier(.34,1.56,.64,1); }
 .gallery-page-x:hover { color:var(--gold); transform:translateY(-2px) rotate(90deg); box-shadow:0 10px 20px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 4px rgba(0,0,0,.3),0 0 0 1px rgba(var(--gold-rgb),.5); }
@@ -829,8 +853,18 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
 <body>
 <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
 <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarı çık">↑</button>
+<nav class="side-nav" id="sideNav" aria-label="Bölüm gezinme">
+  <a href="#hakkimda" class="side-nav-dot" data-label="Hakkımda"></a>
+  <a href="#fotografcilik" class="side-nav-dot" data-label="Fotoğrafçılığım"></a>
+  <a href="#yazarlik" class="side-nav-dot" data-label="Yazarlığım"></a>
+  <a href="#kulturel" class="side-nav-dot" data-label="Kültürel Miras"></a>
+  <a href="#sergiler" class="side-nav-dot" data-label="Sergiler"></a>
+  <a href="#egitim" class="side-nav-dot" data-label="Eğitim &amp; Atölyeler"></a>
+  <a href="#gazetecilik" class="side-nav-dot" data-label="Gazetecilik &amp; Yazılar"></a>
+  <a href="#iletisim" class="side-nav-dot" data-label="İletişim"></a>
+</nav>
 <nav id="mainNav">
-  <a href="#" class="nav-logo" id="ekTrigger">Enver Şengül</a>
+  <a href="#" class="nav-logo" id="ekTrigger"><img class="nav-logo-img" src="logo1.png" alt="Enver Şengül"></a>
   <ul class="nav-links">
     <li><a href="#hakkimda">Hakkımda</a></li>
     <li><a href="#fotografcilik">Fotoğrafçılığım</a></li>
@@ -1053,6 +1087,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
       <button class="tab" id="tab-video">Fotoğraf Sunumlarım</button>
       <button class="tab" id="tab-tfsf">TFSF Yöneticiliğim</button>
       <button class="tab" id="tab-yazi">Fotoğraf Yazılarım</button>
+      <button class="tab" id="tab-atolyeler">Fotoğraf Atölyelerim</button>
     </div>
     <div id="pt-portfolyo">
       <div class="gallery-cats">
@@ -1316,6 +1351,10 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           </div>
         </div>
       </div>
+    </div>
+    <div id="pt-atolyeler" style="display:none;">
+      <p class="gallery-page-desc" style="text-align:center;margin-bottom:28px;">Sonuçlandırdığım Uzun Soluklu Atölyeler</p>
+      <div class="atolye-grid" id="atolyeGrid"></div>
     </div>
   </div>
 </section>
@@ -1962,12 +2001,11 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
         <h3 class="edu-title" data-ek="edu1_title" data-ek-label="Eğitim Kartı 1 · Başlık" data-ek-group="Eğitim & Atölyeler">Öğretmenlik</h3>
         <p class="edu-desc" data-ek="edu1_desc" data-ek-label="Eğitim Kartı 1 · Açıklama" data-ek-group="Eğitim & Atölyeler">Kariyer yolculuğunun ilk durağı olan öğretmenlik deneyimi, insanlara öğretme ve bilgi aktarma tutkusunun temelini oluşturdu. Bu köklü birikim, tüm çalışmalarına yansıyan pedagojik bir bakış açısı kazandırdı.</p>
       </div>
-      <div class="edu-card aos d1" style="background-image:url('edu-atolye.jpg');background-size:cover;background-position:center;cursor:pointer;" onclick="openAtolyeler()">
+      <div class="edu-card aos d1" style="background-image:url('edu-atolye.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">02</div>
         <div class="edu-icon">📷</div>
         <h3 class="edu-title" data-ek="edu2_title" data-ek-label="Eğitim Kartı 2 · Başlık" data-ek-group="Eğitim & Atölyeler">Fotoğraf Atölyeleri</h3>
         <p class="edu-desc" data-ek="edu2_desc" data-ek-label="Eğitim Kartı 2 · Açıklama" data-ek-group="Eğitim & Atölyeler">Yurt içi ve yurt dışında düzenlenen fotoğraf atölyeleri ve seminerlerle binlerce fotoğraf meraklısına rehberlik etti. Kompozisyon, ışık kullanımı ve sanatsal anlatım üzerine kapsamlı eğitimler.</p>
-        <a class="card-link" style="margin-top:16px;" onclick="event.stopPropagation();openAtolyeler();">18 Atölyeyi İncele <span class="btn-arrow">→</span></a>
       </div>
       <div class="edu-card aos d2" style="background-image:url('edu-video.jpg');background-size:cover;background-position:center;">
         <div class="edu-num">03</div>
@@ -2091,6 +2129,15 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
   </div>
 </div>
 <audio id="bgMusic" preload="none"></audio>
+<div class="lightbox" id="atolyeLightbox">
+  <button class="lb-close" onclick="closeAtolyeImage()">✕</button>
+  <button class="lb-btn lb-prev" onclick="atolyeImgNav(-1)">&#8249;</button>
+  <div class="lightbox-img-wrap">
+    <img class="lightbox-img" id="atolyeLightboxImg" src="" alt="">
+  </div>
+  <button class="lb-btn lb-next" onclick="atolyeImgNav(1)">&#8250;</button>
+  <div class="atolye-lb-caption" id="atolyeLightboxCaption"></div>
+</div>
 <div class="video-lightbox" id="kirkpinarVideoLightbox">
   <button class="lb-close" onclick="closeKirkpinarVideo()">✕</button>
   <div class="video-lightbox-wrap">
@@ -2717,6 +2764,123 @@ function driveImgUrl(fileId, size) {
   size = size || 'w1200';
   return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
 }
+function attachCoverFadeIn(img) {
+  const card = img.closest('.gallery-cat-card, .atolye-card');
+  const onLoaded = function(){
+    img.style.opacity = '1';
+    if (card) card.style.animation = 'none';
+    img.removeEventListener('load', onLoaded);
+  };
+  img.addEventListener('load', onLoaded);
+}
+
+// ══════ Fotoğraf Atölyeleri ══════
+const ATOLYELER = [
+  { num:1,  name:'Demiryolu', year:2008 },
+  { num:2,  name:'Uzun Poz', year:2010 },
+  { num:3,  name:"Edirne'nin Yüzleri", year:2011 },
+  { num:4,  name:'Doğanın Sarı Gelini: Ayçiçeği', year:2012 },
+  { num:5,  name:'Time Lapse: Edirne', year:2013 },
+  { num:6,  name:'Aydınlık Oda', year:2013 },
+  { num:7,  name:'Kurgusal Fotoğraf', year:2014 },
+  { num:8,  name:'Portre Fotoğrafçılığı', year:2015 },
+  { num:9,  name:'Dünya İnançları', year:2016 },
+  { num:10, name:'Fotoğraf Üretim', year:2018 },
+  { num:11, name:'Nostalji', year:2020 },
+  { num:12, name:'Minimal Kareler', year:2021 },
+  { num:13, name:'Dijital Hayaller', year:2022 },
+  { num:14, name:'Dans', year:2023 },
+  { num:15, name:'Müzisyenler', year:2024 },
+  { num:16, name:'Işığın Götürdüğü Yere Git', year:2025 },
+  { num:17, name:'Photoshop - Yapay Zeka', year:2026 },
+  { num:18, name:'Yaratıcı Fotoğrafçılık Atölyesi', year:null },
+];
+let atolyeFolderIdCache = null;
+let atolyeFilesCache = null;
+let atolyeFileMap = [];
+let atolyeCurrentIdx = 0;
+
+function atolyeNormalize(s) {
+  return s.toLowerCase()
+    .replace(/\.[a-z0-9]+$/i, '')
+    .replace(/[^a-zçğıöşü0-9]+/gi, ' ')
+    .trim();
+}
+function findAtolyeFile(files, item) {
+  const numRe = new RegExp('^0*' + item.num + '[\\s._-]');
+  let file = files.find(f => numRe.test(f.name.replace(/\.[a-z0-9]+$/i, '')));
+  if (file) return file;
+  const target = atolyeNormalize(item.name);
+  file = files.find(f => {
+    const n = atolyeNormalize(f.name);
+    return n === target || n.includes(target) || target.includes(n);
+  });
+  return file || null;
+}
+function renderAtolyeGrid() {
+  const grid = document.getElementById('atolyeGrid');
+  if (!grid) return;
+  grid.innerHTML = ATOLYELER.map((a, i) => `
+    <div class="atolye-card" onclick="openAtolyeImage(${i})">
+      <img class="atolye-card-img" id="atolye-img-${i}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="${a.name}">
+      <div class="atolye-card-overlay"></div>
+      <div class="atolye-card-num">${String(a.num).padStart(2,'0')}</div>
+      <div class="atolye-card-info">
+        <div class="atolye-card-name">${a.name}</div>
+        ${a.year ? `<div class="atolye-card-year">${a.year}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+async function loadAtolyeFiles() {
+  if (atolyeFilesCache) return atolyeFilesCache;
+  const portfolyomId = await getFolderIdByName(DRIVE_ROOT_ID, 'PORTFOLYOM');
+  if (!portfolyomId) return [];
+  atolyeFolderIdCache = await getFolderIdByName(portfolyomId, 'Fotoğraf Atölyelerim');
+  if (!atolyeFolderIdCache) return [];
+  atolyeFilesCache = await getPhotosInFolder(atolyeFolderIdCache);
+  return atolyeFilesCache;
+}
+async function initAtolyeGrid() {
+  renderAtolyeGrid();
+  const files = await loadAtolyeFiles();
+  atolyeFileMap = ATOLYELER.map(a => findAtolyeFile(files, a));
+  atolyeFileMap.forEach((file, i) => {
+    if (!file) return;
+    const img = document.getElementById('atolye-img-' + i);
+    if (img) { img.src = driveImgUrl(file.id, 'w800'); attachCoverFadeIn(img); }
+  });
+}
+function showAtolyeImage() {
+  const a = ATOLYELER[atolyeCurrentIdx];
+  const file = atolyeFileMap[atolyeCurrentIdx];
+  const imgEl = document.getElementById('atolyeLightboxImg');
+  const capEl = document.getElementById('atolyeLightboxCaption');
+  imgEl.src = file ? driveImgUrl(file.id, 'w1600') : '';
+  capEl.innerHTML = `<div class="alc-name">${a.name}</div>` + (a.year ? `<div class="alc-year">${a.year}</div>` : '');
+}
+function openAtolyeImage(idx) {
+  atolyeCurrentIdx = idx;
+  showAtolyeImage();
+  document.getElementById('atolyeLightbox').classList.add('open');
+}
+function closeAtolyeImage() {
+  document.getElementById('atolyeLightbox').classList.remove('open');
+}
+function atolyeImgNav(dir) {
+  atolyeCurrentIdx = (atolyeCurrentIdx + dir + ATOLYELER.length) % ATOLYELER.length;
+  showAtolyeImage();
+}
+document.getElementById('atolyeLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeAtolyeImage();
+});
+document.addEventListener('keydown', function(e) {
+  const lb = document.getElementById('atolyeLightbox');
+  if (lb.classList.contains('open')) {
+    if (e.key === 'Escape') closeAtolyeImage();
+    else if (e.key === 'ArrowLeft') atolyeImgNav(-1);
+    else if (e.key === 'ArrowRight') atolyeImgNav(1);
+  }
+});
 
 // ══════ Galeri arka fon müziği (klasördeki ilk mp3/ses dosyası) ══════
 let audioFileCache = {};
@@ -3330,6 +3494,7 @@ async function preloadCounts() {
 // kart-kultur.webp, kart-egitim.webp, kart-gazete.webp, kitap-daruessifa.webp, kitap-kayipzaman.webp, kitap-kusatma.webp
 const ANASAYFA_IMAGES = {
   'logo':              { selector:'.hero-logo',              type:'img', filename:'logo.png' },
+  'logo1':             { selector:'.nav-logo-img',            type:'img', filename:'logo1.png' },
   'hero':              { selector:'.hero-photo',            type:'img', filename:'hero.webp' },
   'hakkimda':          { selector:'.about-photo-frame img', type:'img', filename:'hakkimda.webp' },
   'kart-foto':         { selector:'.card-bg-1',              type:'bg',  filename:'kart-foto.webp' },
@@ -3429,6 +3594,7 @@ async function getInanclarPhotos(){
 function showCoverMissing(img, reason){
   img.style.display = 'none';
   const card = img.closest('.gallery-cat-card');
+  if (card) card.style.animation = 'none';
   if (card && !card.querySelector('.cover-missing-msg')) {
     const msg = document.createElement('div');
     msg.className = 'cover-missing-msg';
@@ -3475,6 +3641,7 @@ async function loadAllGalleryCovers(){
         kirkpinarVideoFileId = video.id;
         if (countEl) countEl.textContent = 'Videoyu İzle';
         img.src = driveImgUrl(video.id, 'w800');
+        attachCoverFadeIn(img);
         markCoverOrientation(img, null);
         continue;
       }
@@ -3487,6 +3654,7 @@ async function loadAllGalleryCovers(){
         continue;
       }
       img.src = driveImgUrl(cover.id, 'w800');
+      attachCoverFadeIn(img);
       markCoverOrientation(img, cover);
     } catch(e) {
       showCoverMissing(img);
@@ -3623,11 +3791,12 @@ document.addEventListener('keydown', e => {
 window.addEventListener('load', preloadCounts);
 window.addEventListener('load', loadAnasayfaImages);
 window.addEventListener('load', loadAllGalleryCovers);
+window.addEventListener('load', initAtolyeGrid);
 
 function switchTab(btn,id){
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  ['pt-portfolyo','pt-turkiye','pt-dunya','pt-video','pt-tfsf','pt-yazi'].forEach(t=>{
+  ['pt-portfolyo','pt-turkiye','pt-dunya','pt-video','pt-tfsf','pt-yazi','pt-atolyeler'].forEach(t=>{
     const el=document.getElementById(t);
     if(el) el.style.display=(t===id)?'block':'none';
   });
@@ -3640,7 +3809,8 @@ document.addEventListener('DOMContentLoaded', function(){
     'tab-dunya':     'pt-dunya',
     'tab-video':     'pt-video',
     'tab-tfsf':      'pt-tfsf',
-    'tab-yazi':      'pt-yazi'
+    'tab-yazi':      'pt-yazi',
+    'tab-atolyeler': 'pt-atolyeler'
   };
   Object.keys(tabMap).forEach(function(tabId){
     const btn = document.getElementById(tabId);
@@ -3650,7 +3820,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const targetId = tabMap[tabId];
       document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      ['pt-portfolyo','pt-turkiye','pt-dunya','pt-video','pt-tfsf','pt-yazi'].forEach(function(t){
+      ['pt-portfolyo','pt-turkiye','pt-dunya','pt-video','pt-tfsf','pt-yazi','pt-atolyeler'].forEach(function(t){
         const el = document.getElementById(t);
         if(el) el.style.display = (t===targetId) ? 'block' : 'none';
       });
@@ -4006,24 +4176,36 @@ function ekSetFont(f){
     toggle();
   })();
 
-  // --- Nav scroll-spy: aktif bölüm linki altın renkte vurgulansın ---
   (function(){
     var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+    var sideDots = Array.prototype.slice.call(document.querySelectorAll('.side-nav-dot[href^="#"]'));
     var sections = [];
     navLinks.forEach(function(link){
       var id = link.getAttribute('href').slice(1);
       var sec = document.getElementById(id);
-      if(sec) sections.push({ el:sec, link:link });
+      if(sec) sections.push({ id:id, el:sec, link:link });
     });
-    if(!sections.length) return;
+    var extraSections = [];
+    sideDots.forEach(function(dot){
+      var id = dot.getAttribute('href').slice(1);
+      if(!sections.some(function(s){ return s.id === id; })){
+        var sec = document.getElementById(id);
+        if(sec) extraSections.push({ id:id, el:sec });
+      }
+    });
+    var allSections = sections.concat(extraSections);
+    if(!allSections.length) return;
     function onScroll(){
       var scrollPos = window.scrollY + window.innerHeight * 0.35;
-      var current = sections[0];
-      sections.forEach(function(s){
+      var current = allSections[0];
+      allSections.forEach(function(s){
         if(s.el.offsetTop <= scrollPos) current = s;
       });
       navLinks.forEach(function(l){ l.classList.remove('active'); });
-      current.link.classList.add('active');
+      if(current.link) current.link.classList.add('active');
+      sideDots.forEach(function(dot){
+        dot.classList.toggle('active', dot.getAttribute('href').slice(1) === current.id);
+      });
     }
     window.addEventListener('scroll', onScroll, { passive:true });
     onScroll();
@@ -4092,6 +4274,51 @@ function ekSetFont(f){
     }
     applyTilt('.cards-section .card', 7, '--emboss-hover', -10);
     applyTilt('.gallery-cat-card', 6, '--emboss-sm-hover', -6);
+
+    // --- Mobil: jiroskop (cihaz eğimi) ile tilt ---
+    var isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (isCoarsePointer && window.DeviceOrientationEvent) {
+      var gyroActive = false;
+      var gyroTicking = false;
+      var lastGamma = 0, lastBeta = 0;
+      function onOrientation(e){
+        if (e.gamma === null || e.beta === null) return;
+        lastGamma = e.gamma; lastBeta = e.beta;
+        if (gyroTicking) return;
+        gyroTicking = true;
+        requestAnimationFrame(function(){
+          gyroTicking = false;
+          var gx = Math.max(-18, Math.min(18, lastGamma)) / 18;
+          var gy = Math.max(-18, Math.min(18, lastBeta - 45)) / 18;
+          document.querySelectorAll('.cards-section .card, .gallery-cat-card').forEach(function(card){
+            var rect = card.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+            var isMain = card.classList.contains('card');
+            var maxT = isMain ? 6 : 5;
+            var lift = isMain ? -6 : -3;
+            var shadowVar = isMain ? '--emboss-hover' : '--emboss-sm-hover';
+            card.style.transition = 'transform .25s ease-out, box-shadow .4s';
+            card.style.transform = 'perspective(900px) translateY(' + lift + 'px) rotateX(' + (-gy * maxT).toFixed(2) + 'deg) rotateY(' + (gx * maxT).toFixed(2) + 'deg)';
+            card.style.boxShadow = 'var(' + shadowVar + ')';
+          });
+        });
+      }
+      function enableGyroTilt(){
+        if (gyroActive) return;
+        gyroActive = true;
+        window.addEventListener('deviceorientation', onOrientation);
+      }
+      document.addEventListener('touchstart', function firstTouch(){
+        document.removeEventListener('touchstart', firstTouch);
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+          DeviceOrientationEvent.requestPermission().then(function(state){
+            if (state === 'granted') enableGyroTilt();
+          }).catch(function(){});
+        } else {
+          enableGyroTilt();
+        }
+      }, { once:true, passive:true });
+    }
   })();
 
   // --- Hero alıntısı: daktilo efekti (Firebase içerik yüklendikten sonra çalışır) ---
