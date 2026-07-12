@@ -1394,6 +1394,14 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
             <div class="gallery-cat-count">Yazıyı Oku</div>
           </div>
         </div>
+        <div class="gallery-cat-card" onclick="openSessizlikYazisi()" style="background:linear-gradient(135deg,#3a2c16,#0d0b08);display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:64px;opacity:.45;">🤫</div>
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Fotoğrafın Sessizliği</div>
+            <div class="gallery-cat-count">Yazıyı Oku</div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="pt-atolyeler" style="display:none;">
@@ -2370,6 +2378,35 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <div class="text-lightbox-signature">Enver Şengül</div>
   </div>
 </div>
+<div class="text-lightbox" id="sessizlikLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeSessizlikYazisi()">✕</button>
+    <div class="text-lightbox-eyebrow">Fotoğraf Yazılarım</div>
+    <h3 class="text-lightbox-title">Fotoğrafın Sessizliği</h3>
+    <div class="text-lightbox-body">
+      <p>Bil Jay, "Fotoğrafçı Olmak Üzerine" adlı kitabında Magnum'un efsanevi fotoğrafçılarından yakın arkadaşı David Hurn için şunları yazar.</p>
+      <p class="tl-quote">"Diyelim ki David Hurn'u çektiği bir fotoğrafın içindesiniz; muhtemelen onu fark etmeyeceksiniz. O bir bukalemun gibi ortama uyum sağlar ya bir sosyete düğününün konuğudur ya da işçi sınıfından bir piknikçi. Poz verdirmez, insanı ileri geri itip kalkmaz, bir dizi hareket yaratmaz; sakindir, herkesten biridir, içeriden, sessiz biri. Fakat biri sizi dürter ve şöyle der: 'O, fotoğrafçı David Hurn'. Gider tanışırsınız ve doğuştan utangaç birinin içten tebessümü ve heyecanı ile dolu olduğunu görürsünüz."</p>
+      <p>Evet, David Hurn, herkesten biridir. İçeriden ve sessiz biri…</p>
+      <p>Kitabı ilk okuduğumda bu paragrafın üzerinde çok düşündüğümü hatırlıyorum. Özellikle içeriden ve sessiz biri olma kavramının üzerinde çok düşündüm. Çoğu fotoğrafçı fotoğraf makinesinin deklanşörünün sessizliğiyle övünür. Leica'ların en büyük özelliklerinden biri deklanşörünün son derece sessiz çalışmasıdır. Bu özellik bu makineleri son derece sessiz ve dikkat gerektiren ortamların seçkin prensleri haline getirir.</p>
+      <p>Bundan yıllar önce birkaç fotoğrafçı arkadaşımla, bir klasik müzik konserini fotoğraflamaya gittiğimizde yaşadıklarımızı yüzüm kızararak hatırlıyorum.</p>
+      <p>Salonun 4 ayrı yerine konuşlanan tripodlarımızın üzerindeki makinelerden yankılanan deklanşör sesleri, nasıl da derin sessizlik içinde melodilerin büyüleyici etkisi altındaki bir iki izleyicinin tepkisi ile yüzümüze çarpan ve unutamayacağımız bir tokada dönüşmüştü.</p>
+      <p>İşte Leica'nın sessizliği bu tür ortamların cankurtaran simididir.</p>
+      <p>Ya fotoğrafçının sessizliği? İşte konumuz budur aslında.</p>
+      <p>Günümüzde bulundukları ortamlarda dikkat ve ilgiyi üzerlerine çekmekten hoşlanan gösteriş meraklısı fotoğrafçıları gördükçe David Hurn gibi ustaları hatırlamamız gerekir.</p>
+      <p>Hani bilmem kaç milyon pikselli makineleri, bilmem kaç mm odak uzaklığındaki objektifleri, tripodları, monopodları ile saniyede bilmem kaç kare çeken makinesi ile seri çekimle dikkatleri üzerine toplayanlar.</p>
+      <p>Sonra dönüp dolaşıp "Şu insan fotoğraflarında istediğim sonucu bir türlü alamıyorum, ne yapmam lazım?" diyenler.</p>
+      <p>İyi fotoğrafçı kendisini fark ettirmeyen, ortama çabuk uyum sağlayan, dikkatleri üzerine çekmeyen ve sessiz çalışmasını becerebilen fotoğrafçıdır. İyi fotoğraflar da bu tür çalışmaların ürünü olarak karşımıza çıkarlar.</p>
+      <p>Farkında mısınız dijital fotoğrafçılık geleneksel anlayışların kalelerini yerle bir ettikçe, yeni ve kaliteli bir fotoğraf anlayışının yanında farklı fotoğrafçı tipleri de karşımıza çıkmaya başladı.</p>
+      <p>Kendisini hemen fark ettiren, ortama uyum sağlamakta zorlanan ve alabildiğine gürültülü çalışan ve bunu bir maharet olarak çevresine aksettiren fotoğrafçılar bunlar.</p>
+      <p>Sadece fiziksel anlamda değil, sosyal ve anlayış olarak ta gürültücüdürler.</p>
+      <p>Her ketsen önce topa dalıp tartışmaların içinde olurlar, bir iki fotoğrafla öne çıkıp ahkâm keserler, web sitelerinin forum sayfalarındaki tartışmalara balıklamasına dalarlar, gördükleri her fotoğrafa fütursuzca eleştiri yapar ve kimseyi kolay kolay beğenmezler.</p>
+      <p class="tl-quote">Fotoğrafçının fotoğrafı konuşmalı, projeleri gürültü çıkarmalıdır.</p>
+      <p>Bil Jay'ın, ünlü usta Hurn'la ilgili düşüncelerinin devamıyla yazımı noktalayayım.</p>
+      <p class="tl-quote">"Tuhaf ama gerçek. Tüm dünyasına ve dünya çapındaki deneyimlerine rağmen David Hurn, birçok fotoğrafçı gibi çekingen biridir. Güçsüzlük gibi görünen bu özelliğini güce dönüştürmeyi başarmıştır. İnsanlardan hoşlanır ve fotoğraf makinesi sayesinde onlarla bağlantı kurar, hem makinenin arkasında saklanmaya devam eder."</p>
+    </div>
+    <div class="text-lightbox-signature">Enver Şengül</div>
+  </div>
+</div>
 <div class="text-lightbox" id="bookLightbox">
   <div class="text-lightbox-panel">
     <button class="lb-close" onclick="closeBookLightbox()">✕</button>
@@ -3222,6 +3259,25 @@ document.getElementById('cekemedigimLightbox').addEventListener('click', functio
 document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('cekemedigimLightbox');
   if (modal.classList.contains('open') && e.key === 'Escape') closeCekemedigimYazisi();
+});
+
+// ══════ Fotoğrafın Sessizliği (yazı) ══════
+function openSessizlikYazisi() {
+  const modal = document.getElementById('sessizlikLightbox');
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeSessizlikYazisi() {
+  document.getElementById('sessizlikLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('sessizlikLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeSessizlikYazisi();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('sessizlikLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeSessizlikYazisi();
 });
 
 // ══════ Yazarlığım: kitap tanıtım yazıları (yazılış animasyonlu) ══════
@@ -4672,7 +4728,8 @@ function ekToggleTheme(){
     tarihLightbox:         function(){ closeTarihYazisi(); },
     yasamLightbox:         function(){ closeYasamYazisi(); },
     ihtimallerLightbox:    function(){ closeIhtimallerYazisi(); },
-    cekemedigimLightbox:   function(){ closeCekemedigimYazisi(); }
+    cekemedigimLightbox:   function(){ closeCekemedigimYazisi(); },
+    sessizlikLightbox:     function(){ closeSessizlikYazisi(); }
   };
 
   var ekModalStack = [];
