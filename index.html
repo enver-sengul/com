@@ -184,12 +184,12 @@ html.cc-active, html.cc-active *{cursor:none !important;}
 .custom-cursor{position:fixed;top:0;left:0;width:30px;height:30px;pointer-events:none;z-index:99999;--cx:-100px;--cy:-100px;--cc-scale:1;transform:translate(var(--cx),var(--cy)) translate(-50%,-50%) scale(var(--cc-scale));opacity:0;transition:opacity .25s ease, transform .12s cubic-bezier(.34,1.56,.64,1);}
 html.cc-active .custom-cursor{opacity:1;}
 .custom-cursor svg{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.55)) drop-shadow(0 0 10px rgba(var(--gold-rgb),.25));}
-.cc-ring{stroke:rgba(var(--gold-rgb),.5);stroke-width:2;}
+.cc-ring{stroke:rgba(var(--gold-rgb),.55);stroke-width:6;}
 .cc-outline{fill:none;stroke:rgba(255,255,255,.15);stroke-width:1;}
-.cc-blade{fill:url(#ccGoldGrad);stroke:#3a2b0a;stroke-width:0.7;stroke-linejoin:round;}
+.cc-blade{fill:url(#ccGoldGrad);stroke:#3a2b0a;stroke-width:0.8;stroke-linejoin:round;}
 .cc-blades{transform-box:fill-box;transform-origin:center;transition:transform .16s cubic-bezier(.4,0,.2,1);}
-.cc-hole{fill:#0d0b08;transition:r .16s ease;}
-.custom-cursor.cc-down .cc-blades{transform:scale(.1) rotate(38deg);transition:transform .09s cubic-bezier(.4,0,.6,1);}
+.cc-hole{fill:url(#ccGoldGrad);stroke:#3a2b0a;stroke-width:0.6;transition:r .16s ease;}
+.custom-cursor.cc-down .cc-blades{transform:scale(.1) rotate(32deg);transition:transform .09s cubic-bezier(.4,0,.6,1);}
 .custom-cursor.cc-down .cc-hole{r:1;}
 .custom-cursor.cc-hover{--cc-scale:1.18;}
 @media(max-width:1100px){.side-nav{display:none;}}
@@ -886,20 +886,17 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
         <stop offset="100%" stop-color="#0d0b08"/>
       </radialGradient>
     </defs>
-    <circle class="cc-ring" cx="50" cy="50" r="47" fill="url(#ccRingGrad)"/>
+    <circle class="cc-ring" cx="50" cy="50" r="44" fill="url(#ccRingGrad)"/>
     <g class="cc-blades">
-      <path class="cc-blade" d="M59.00,50.00 L94.63,38.87 L91.34,70.17 Z"/>
-      <path class="cc-blade" d="M56.89,55.79 L91.34,70.17 L68.71,92.02 Z"/>
-      <path class="cc-blade" d="M51.56,58.86 L68.71,92.02 L37.32,94.22 Z"/>
-      <path class="cc-blade" d="M45.50,57.79 L37.32,94.22 L11.86,75.72 Z"/>
-      <path class="cc-blade" d="M41.54,53.08 L11.86,75.72 L4.25,45.19 Z"/>
-      <path class="cc-blade" d="M41.54,46.92 L4.25,45.19 L18.05,16.91 Z"/>
-      <path class="cc-blade" d="M45.50,42.21 L18.05,16.91 L46.79,4.11 Z"/>
-      <path class="cc-blade" d="M51.56,41.14 L46.79,4.11 L77.04,12.79 Z"/>
-      <path class="cc-blade" d="M56.89,44.21 L77.04,12.79 L94.63,38.87 Z"/>
+      <path class="cc-blade" d="M64.00,50.00 L91.35,34.95 L83.71,78.28 Z"/>
+      <path class="cc-blade" d="M57.00,62.12 L83.71,78.28 L42.36,93.33 Z"/>
+      <path class="cc-blade" d="M43.00,62.12 L42.36,93.33 L8.65,65.05 Z"/>
+      <path class="cc-blade" d="M36.00,50.00 L8.65,65.05 L16.29,21.72 Z"/>
+      <path class="cc-blade" d="M43.00,37.88 L16.29,21.72 L57.64,6.67 Z"/>
+      <path class="cc-blade" d="M57.00,37.88 L57.64,6.67 L91.35,34.95 Z"/>
     </g>
-    <circle class="cc-hole" cx="50" cy="50" r="8"/>
-    <circle class="cc-outline" cx="50" cy="50" r="47"/>
+    <circle class="cc-hole" cx="50" cy="50" r="12"/>
+    <circle class="cc-outline" cx="50" cy="50" r="44"/>
   </svg>
 </div>
 <nav id="mainNav">
@@ -1386,6 +1383,14 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Fotoğraf: Sayısız İhtimaller Sanatı</div>
+            <div class="gallery-cat-count">Yazıyı Oku</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openCekemedigimYazisi()" style="background:linear-gradient(135deg,#3a2c16,#0d0b08);display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:64px;opacity:.45;">📷</div>
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Çekemediğim Fotoğraf</div>
             <div class="gallery-cat-count">Yazıyı Oku</div>
           </div>
         </div>
@@ -2344,6 +2349,27 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <div class="text-lightbox-signature">Enver Şengül</div>
   </div>
 </div>
+<div class="text-lightbox" id="cekemedigimLightbox">
+  <div class="text-lightbox-panel">
+    <button class="lb-close" onclick="closeCekemedigimYazisi()">✕</button>
+    <div class="text-lightbox-eyebrow">Fotoğraf Yazılarım</div>
+    <h3 class="text-lightbox-title">Çekemediğim Fotoğraf</h3>
+    <div class="text-lightbox-body">
+      <p>Bundan yıllarca önceydi. Bulunduğum kent sonbahar ile kış arası gri bir pazar gününü yaşamaktaydı. Bodrum katındaki gazete bürosunun sigara dumanlı ortamından kendisini dışarı atan 4 arkadaşım ile birlikte, bir fotoğraf çalışması için yüz metre ilerideki aracımıza doğru ağır aksak gidiyorduk.</p>
+      <p>Az önce yaptığımız sohbetin son kırıntılarını tüketmeye çalışırken, yan sokaktan gelen silah sesleri sohbetimizi zorunlu olarak noktalamaya yetmişti.</p>
+      <p>İnsanların silah seslerinin geldiği ara sokağa doğru koşmaları doğal olarak bizi de oraya yöneltti. Arnavut kaldırımı parkelerin düzensiz aralıklarına takılıp düşme korkusuna rağmen bir solukta olay yerine vardığımızda, gördüğümüz manzara hem çok fotografik ve hem de çok korkunçtu.</p>
+      <p>17-18 yaşlarındaki genç bir delikanlı, kıpkırmızı kanlar içindeki elbiseleri ile ayakta duruyordu. Şok geçiren bir yüz ifadesi, neye uğradığını anlamayan bir çift iri göz ve alnının tam ortasında bir delik vardı. Bu delikten ileriye doğru kan fışkırıyordu...</p>
+      <p>Etraftaki insanlar ne olduğunu bilemez bir telaşla sağa sola koşuşturuyorlardı. Kaşla göz arasında çağrılan arabaya çocuğu bindirip hastaneye yolladığımızda, bilinçaltımızda tek bir şey kalmıştı; Fotoğraf...</p>
+      <p>Evet. Bu şok anını içimizden biri fotoğraflamış mıydı acaba? Hemen biri birimize sorduk! Hayır...hayır...benimle birlikte elinde fotoğraf makinesi bulunan diğer 4 arkadaşımın da aklına bu anı fotoğraflamak gelmemişti.</p>
+      <p>Evet, dünyanın pek çok dergisine kapak olabilecek bu fotoğrafı çekememiş, çocuğu kurtarma telaşına ve insanca duygularımızın akışına kapılıp gitmiştik.</p>
+      <p>Çocuğun yere düşen bir silahtan patlayıp seken kurşunlardan biri ile vurulduğunu öğrendik, ama alnının ortasından aldığı yaraya rağmen neden hala ayakta durabildiğini ve hemen ameliyata alınan çocuğun akıbetini bir daha öğrenemedik. Acaba kurtulmuş muydu?</p>
+      <p>Aradan yıllar geçti, olayın detayları, hafızamın kıvrımlarında kayboldu gitti, ama belleğim orada gördüğüm tek kare fotoğrafı hiç ama hiç unutamadı ve çekemediğim fotoğrafların birinci sırasına hep onu oturttu. Kanlar içinde bir yüz, şok bakışlı iki kocaman göz, alnın tam ortasında bir delik ve ileri doğru fışkırmakta olan kan...</p>
+      <p class="tl-quote">Bu nedenle nerde bir kargaşaya tanık olsam veya bir silah sesi duysam, parmaklarım farkında olmadan makinemin deklanşörüne gider...</p>
+      <p>Böyle bir fotoğrafı yine de çekemeyeceğimi bilsem de...</p>
+    </div>
+    <div class="text-lightbox-signature">Enver Şengül</div>
+  </div>
+</div>
 <div class="text-lightbox" id="bookLightbox">
   <div class="text-lightbox-panel">
     <button class="lb-close" onclick="closeBookLightbox()">✕</button>
@@ -3177,6 +3203,25 @@ document.getElementById('ihtimallerLightbox').addEventListener('click', function
 document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('ihtimallerLightbox');
   if (modal.classList.contains('open') && e.key === 'Escape') closeIhtimallerYazisi();
+});
+
+// ══════ Çekemediğim Fotoğraf (yazı) ══════
+function openCekemedigimYazisi() {
+  const modal = document.getElementById('cekemedigimLightbox');
+  modal.classList.add('open');
+  modal.querySelector('.text-lightbox-panel').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeCekemedigimYazisi() {
+  document.getElementById('cekemedigimLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('cekemedigimLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeCekemedigimYazisi();
+});
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('cekemedigimLightbox');
+  if (modal.classList.contains('open') && e.key === 'Escape') closeCekemedigimYazisi();
 });
 
 // ══════ Yazarlığım: kitap tanıtım yazıları (yazılış animasyonlu) ══════
@@ -4626,7 +4671,8 @@ function ekToggleTheme(){
     kesifLightbox:         function(){ closeKesifYazisi(); },
     tarihLightbox:         function(){ closeTarihYazisi(); },
     yasamLightbox:         function(){ closeYasamYazisi(); },
-    ihtimallerLightbox:    function(){ closeIhtimallerYazisi(); }
+    ihtimallerLightbox:    function(){ closeIhtimallerYazisi(); },
+    cekemedigimLightbox:   function(){ closeCekemedigimYazisi(); }
   };
 
   var ekModalStack = [];
