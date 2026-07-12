@@ -4242,40 +4242,6 @@ function ekSetFont(f){
     update();
   })();
 
-  // --- Özel deklanşör imleci ---
-  (function(){
-    var cursor = document.getElementById('customCursor');
-    if(!cursor) return;
-    var isFine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
-    if(!isFine) return;
-    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var html = document.documentElement;
-    var mx = 0, my = 0, raf = null;
-    function place(){
-      cursor.style.setProperty('--cx', mx + 'px');
-      cursor.style.setProperty('--cy', my + 'px');
-      raf = null;
-    }
-    document.addEventListener('mousemove', function(e){
-      html.classList.add('cc-active');
-      mx = e.clientX; my = e.clientY;
-      if(!raf) raf = requestAnimationFrame(place);
-      var target = e.target.closest && e.target.closest('a, button, [onclick], .card, .gallery-cat-card, input, textarea, select');
-      cursor.classList.toggle('cc-hover', !!target);
-    }, { passive:true });
-    document.addEventListener('mouseleave', function(){
-      html.classList.remove('cc-active');
-    });
-    if(!reduced){
-      document.addEventListener('mousedown', function(){
-        cursor.classList.add('cc-down');
-      });
-      document.addEventListener('mouseup', function(){
-        cursor.classList.remove('cc-down');
-      });
-    }
-  })();
-
   // --- Yukarı çık butonu ---
   (function(){
     var btn = document.getElementById('scrollTopBtn');
@@ -4605,5 +4571,39 @@ function ekSetFont(f){
 })();
 </script>
 
+<script>
+(function(){
+  try{
+    var cursor = document.getElementById('customCursor');
+    if(!cursor){ console.warn('customCursor elementi bulunamadı'); return; }
+    var isFine = !window.matchMedia || window.matchMedia('(pointer: fine)').matches;
+    if(!isFine){ return; }
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var htmlEl = document.documentElement;
+    var mx = window.innerWidth/2, my = window.innerHeight/2, raf = null;
+    function place(){
+      cursor.style.setProperty('--cx', mx + 'px');
+      cursor.style.setProperty('--cy', my + 'px');
+      raf = null;
+    }
+    window.addEventListener('mousemove', function(e){
+      htmlEl.classList.add('cc-active');
+      mx = e.clientX; my = e.clientY;
+      if(!raf) raf = requestAnimationFrame(place);
+      var target = e.target && e.target.closest ? e.target.closest('a, button, [onclick], .card, .gallery-cat-card, input, textarea, select') : null;
+      cursor.classList.toggle('cc-hover', !!target);
+    }, { passive:true });
+    document.documentElement.addEventListener('mouseleave', function(){
+      htmlEl.classList.remove('cc-active');
+    });
+    if(!reduced){
+      window.addEventListener('mousedown', function(){ cursor.classList.add('cc-down'); });
+      window.addEventListener('mouseup', function(){ cursor.classList.remove('cc-down'); });
+    }
+  }catch(err){
+    console.error('Özel imleç başlatılamadı:', err);
+  }
+})();
+</script>
 </body>
 </html>
