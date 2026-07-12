@@ -180,7 +180,7 @@ body{font-family:var(--font-body);background:var(--dark);color:var(--cream);over
 
 /* Özel deklanşör imleci */
 html.cc-active, html.cc-active *{cursor:none !important;}
-.custom-cursor{position:fixed;top:0;left:0;width:38px;height:38px;pointer-events:none;z-index:99999;--cx:-100px;--cy:-100px;--cc-scale:1;transform:translate(var(--cx),var(--cy)) translate(-50%,-50%) scale(var(--cc-scale));opacity:0;transition:opacity .25s ease, transform .12s cubic-bezier(.34,1.56,.64,1);}
+.custom-cursor{position:fixed;top:0;left:0;width:30px;height:30px;pointer-events:none;z-index:99999;--cx:-100px;--cy:-100px;--cc-scale:1;transform:translate(var(--cx),var(--cy)) translate(-50%,-50%) scale(var(--cc-scale));opacity:0;transition:opacity .25s ease, transform .12s cubic-bezier(.34,1.56,.64,1);}
 html.cc-active .custom-cursor{opacity:1;}
 .custom-cursor svg{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.55)) drop-shadow(0 0 10px rgba(var(--gold-rgb),.25));}
 .cc-ring{stroke:rgba(var(--gold-rgb),.5);stroke-width:2;}
@@ -2850,6 +2850,31 @@ window.addEventListener('resize', function(){
   });
 });
 
+// ══════ Chrome/tarayıcı "geri" tuşuyla açık pencere/galeri/görselleri kapatma ══════
+// Her "aç" işlemi tarayıcı geçmişine bir kayıt ekler; geri tuşuna basıldığında
+// sayfadan çıkmak yerine en üstteki açık pencere kapanır (iç içe pencerelerde sırayla).
+var ekModalStack = [];
+var ekPoppingModal = false;
+function ekPushModal(actualCloseFn){
+  ekModalStack.push(actualCloseFn);
+  history.pushState({ ekModal: ekModalStack.length }, '');
+}
+function ekPopModalAndClose(){
+  // "✕" butonuna, dışına tıklamaya veya Escape'e basıldığında çağrılır.
+  if(ekPoppingModal) return;
+  if(ekModalStack.length){
+    history.back();
+  }
+}
+window.addEventListener('popstate', function(){
+  if(ekModalStack.length){
+    ekPoppingModal = true;
+    var fn = ekModalStack.pop();
+    if(fn) fn();
+    ekPoppingModal = false;
+  }
+});
+
 // ══════ Fotoğraf Atölyeleri ══════
 const ATOLYELER = [
   { num:1,  name:'Demiryolu', year:2008 },
@@ -4576,28 +4601,32 @@ function ekSetFont(f){
   try{
     var cursor = document.getElementById('customCursor');
     if(!cursor){ console.warn('customCursor elementi bulunamadı'); return; }
-    var isFine = !window.matchMedia || window.matchMedia('(pointer: fine)').matches;
-    if(!isFine){ return; }
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var htmlEl = document.documentElement;
     var mx = window.innerWidth/2, my = window.innerHeight/2, raf = null;
+    var usingTouch = false;
     function place(){
       cursor.style.setProperty('--cx', mx + 'px');
       cursor.style.setProperty('--cy', my + 'px');
       raf = null;
     }
     window.addEventListener('mousemove', function(e){
+      if(usingTouch) return;
       htmlEl.classList.add('cc-active');
       mx = e.clientX; my = e.clientY;
       if(!raf) raf = requestAnimationFrame(place);
       var target = e.target && e.target.closest ? e.target.closest('a, button, [onclick], .card, .gallery-cat-card, input, textarea, select') : null;
       cursor.classList.toggle('cc-hover', !!target);
     }, { passive:true });
+    window.addEventListener('touchstart', function(){
+      usingTouch = true;
+      htmlEl.classList.remove('cc-active');
+    }, { passive:true });
     document.documentElement.addEventListener('mouseleave', function(){
       htmlEl.classList.remove('cc-active');
     });
     if(!reduced){
-      window.addEventListener('mousedown', function(){ cursor.classList.add('cc-down'); });
+      window.addEventListener('mousedown', function(){ if(!usingTouch) cursor.classList.add('cc-down'); });
       window.addEventListener('mouseup', function(){ cursor.classList.remove('cc-down'); });
     }
   }catch(err){
