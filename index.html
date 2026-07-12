@@ -177,6 +177,20 @@ body{font-family:var(--font-body);background:var(--dark);color:var(--cream);over
 .side-nav-dot:hover::before{opacity:1;transform:translateY(-50%) translateX(0);}
 .side-nav-dot:hover{background:rgba(var(--gold-rgb),.6);transform:scale(1.3);}
 .side-nav-dot.active{background:linear-gradient(180deg,var(--gold-light),var(--gold));transform:scale(1.45);box-shadow:0 0 0 4px rgba(var(--gold-rgb),.18),0 3px 10px rgba(0,0,0,.4);}
+
+/* Özel deklanşör imleci */
+html.cc-active, html.cc-active *{cursor:none !important;}
+.custom-cursor{position:fixed;top:0;left:0;width:38px;height:38px;pointer-events:none;z-index:99999;--cx:-100px;--cy:-100px;--cc-scale:1;transform:translate(var(--cx),var(--cy)) translate(-50%,-50%) scale(var(--cc-scale));opacity:0;transition:opacity .25s ease, transform .12s cubic-bezier(.34,1.56,.64,1);}
+html.cc-active .custom-cursor{opacity:1;}
+.custom-cursor svg{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.55)) drop-shadow(0 0 10px rgba(var(--gold-rgb),.25));}
+.cc-ring{stroke:rgba(var(--gold-rgb),.5);stroke-width:2;}
+.cc-outline{fill:none;stroke:rgba(255,255,255,.15);stroke-width:1;}
+.cc-blade{fill:url(#ccGoldGrad);stroke:#3a2b0a;stroke-width:0.7;stroke-linejoin:round;}
+.cc-blades{transform-box:fill-box;transform-origin:center;transition:transform .16s cubic-bezier(.4,0,.2,1);}
+.cc-hole{fill:#0d0b08;transition:r .16s ease;}
+.custom-cursor.cc-down .cc-blades{transform:scale(.1) rotate(38deg);transition:transform .09s cubic-bezier(.4,0,.6,1);}
+.custom-cursor.cc-down .cc-hole{r:1;}
+.custom-cursor.cc-hover{--cc-scale:1.18;}
 @media(max-width:1100px){.side-nav{display:none;}}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
@@ -856,6 +870,35 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
   <a href="#gazetecilik" class="side-nav-dot" data-label="Gazetecilik &amp; Yazılar"></a>
   <a href="#iletisim" class="side-nav-dot" data-label="İletişim"></a>
 </nav>
+<div class="custom-cursor" id="customCursor" aria-hidden="true">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ccGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFF3C4"/>
+        <stop offset="45%" stop-color="#E8B84B"/>
+        <stop offset="100%" stop-color="#9A6A1E"/>
+      </linearGradient>
+      <radialGradient id="ccRingGrad" cx="50%" cy="40%" r="70%">
+        <stop offset="0%" stop-color="#2a2419"/>
+        <stop offset="100%" stop-color="#0d0b08"/>
+      </radialGradient>
+    </defs>
+    <circle class="cc-ring" cx="50" cy="50" r="47" fill="url(#ccRingGrad)"/>
+    <g class="cc-blades">
+      <path class="cc-blade" d="M59.00,50.00 L94.63,38.87 L91.34,70.17 Z"/>
+      <path class="cc-blade" d="M56.89,55.79 L91.34,70.17 L68.71,92.02 Z"/>
+      <path class="cc-blade" d="M51.56,58.86 L68.71,92.02 L37.32,94.22 Z"/>
+      <path class="cc-blade" d="M45.50,57.79 L37.32,94.22 L11.86,75.72 Z"/>
+      <path class="cc-blade" d="M41.54,53.08 L11.86,75.72 L4.25,45.19 Z"/>
+      <path class="cc-blade" d="M41.54,46.92 L4.25,45.19 L18.05,16.91 Z"/>
+      <path class="cc-blade" d="M45.50,42.21 L18.05,16.91 L46.79,4.11 Z"/>
+      <path class="cc-blade" d="M51.56,41.14 L46.79,4.11 L77.04,12.79 Z"/>
+      <path class="cc-blade" d="M56.89,44.21 L77.04,12.79 L94.63,38.87 Z"/>
+    </g>
+    <circle class="cc-hole" cx="50" cy="50" r="8"/>
+    <circle class="cc-outline" cx="50" cy="50" r="47"/>
+  </svg>
+</div>
 <nav id="mainNav">
   <a href="#" class="nav-logo" id="ekTrigger"><img class="nav-logo-img" src="logo1.png" alt="Enver Şengül"></a>
   <ul class="nav-links">
@@ -4197,6 +4240,40 @@ function ekSetFont(f){
     window.addEventListener('scroll', update, { passive:true });
     window.addEventListener('resize', update);
     update();
+  })();
+
+  // --- Özel deklanşör imleci ---
+  (function(){
+    var cursor = document.getElementById('customCursor');
+    if(!cursor) return;
+    var isFine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    if(!isFine) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var html = document.documentElement;
+    var mx = 0, my = 0, raf = null;
+    function place(){
+      cursor.style.setProperty('--cx', mx + 'px');
+      cursor.style.setProperty('--cy', my + 'px');
+      raf = null;
+    }
+    document.addEventListener('mousemove', function(e){
+      html.classList.add('cc-active');
+      mx = e.clientX; my = e.clientY;
+      if(!raf) raf = requestAnimationFrame(place);
+      var target = e.target.closest && e.target.closest('a, button, [onclick], .card, .gallery-cat-card, input, textarea, select');
+      cursor.classList.toggle('cc-hover', !!target);
+    }, { passive:true });
+    document.addEventListener('mouseleave', function(){
+      html.classList.remove('cc-active');
+    });
+    if(!reduced){
+      document.addEventListener('mousedown', function(){
+        cursor.classList.add('cc-down');
+      });
+      document.addEventListener('mouseup', function(){
+        cursor.classList.remove('cc-down');
+      });
+    }
   })();
 
   // --- Yukarı çık butonu ---
