@@ -2867,7 +2867,7 @@ function showAtolyePage() {
   const a = ATOLYELER[atolyeCurrentIdx];
   const file = atolyeFileMap[atolyeCurrentIdx];
   document.getElementById('atolyeLbTitle').textContent = a.name + (a.year ? ' · ' + a.year : '');
-  document.getElementById('atolyePageImg').src = file ? driveImgUrl(file.id, 'w1600') : '';
+  document.getElementById('atolyePageImg').src = file ? driveImgUrl(file.id, 'w1920-h1280') : '';
   document.getElementById('atolyeLbCounter').textContent = (atolyeCurrentIdx + 1) + ' / ' + ATOLYELER.length;
 }
 function openAtolyePage(idx) {
