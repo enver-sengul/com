@@ -698,9 +698,9 @@ footer { text-align:center; }
 .lightbox-img { max-height:86vh; max-width:92vw; width:auto; height:auto; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; border-radius:6px; box-shadow:0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(var(--gold-rgb),.25), inset 0 1px 0 rgba(255,255,255,.06), 0 0 80px rgba(0,0,0,.6); position:relative; display:block; }
 .lightbox-watermark { position:absolute; bottom:24px; right:28px; z-index:5; font-family:var(--font-serif); font-size:13px; font-style:italic; line-height:1.5; color:rgba(255,255,255,.5); text-shadow:0 2px 8px rgba(0,0,0,1); text-align:right; pointer-events:none; }
 .lightbox-photo-col { display:flex; flex-direction:column; align-items:stretch; }
-.lightbox-stats { display:flex; flex-direction:column; gap:6px; align-items:flex-start; margin-top:14px; padding-top:10px; border-top:1px solid rgba(var(--gold-rgb),.25); }
+.lightbox-stats { display:flex; flex-direction:row; align-items:center; gap:14px; margin-top:10px; padding-top:8px; border-top:1px solid rgba(var(--gold-rgb),.25); }
 .ls-stars { display:flex; gap:3px; }
-.ls-star { font-size:17px; line-height:1; color:rgba(255,255,255,.28); cursor:pointer; transition:color .15s, transform .15s; text-shadow:0 1px 4px rgba(0,0,0,.9); user-select:none; }
+.ls-star { font-size:15px; line-height:1; color:rgba(255,255,255,.28); cursor:pointer; transition:color .15s, transform .15s; text-shadow:0 1px 4px rgba(0,0,0,.9); user-select:none; }
 .ls-star:hover { transform:scale(1.15); }
 .ls-star.filled { color:var(--gold); }
 .ls-info { font-family:var(--font-body); font-size:10.5px; font-weight:600; letter-spacing:1px; color:var(--cream2); text-shadow:none; white-space:nowrap; }
@@ -823,7 +823,8 @@ footer { text-align:center; }
   .lb-close, .lb-music-toggle { width:38px; height:38px; }
   .lb-music-toggle { right:56px; }
   .lightbox-watermark { font-size:10px; bottom:14px; right:16px; }
-  .lightbox-stats { margin-top:10px; padding-top:8px; gap:4px; }
+  .lightbox-stats { margin-top:8px; padding-top:6px; gap:10px; }
+  .ls-star { font-size:13px; }
 }
 .btn-buy { display:inline-flex;align-items:center;gap:8px; margin-top:16px;padding:11px 22px; background:transparent; border:none; border-radius:9px; color:var(--gold); font-family:var(--font-body); font-size:10px;font-weight:700;letter-spacing:2px; text-transform:uppercase;text-decoration:none; transition:all .3s; box-shadow:0 6px 14px rgba(0,0,0,.35),inset 0 0 0 1px rgba(var(--gold-rgb),.4); }
 .btn-buy:hover{background:linear-gradient(180deg,var(--gold-light),var(--gold));color:var(--dark);transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);}
@@ -2834,10 +2835,11 @@ function attachCoverFadeIn(img) {
   };
   img.addEventListener('load', onLoaded);
 }
-function fitLightboxImage(imgEl){
+function fitLightboxImage(imgEl, reservePx){
+  reservePx = reservePx || 0;
   function apply(){
     if (!imgEl.naturalWidth || !imgEl.naturalHeight) return;
-    const maxH = window.innerHeight * 0.86;
+    const maxH = (window.innerHeight * 0.86) - reservePx;
     const maxW = window.innerWidth * 0.92;
     const ar = imgEl.naturalWidth / imgEl.naturalHeight;
     let w, h;
@@ -2850,9 +2852,10 @@ function fitLightboxImage(imgEl){
   if (imgEl.complete && imgEl.naturalWidth) apply();
 }
 window.addEventListener('resize', function(){
+  const ekReserve = { lbImg:56, inanclarLbImg:56, atolyePageImg:0 };
   ['lbImg','inanclarLbImg','atolyePageImg'].forEach(function(id){
     const el = document.getElementById(id);
-    if (el && el.naturalWidth) fitLightboxImage(el);
+    if (el && el.naturalWidth) fitLightboxImage(el, ekReserve[id]);
   });
 });
 
@@ -3524,7 +3527,7 @@ function openLightbox(idx) {
   const photo = currentPhotos[idx];
   const lbSize = currentCatKey === 'fotograf-yazilari' ? 'w2400' : 'w1920-h1280';
   document.getElementById('lbImg').src = driveImgUrl(photo.id, lbSize);
-  fitLightboxImage(document.getElementById('lbImg'));
+  fitLightboxImage(document.getElementById('lbImg'), 56);
   document.getElementById('lbTitle').textContent = GALLERY_CATS[currentCatKey]?.title || '';
   document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + currentPhotos.length;
   document.getElementById('lightbox').classList.add('open');
@@ -3839,7 +3842,7 @@ function openInanclarLightbox(idx){
   inanclarLbIndex = idx;
   const photo = inanclarPhotos[idx];
   document.getElementById('inanclarLbImg').src = driveImgUrl(photo.id, 'w1920-h1280');
-  fitLightboxImage(document.getElementById('inanclarLbImg'));
+  fitLightboxImage(document.getElementById('inanclarLbImg'), 56);
   document.getElementById('inanclarLbCounter').textContent = (idx + 1) + ' / ' + inanclarPhotos.length;
   document.getElementById('inanclarLightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
