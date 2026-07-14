@@ -532,25 +532,26 @@ footer{background:var(--dark);padding:44px 72px;display:flex;align-items:center;
 .aos.in{opacity:1;transform:none;filter:blur(0);}
 /* ══════ Karanlık Oda Notları — Editör Masası Bölümü ══════ */
 .darkroom-bg{background:var(--dark);}
-.dk-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:stretch;}
-.dk-loupe-stage{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--dark3);box-shadow:var(--emboss);cursor:none;}
+.dk-grid{display:flex;flex-direction:column;gap:32px;max-width:900px;margin:0 auto;}
+.dk-note{background:var(--dark2);border-radius:16px;padding:44px;box-shadow:var(--emboss);display:flex;flex-direction:column;}
+.dk-note-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.dk-note-text{font-family:var(--font-serif);font-style:italic;font-size:19px;line-height:1.7;color:var(--white);margin-bottom:22px;}
+.dk-note-meta{font-size:12px;letter-spacing:1px;color:var(--muted);margin:0;}
+.dk-loupe-stage{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/2;background:var(--dark3);box-shadow:var(--emboss);cursor:none;}
 .dk-loupe-stage img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.92) sepia(6%);}
 .dk-frame-tag{position:absolute;top:16px;left:16px;font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-light);padding:7px 12px;background:rgba(13,11,8,.65);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);z-index:2;}
 .dk-frame-tag.right{left:auto;right:16px;}
 .dk-loupe{position:absolute;width:230px;height:230px;border-radius:50%;border:2px solid var(--gold);pointer-events:none;z-index:5;display:none;background-repeat:no-repeat;box-shadow:0 0 0 4000px rgba(13,11,8,.55),inset 0 0 24px rgba(0,0,0,.4),0 0 0 1px rgba(var(--gold-rgb),.5);}
 .dk-loupe-stage:hover .dk-loupe{display:block;}
-.dk-note{background:var(--dark2);border-radius:16px;padding:44px;box-shadow:var(--emboss);display:flex;flex-direction:column;}
-.dk-note-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
-.dk-note-text{font-family:var(--font-serif);font-style:italic;font-size:19px;line-height:1.7;color:var(--white);margin-bottom:22px;}
-.dk-note-meta{font-size:12px;letter-spacing:1px;color:var(--muted);margin-bottom:32px;}
 .dk-strip-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.dk-mini-frames{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
-.dk-mini-frame{position:relative;aspect-ratio:1/1;border-radius:8px;overflow:hidden;box-shadow:var(--emboss-sm);}
+.dk-mini-frames{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:0;}
+.dk-mini-frame{position:relative;aspect-ratio:3/2;border-radius:8px;overflow:hidden;box-shadow:var(--emboss-sm);}
 .dk-mini-frame img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) sepia(8%);}
 .dk-mini-frame.picked .dk-pick-circle{position:absolute;inset:8%;border:2px solid var(--gold);border-radius:50%;transform:rotate(-4deg);box-shadow:0 0 0 1px rgba(var(--gold-rgb),.2);}
-@media(max-width:900px){
-  .dk-grid{grid-template-columns:1fr;}
+.dk-cta-wrap{align-self:center;}
+@media(max-width:700px){
   .dk-note{padding:30px;}
+  .dk-mini-frames{grid-template-columns:repeat(2,1fr);}
 }
 .d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
 .d4{transition-delay:.32s;}.d5{transition-delay:.4s;}
@@ -1637,6 +1638,12 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <h2 class="section-title aos" data-ek="karanlikoda_title" data-ek-br="1" data-ek-label="Karanlık Oda · Başlık" data-ek-group="Karanlık Oda Notları">Sabırla Beklenen <em>Kare</em></h2>
 
     <div class="dk-grid aos">
+      <div class="dk-note">
+        <div class="dk-note-label">Fotoğrafçının Notu</div>
+        <p class="dk-note-text" data-ek="karanlikoda_not" data-ek-br="1" data-ek-label="Karanlık Oda · Not" data-ek-group="Karanlık Oda Notları">Bu kareyi çekmeden önce aynı köşede üç kez bekledim. Işık her seferinde biraz daha geç düştü, biraz daha başka bir yerden kırıldı. Sabrın fotoğrafçıya öğrettiği ilk şey budur: doğru an, acele edenin değil, bekleyenin önüne çıkar.</p>
+        <div class="dk-note-meta">— Enver Şengül</div>
+      </div>
+
       <div class="dk-loupe-stage" id="karanlikodaLoupeStage">
         <img class="dk-hero-img" src="hero.jpg" alt="Haftanın karesi">
         <div class="dk-frame-tag">f/8 · 1/125 · ISO 200</div>
@@ -1644,22 +1651,18 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
         <div class="dk-loupe" id="karanlikodaLoupe"></div>
       </div>
 
-      <div class="dk-note">
-        <div class="dk-note-label">Fotoğrafçının Notu</div>
-        <p class="dk-note-text" data-ek="karanlikoda_not" data-ek-br="1" data-ek-label="Karanlık Oda · Not" data-ek-group="Karanlık Oda Notları">Bu kareyi çekmeden önce aynı köşede üç kez bekledim. Işık her seferinde biraz daha geç düştü, biraz daha başka bir yerden kırıldı. Sabrın fotoğrafçıya öğrettiği ilk şey budur: doğru an, acele edenin değil, bekleyenin önüne çıkar.</p>
-        <div class="dk-note-meta">— Enver Şengül</div>
-
-        <div>
-          <div class="dk-strip-label">Aynı Seriden</div>
-          <div class="dk-mini-frames">
-            <div class="dk-mini-frame"><img class="dk-mini-1" src="hakkimda.jpg" alt=""></div>
-            <div class="dk-mini-frame picked"><img class="dk-mini-2" src="hero.jpg" alt=""><div class="dk-pick-circle"></div></div>
-            <div class="dk-mini-frame"><img class="dk-mini-3" src="hakkimda.jpg" alt=""></div>
-            <div class="dk-mini-frame"><img class="dk-mini-4" src="hero.jpg" alt=""></div>
-          </div>
+      <div>
+        <div class="dk-strip-label">Aynı Seriden</div>
+        <div class="dk-mini-frames">
+          <div class="dk-mini-frame"><img class="dk-mini-1" src="hakkimda.jpg" alt=""></div>
+          <div class="dk-mini-frame picked"><img class="dk-mini-2" src="hero.jpg" alt=""><div class="dk-pick-circle"></div></div>
+          <div class="dk-mini-frame"><img class="dk-mini-3" src="hakkimda.jpg" alt=""></div>
+          <div class="dk-mini-frame"><img class="dk-mini-4" src="hero.jpg" alt=""></div>
         </div>
+      </div>
 
-        <a href="#fotografcilik" class="btn-outline" style="margin-top:28px;align-self:flex-start;">Tüm Portfolyoyu Gör →</a>
+      <div class="dk-cta-wrap">
+        <a href="#fotografcilik" class="btn-outline">Tüm Portfolyoyu Gör →</a>
       </div>
     </div>
   </div>
