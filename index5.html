@@ -536,7 +536,7 @@ footer{background:var(--dark);padding:44px 72px;display:flex;align-items:center;
 .dk-loupe-stage img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.92) sepia(6%);}
 .dk-frame-tag{position:absolute;top:16px;left:16px;font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-light);padding:7px 12px;background:rgba(13,11,8,.65);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);z-index:2;}
 .dk-frame-tag.right{left:auto;right:16px;}
-.dk-loupe{position:absolute;width:150px;height:150px;border-radius:50%;border:2px solid var(--gold);pointer-events:none;z-index:5;display:none;background-repeat:no-repeat;box-shadow:0 0 0 4000px rgba(13,11,8,.55),inset 0 0 24px rgba(0,0,0,.4),0 0 0 1px rgba(var(--gold-rgb),.5);}
+.dk-loupe{position:absolute;width:230px;height:230px;border-radius:50%;border:2px solid var(--gold);pointer-events:none;z-index:5;display:none;background-repeat:no-repeat;box-shadow:0 0 0 4000px rgba(13,11,8,.55),inset 0 0 24px rgba(0,0,0,.4),0 0 0 1px rgba(var(--gold-rgb),.5);}
 .dk-loupe-stage:hover .dk-loupe{display:block;}
 .dk-note{background:var(--dark2);border-radius:16px;padding:44px;box-shadow:var(--emboss);display:flex;flex-direction:column;}
 .dk-note-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
@@ -1552,11 +1552,12 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     var x = e.clientX - rect.left;
     var y = e.clientY - rect.top;
     var img = stage.querySelector('img');
-    loupe.style.left = (x - 75) + 'px';
-    loupe.style.top = (y - 75) + 'px';
+    var half = 115;
+    loupe.style.left = (x - half) + 'px';
+    loupe.style.top = (y - half) + 'px';
     loupe.style.backgroundImage = 'url(' + img.src + ')';
     loupe.style.backgroundSize = (rect.width * 2.2) + 'px ' + (rect.height * 2.2) + 'px';
-    loupe.style.backgroundPosition = '-' + (x * 2.2 - 75) + 'px -' + (y * 2.2 - 75) + 'px';
+    loupe.style.backgroundPosition = '-' + (x * 2.2 - half) + 'px -' + (y * 2.2 - half) + 'px';
   });
 })();
 </script>
