@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editör Masası — Küratörlü Fotoğraf Evi</title>
+<meta name="robots" content="noai, noimageai">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#14120F;
+    --void-2:#1B1815;
+    --paper:#F1E9D8;
+    --paper-dim:#CFC6B2;
+    --safelight:#C23A2E;
+    --safelight-glow: rgba(194,58,46,0.35);
+    --grease:#E8A33D;
+    --brass:#A9895C;
+    --film:#726B5E;
+    --line: rgba(241,233,216,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--paper);
+    font-family:'IBM Plex Sans',sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--safelight); color:var(--paper);}
+
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Fraunces',serif;}
+
+  /* ambient safelight glow */
+  .safelight-source{
+    position:fixed; top:-200px; left:50%; transform:translateX(-50%);
+    width:900px; height:600px;
+    background:radial-gradient(ellipse at center, var(--safelight-glow) 0%, rgba(194,58,46,0) 70%);
+    pointer-events:none; z-index:0; opacity:0.7;
+  }
+  .grain{
+    position:fixed; inset:0; z-index:2; pointer-events:none; opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  header{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 48px;
+    background:rgba(20,18,15,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .dot{width:8px;height:8px;border-radius:50%;background:var(--safelight); box-shadow:0 0 10px var(--safelight);}
+  nav{display:flex; gap:34px; font-size:0.82rem; letter-spacing:0.04em; text-transform:uppercase;}
+  nav a{opacity:0.72; transition:opacity .25s, color .25s; position:relative; padding-bottom:4px;}
+  nav a:hover{opacity:1; color:var(--grease);}
+  .nav-cta{
+    font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase;
+    border:1px solid var(--brass); padding:9px 18px; border-radius:2px;
+    transition:all .25s;
+  }
+  .nav-cta:hover{background:var(--brass); color:var(--void);}
+
+  /* HERO — contact sheet */
+  .hero{
+    position:relative; z-index:1;
+    padding:80px 48px 60px;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:64px; align-items:center;
+    max-width:1360px; margin:0 auto;
+  }
+  .hero-eyebrow{
+    font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--grease);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .hero-eyebrow::before{content:''; width:22px; height:1px; background:var(--grease);}
+  .hero h1{
+    font-family:'Fraunces',serif; font-weight:500; font-style:italic;
+    font-size:clamp(2.4rem, 4.2vw, 3.6rem); line-height:1.08; letter-spacing:-0.01em;
+    margin-bottom:26px;
+  }
+  .hero h1 em{font-style:normal; font-weight:600; color:var(--paper); border-bottom:2px solid var(--safelight);}
+  .hero p.lede{
+    font-size:1.02rem; line-height:1.7; color:var(--paper-dim); max-width:46ch; margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:16px; align-items:center; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--safelight); color:var(--paper); padding:14px 26px; border-radius:2px;
+    font-size:0.86rem; letter-spacing:0.03em; font-weight:500; transition:transform .2s, box-shadow .2s;
+    display:inline-block;
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(194,58,46,0.35);}
+  .btn-ghost{
+    color:var(--paper-dim); font-size:0.86rem; letter-spacing:0.03em;
+    border-bottom:1px solid var(--film); padding-bottom:3px; transition:color .2s, border-color .2s;
+  }
+  .btn-ghost:hover{color:var(--paper); border-color:var(--paper);}
+
+  /* the loupe frame - signature element */
+  .loupe-stage{
+    position:relative; aspect-ratio:4/5; border-radius:2px; overflow:hidden;
+    background:#0c0b09; cursor:none;
+    border:1px solid var(--line);
+  }
+  .loupe-stage img{width:100%; height:100%; object-fit:cover; display:block; filter:saturate(0.92) contrast(1.04);}
+  .frame-chrome{
+    position:absolute; inset:0; pointer-events:none;
+    border:10px solid transparent;
+  }
+  .frame-tag{
+    position:absolute; top:14px; left:14px;
+    font-size:0.68rem; letter-spacing:0.08em; padding:6px 10px;
+    background:rgba(20,18,15,0.75); border:1px solid var(--line); backdrop-filter:blur(4px);
+  }
+  .frame-tag.right{left:auto; right:14px;}
+  .loupe{
+    position:absolute; width:150px; height:150px; border-radius:50%;
+    border:2px solid var(--grease); pointer-events:none; z-index:5;
+    box-shadow:0 0 0 4000px rgba(12,11,9,0.55), inset 0 0 30px rgba(0,0,0,0.4);
+    display:none; overflow:hidden; background-repeat:no-repeat;
+  }
+  .loupe::after{
+    content:''; position:absolute; inset:0; border-radius:50%;
+    box-shadow:inset 0 0 20px rgba(232,163,61,0.25);
+  }
+  .loupe-stage:hover .loupe{display:block;}
+
+  /* grease pencil mark svg */
+  .grease-mark{position:absolute; pointer-events:none;}
+
+  /* stats strip as exposure meter */
+  .meter-strip{
+    max-width:1360px; margin:0 auto; padding:0 48px 70px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .meter-cell{background:var(--void); padding:30px 6px; text-align:center;}
+  .meter-cell .num{font-family:'Fraunces',serif; font-size:2.1rem; font-weight:600; color:var(--paper);}
+  .meter-cell .lab{font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--film); margin-top:6px;}
+
+  /* CONTACT SHEET SECTION */
+  .section{max-width:1360px; margin:0 auto; padding:90px 48px;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:38px; gap:20px; flex-wrap:wrap;}
+  .section-eyebrow{font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--grease); margin-bottom:12px;}
+  .section-head h2{font-family:'Fraunces',serif; font-weight:500; font-style:italic; font-size:clamp(1.6rem,3vw,2.2rem);}
+  .section-link{font-size:0.82rem; color:var(--paper-dim); border-bottom:1px solid var(--film); padding-bottom:3px; white-space:nowrap;}
+  .section-link:hover{color:var(--grease); border-color:var(--grease);}
+
+  .contact-sheet{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:2px;
+    background:var(--brass); padding:2px; border-radius:2px;
+    position:relative;
+  }
+  .contact-sheet::before, .contact-sheet::after{
+    content:''; position:absolute; left:0; right:0; height:14px;
+    background-image:radial-gradient(circle, var(--void) 3px, transparent 3.5px);
+    background-size:22px 14px; background-repeat:repeat-x; background-position:8px center;
+  }
+  .contact-sheet::before{top:-16px;}
+  .contact-sheet::after{bottom:-16px;}
+  .frame{
+    position:relative; aspect-ratio:1/1; overflow:hidden; background:#0c0b09;
+    cursor:pointer;
+  }
+  .frame img{width:100%; height:100%; object-fit:cover; filter:grayscale(0.15) contrast(1.05); transition:transform .5s ease, filter .5s ease;}
+  .frame:hover img{transform:scale(1.06); filter:grayscale(0) contrast(1.1);}
+  .frame .fnum{
+    position:absolute; bottom:6px; left:8px; font-size:0.62rem; color:rgba(241,233,216,0.75);
+    text-shadow:0 1px 3px rgba(0,0,0,0.8);
+  }
+  .frame.picked .frame-circle{
+    position:absolute; inset:6%; border:2.5px solid var(--grease); border-radius:50%;
+    transform:rotate(-3deg); opacity:0.9;
+    box-shadow:0 0 0 1px rgba(232,163,61,0.15);
+  }
+  .frame.picked::before{
+    content:'SEÇİLDİ'; position:absolute; top:6px; right:8px; font-size:0.58rem; letter-spacing:0.06em;
+    color:var(--grease); font-family:'IBM Plex Mono',monospace; transform:rotate(-3deg);
+  }
+
+  /* editor's desk — critique panel */
+  .desk{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;
+    background:var(--void-2); border:1px solid var(--line); border-radius:4px; padding:56px;
+  }
+  .desk-photo{aspect-ratio:3/4; overflow:hidden; border-radius:2px; position:relative;}
+  .desk-photo img{width:100%; height:100%; object-fit:cover;}
+  .critique-quote{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:1.3rem; line-height:1.55; color:var(--paper); margin-bottom:22px;
+  }
+  .editor-byline{display:flex; align-items:center; gap:12px; margin-bottom:28px;}
+  .editor-byline .av{width:36px; height:36px; border-radius:50%; background:var(--film);}
+  .editor-byline .name{font-size:0.86rem; font-weight:500;}
+  .editor-byline .role{font-size:0.72rem; color:var(--film); text-transform:uppercase; letter-spacing:0.06em;}
+  .critique-marks{display:flex; gap:22px; margin-top:6px;}
+  .critique-marks .mark{font-size:0.72rem; color:var(--paper-dim);}
+  .critique-marks .mark b{display:block; font-family:'Fraunces',serif; font-size:1.3rem; color:var(--paper); font-weight:600;}
+
+  /* film reels / themed collections */
+  .reels{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .reel{position:relative; border-radius:3px; overflow:hidden; aspect-ratio:3/4; cursor:pointer;}
+  .reel img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .reel:hover img{transform:scale(1.08);}
+  .reel::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,18,15,0) 40%, rgba(20,18,15,0.92) 100%);}
+  .reel-info{position:absolute; bottom:0; left:0; right:0; padding:20px; z-index:2;}
+  .reel-info .rtitle{font-family:'Fraunces',serif; font-style:italic; font-size:1.15rem; margin-bottom:4px;}
+  .reel-info .rcount{font-size:0.72rem; color:var(--paper-dim); font-family:'IBM Plex Mono',monospace;}
+  .reel-spool{position:absolute; top:14px; right:14px; z-index:2; width:26px; height:26px; border-radius:50%; border:2px solid rgba(241,233,216,0.5);}
+  .reel-spool::before{content:''; position:absolute; inset:6px; border-radius:50%; background:rgba(241,233,216,0.5);}
+
+  /* competition module */
+  .contest-band{
+    background:linear-gradient(135deg, var(--void-2), var(--void));
+    border:1px solid var(--line); border-radius:4px; padding:60px; position:relative; overflow:hidden;
+  }
+  .contest-band::before{
+    content:''; position:absolute; top:-40%; right:-10%; width:500px; height:500px; border-radius:50%;
+    background:radial-gradient(circle, var(--safelight-glow), transparent 70%); opacity:0.6;
+  }
+  .contest-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:50px; align-items:center; position:relative; z-index:1;}
+  .countdown{display:flex; gap:14px; margin:26px 0;}
+  .countdown .cbox{background:var(--void); border:1px solid var(--brass); padding:14px 16px; text-align:center; border-radius:2px; min-width:64px;}
+  .countdown .cbox .cn{font-family:'IBM Plex Mono',monospace; font-size:1.5rem; font-weight:500;}
+  .countdown .cbox .cl{font-size:0.62rem; text-transform:uppercase; color:var(--film); margin-top:2px;}
+  .contest-rules{font-size:0.86rem; color:var(--paper-dim); line-height:1.9;}
+  .contest-rules li{list-style:none; padding-left:24px; position:relative; margin-bottom:8px;}
+  .contest-rules li::before{content:'—'; position:absolute; left:0; color:var(--grease);}
+
+  /* profiles strip */
+  .profiles{display:grid; grid-template-columns:repeat(5,1fr); gap:20px;}
+  .profile{text-align:center;}
+  .profile-photo{aspect-ratio:1/1; border-radius:50%; overflow:hidden; margin-bottom:14px; border:1px solid var(--line); position:relative;}
+  .profile-photo img{width:100%; height:100%; object-fit:cover; filter:grayscale(0.3);}
+  .profile-photo .badge{
+    position:absolute; bottom:2px; right:2px; width:22px; height:22px; border-radius:50%;
+    background:var(--safelight); display:flex; align-items:center; justify-content:center; font-size:0.6rem;
+    border:2px solid var(--void);
+  }
+  .profile .pname{font-size:0.88rem; font-weight:500;}
+  .profile .prole{font-size:0.7rem; color:var(--film); margin-top:2px;}
+
+  /* newsletter as darkroom slip */
+  .slip{
+    background:var(--paper); color:var(--void); border-radius:4px; padding:56px;
+    display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;
+  }
+  .slip h3{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:1.7rem; margin-bottom:10px;}
+  .slip p{color:#4a463e; max-width:46ch; font-size:0.92rem; line-height:1.6;}
+  .slip-form{display:flex; gap:0; border-bottom:2px solid var(--void); padding-bottom:2px; min-width:340px;}
+  .slip-form input{
+    flex:1; background:transparent; border:none; outline:none; font-family:'IBM Plex Sans'; font-size:0.92rem; padding:10px 4px; color:var(--void);
+  }
+  .slip-form input::placeholder{color:#8a8474;}
+  .slip-form button{
+    background:var(--void); color:var(--paper); border:none; padding:12px 22px; font-size:0.8rem; letter-spacing:0.04em; cursor:pointer;
+    border-radius:2px;
+  }
+
+  footer{border-top:1px solid var(--line); padding:60px 48px 40px;}
+  .footer-grid{max-width:1360px; margin:0 auto; display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+  .footer-grid h4{font-size:0.74rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--film); margin-bottom:16px;}
+  .footer-grid a{display:block; font-size:0.86rem; color:var(--paper-dim); margin-bottom:10px; transition:color .2s;}
+  .footer-grid a:hover{color:var(--grease);}
+  .footer-bottom{max-width:1360px; margin:0 auto; display:flex; justify-content:space-between; font-size:0.76rem; color:var(--film); padding-top:24px; border-top:1px solid var(--line);}
+
+  @media (max-width:900px){
+    .hero, .desk, .contest-grid{grid-template-columns:1fr;}
+    .meter-strip, .contact-sheet, .reels, .profiles{grid-template-columns:repeat(2,1fr);}
+    header{padding:18px 22px;} nav{display:none;}
+    .section{padding:60px 22px;}
+    .slip{grid-template-columns:1fr;}
+  }
+
+  [data-reveal]{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  [data-reveal].in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="safelight-source"></div>
+<div class="grain"></div>
+
+<header>
+  <div class="logo"><span class="dot"></span>Editör Masası</div>
+  <nav>
+    <a href="#kontak">Kontak Sayfası</a>
+    <a href="#masa">Editör Masası</a>
+    <a href="#makara">Makaralar</a>
+    <a href="#yarisma">Yarışma</a>
+    <a href="#topluluk">Fotoğrafçılar</a>
+  </nav>
+  <a href="#" class="nav-cta">Gönderi Yap</a>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Kontak Sayfası No. 118 · 14 Tem 2026</div>
+    <h1>Algoritma değil,<br><em>bir insanın ışığa<br>karar verdiği an.</em></h1>
+    <p class="lede">Her kare, yayına girmeden önce gerçek bir editörün masasından geçer. Grease-pencil ile işaretlenen, loupe ile büyütülen, tek tek elden geçirilen bir seçki — burada AI üretimi görsel yok, sadece sabır var.</p>
+    <div class="hero-actions">
+      <a href="#kontak" class="btn-primary">Kontak sayfasını incele</a>
+      <a href="#masa" class="btn-ghost">Editörün eleştirisini oku →</a>
+    </div>
+  </div>
+  <div class="loupe-stage" id="loupeStage">
+    <img src="https://picsum.photos/id/1015/900/1100" alt="Haftanın karesi">
+    <div class="frame-chrome"></div>
+    <div class="frame-tag mono">Sv. 14 · f/2.8 · 1/250</div>
+    <div class="frame-tag right mono">@onurdemirkapi</div>
+    <div class="loupe" id="loupe"></div>
+  </div>
+</section>
+
+<div class="meter-strip">
+  <div class="meter-cell"><div class="num">%100</div><div class="lab mono">Editör onaylı</div></div>
+  <div class="meter-cell"><div class="num">2.318</div><div class="lab mono">Bu ay incelenen kare</div></div>
+  <div class="meter-cell"><div class="num">0</div><div class="lab mono">AI üretimi görsel</div></div>
+</div>
+
+<section class="section" id="kontak">
+  <div class="section-head">
+    <div>
+      <div class="section-eyebrow">Bu haftanın masası</div>
+      <h2>Kontak sayfası — 24 kareden 4'ü seçildi</h2>
+    </div>
+    <a href="#" class="section-link">Tüm kontak arşivini gör →</a>
+  </div>
+  <div class="contact-sheet" id="contactSheet"></div>
+</section>
+
+<section class="section" id="masa">
+  <div class="desk" data-reveal>
+    <div class="desk-photo">
+      <img src="https://picsum.photos/id/1015/700/900" alt="İncelenen fotoğraf">
+    </div>
+    <div>
+      <div class="section-eyebrow">Editör eleştirisi</div>
+      <p class="critique-quote">"Kadrajın sol üçte biri fazla boş kalmış olsa da, sisin ışığı kırma biçimi ve figürün duruşundaki sabır bu kareyi haftanın seçkisine taşıdı. Bu bir enstantane değil, beklenmiş bir an."</p>
+      <div class="editor-byline">
+        <div class="av"></div>
+        <div>
+          <div class="name">Selin Aydoğan</div>
+          <div class="role">Baş Editör · Manzara & Belgesel</div>
+        </div>
+      </div>
+      <div class="critique-marks">
+        <div class="mark"><b>8.7</b>Kompozisyon</div>
+        <div class="mark"><b>9.2</b>Işık & Ton</div>
+        <div class="mark"><b>7.9</b>Öykü</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="makara">
+  <div class="section-head">
+    <div>
+      <div class="section-eyebrow">Editör koleksiyonları</div>
+      <h2>Temalı makaralar</h2>
+    </div>
+    <a href="#" class="section-link">Tüm makaraları gör →</a>
+  </div>
+  <div class="reels">
+    <div class="reel">
+      <div class="reel-spool"></div>
+      <img src="https://picsum.photos/id/1043/500/650" alt="Anadolu Geceleri">
+      <div class="reel-info"><div class="rtitle">Anadolu Geceleri</div><div class="rcount mono">18 KARE · 6 FOTOĞRAFÇI</div></div>
+    </div>
+    <div class="reel">
+      <div class="reel-spool"></div>
+      <img src="https://picsum.photos/id/1036/500/650" alt="Deniz ve Kıyı">
+      <div class="reel-info"><div class="rtitle">Deniz ve Kıyı</div><div class="rcount mono">24 KARE · 9 FOTOĞRAFÇI</div></div>
+    </div>
+    <div class="reel">
+      <div class="reel-spool"></div>
+      <img src="https://picsum.photos/id/437/500/650" alt="Şehrin Geometrisi">
+      <div class="reel-info"><div class="rtitle">Şehrin Geometrisi</div><div class="rcount mono">31 KARE · 11 FOTOĞRAFÇI</div></div>
+    </div>
+    <div class="reel">
+      <div class="reel-spool"></div>
+      <img src="https://picsum.photos/id/366/500/650" alt="Sessiz Portreler">
+      <div class="reel-info"><div class="rtitle">Sessiz Portreler</div><div class="rcount mono">12 KARE · 5 FOTOĞRAFÇI</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="yarisma">
+  <div class="contest-band">
+    <div class="contest-grid">
+      <div>
+        <div class="section-eyebrow">Ayın yarışması</div>
+        <h2 class="display" style="font-style:italic; font-weight:500; font-size:clamp(1.7rem,3vw,2.3rem); margin-bottom:14px;">"Beklenen An" — Temmuz Yarışması</h2>
+        <p style="color:var(--paper-dim); max-width:50ch; line-height:1.7; margin-bottom:10px;">Sabırla beklenmiş, kurgulanmamış tek bir kare gönderin. Finalistler editör kurulunca seçilir, kazanan dergide yayınlanır.</p>
+        <div class="countdown">
+          <div class="cbox"><div class="cn mono">06</div><div class="cl">gün</div></div>
+          <div class="cbox"><div class="cn mono">14</div><div class="cl">saat</div></div>
+          <div class="cbox"><div class="cn mono">52</div><div class="cl">dk</div></div>
+        </div>
+        <a href="#" class="btn-primary">Kareni gönder</a>
+      </div>
+      <ul class="contest-rules">
+        <li>Tek kare, kırpılmamış EXIF ile gönderilir</li>
+        <li>AI destekli düzenleme veya üretim kabul edilmez</li>
+        <li>3 editör bağımsız olarak puanlar, ortalama alınır</li>
+        <li>Kazanan, gelecek ayın kapak fotoğrafçısı olur</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="topluluk">
+  <div class="section-head">
+    <div>
+      <div class="section-eyebrow">Topluluk</div>
+      <h2>Bu ay öne çıkan fotoğrafçılar</h2>
+    </div>
+    <a href="#" class="section-link">Tüm profilleri gör →</a>
+  </div>
+  <div class="profiles">
+    <div class="profile"><div class="profile-photo"><img src="https://picsum.photos/id/64/200/200"><div class="badge">✓</div></div><div class="pname">Onur Demirkapı</div><div class="prole">Manzara</div></div>
+    <div class="profile"><div class="profile-photo"><img src="https://picsum.photos/id/91/200/200"><div class="badge">✓</div></div><div class="pname">Naz Yerlikaya</div><div class="prole">Portre</div></div>
+    <div class="profile"><div class="profile-photo"><img src="https://picsum.photos/id/177/200/200"><div class="badge">✓</div></div><div class="pname">Kerem Sarıalp</div><div class="prole">Sokak</div></div>
+    <div class="profile"><div class="profile-photo"><img src="https://picsum.photos/id/22/200/200"><div class="badge">✓</div></div><div class="pname">Elif Turaç</div><div class="prole">Mimari</div></div>
+    <div class="profile"><div class="profile-photo"><img src="https://picsum.photos/id/338/200/200"><div class="badge">✓</div></div><div class="pname">Deniz Aktaş</div><div class="prole">Belgesel</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="slip">
+    <div>
+      <h3>Haftanın kontak sayfası e-postanızda.</h3>
+      <p>Her cuma, editörlerin seçtiği 6 kare ve tam eleştiri metniyle. Reklam yok, algoritma yok — sadece editörün notu.</p>
+    </div>
+    <form class="slip-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="e-posta adresiniz" required>
+      <button type="submit">Abone ol</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo" style="margin-bottom:14px;"><span class="dot"></span>Editör Masası</div>
+      <p style="color:var(--paper-dim); font-size:0.86rem; max-width:36ch; line-height:1.7;">AI'sız, elden geçirilmiş, insan yapımı fotoğrafın Türkçe editoryal evi. Her kare bir editörün masasından, bir loupe'un altından geçer.</p>
+    </div>
+    <div><h4>Keşfet</h4><a href="#kontak">Kontak Sayfaları</a><a href="#makara">Makaralar</a><a href="#topluluk">Fotoğrafçılar</a></div>
+    <div><h4>Topluluk</h4><a href="#masa">Editör Eleştirisi</a><a href="#yarisma">Yarışmalar</a><a href="#">Portfolyolar</a></div>
+    <div><h4>Kurumsal</h4><a href="#">Editöryel İlkeler</a><a href="#">KVKK & Gizlilik</a><a href="#">İletişim</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Editör Masası · İnsan yapımı, küratörlü fotoğraf evi</span>
+    <span class="mono">NOAI · NOIMAGEAI</span>
+  </div>
+</footer>
+
+<script>
+  // Contact sheet generation with grease-pencil pick marks
+  const photoIds = [1015,1025,1035,1041,1050,1060,1074,1084,1062,1080,1069,1082];
+  const pickedIndices = [2, 7]; // which frames are "editor picked"
+  const sheet = document.getElementById('contactSheet');
+  photoIds.forEach((id, i) => {
+    const frame = document.createElement('div');
+    frame.className = 'frame' + (pickedIndices.includes(i) ? ' picked' : '');
+    frame.innerHTML = `
+      <img src="https://picsum.photos/id/${id}/300/300" loading="lazy" alt="Kare ${i+1}">
+      <div class="fnum mono">${String(i+1).padStart(2,'0')}A</div>
+      ${pickedIndices.includes(i) ? '<div class="frame-circle"></div>' : ''}
+    `;
+    sheet.appendChild(frame);
+  });
+
+  // Loupe magnifier follows cursor over hero stage
+  const stage = document.getElementById('loupeStage');
+  const loupe = document.getElementById('loupe');
+  const bgImg = stage.querySelector('img').getAttribute('src') + '?zoom';
+  stage.addEventListener('mousemove', (e) => {
+    const rect = stage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    loupe.style.left = (x - 75) + 'px';
+    loupe.style.top = (y - 75) + 'px';
+    loupe.style.backgroundImage = `url(${stage.querySelector('img').src})`;
+    loupe.style.backgroundSize = (rect.width * 2.2) + 'px ' + (rect.height * 2.2) + 'px';
+    loupe.style.backgroundPosition = `-${x * 2.2 - 75}px -${y * 2.2 - 75}px`;
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.2 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Countdown demo (static target ~6 days out)
+  const target = new Date(); target.setDate(target.getDate() + 6); target.setHours(target.getHours()+14);
+  function tick(){
+    const now = new Date();
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const boxes = document.querySelectorAll('.countdown .cn');
+    if (boxes.length === 3) {
+      boxes[0].textContent = String(d).padStart(2,'0');
+      boxes[1].textContent = String(h).padStart(2,'0');
+      boxes[2].textContent = String(m).padStart(2,'0');
+    }
+  }
+  tick(); setInterval(tick, 60000);
+</script>
+
+</body>
+</html>
