@@ -264,8 +264,8 @@ nav{
 .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:64px;z-index:2;background:linear-gradient(to bottom, transparent 0%, rgba(var(--dark2-rgb),.9) 100%);pointer-events:none;}
 @media (prefers-reduced-motion: reduce){ .hero-photo{animation:none;} }
 .hero-left{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:76px 56px 32px 72px;max-width:680px;width:55%;height:100%;}
-.hero-right-quote{position:absolute;bottom:20px;right:48px;z-index:2;max-width:220px;text-align:right;padding:16px 20px;border-radius:12px;background:rgba(13,11,8,.28);backdrop-filter:blur(6px);box-shadow:0 10px 26px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(0,0,0,.3);}
-.hero-right-quote p{font-family:var(--font-serif);font-size:14px;font-style:italic;color:var(--cream2);line-height:1.7;}
+.hero-right-quote{position:absolute;bottom:20px;right:48px;z-index:2;max-width:280px;text-align:right;padding:18px 24px;border-radius:12px;background:rgba(13,11,8,.28);backdrop-filter:blur(6px);box-shadow:0 10px 26px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(0,0,0,.3);}
+.hero-right-quote p{font-family:var(--font-serif);font-size:19px;font-style:italic;color:var(--cream2);line-height:1.7;}
 .hero-right-quote .sig{font-family:var(--font-serif);font-size:22px;font-style:italic;color:var(--gold);display:block;margin-top:10px;}
 .hero-eyebrow{display:none;}
 .hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
@@ -380,7 +380,8 @@ nav{
 .about-body{font-size:14.5px;line-height:1.9;color:var(--muted);margin-bottom:36px;}
 .about-body p{margin-bottom:14px;}
 .roles-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:44px;}
-.role-chip{display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:10px;background:rgba(var(--gold-rgb),.03);box-shadow:var(--emboss-sm);transition:transform .3s,box-shadow .3s;}
+.role-chip{display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:10px;background:rgba(var(--gold-rgb),.03);box-shadow:var(--emboss-sm);transition:transform .3s,box-shadow .3s;cursor:pointer;}
+.role-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 .role-chip:hover{transform:translateY(-3px);box-shadow:var(--emboss-sm-hover);}
 .role-chip span:first-child{font-size:17px;color:var(--gold);}
 .role-chip span:last-child{font-size:12px;font-weight:600;letter-spacing:.5px;color:var(--cream2);}
@@ -822,19 +823,33 @@ footer { text-align:center; }
 .cv-close{position:fixed;top:24px;right:24px;z-index:20;width:46px;height:46px;background:rgba(13,11,8,.85);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--cream2);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 20px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(var(--gold-rgb),.35);}
 .cv-close:hover{color:var(--gold);transform:translateY(-2px) rotate(90deg);box-shadow:0 12px 26px rgba(0,0,0,.5),0 0 0 1px rgba(var(--gold-rgb),.6);}
 
-/* Hero başlık */
-.cv-hero{text-align:center;margin-bottom:56px;}
-.cv-hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:0;animation:cvFadeUp .7s ease-out .1s forwards;}
-.cv-hero-title{font-family:var(--font-heading);font-size:clamp(30px,4.2vw,50px);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:14px;opacity:0;animation:cvFadeUp .8s ease-out .22s forwards;}
-.cv-hero-title em{color:var(--gold-light);font-style:italic;}
-.cv-hero-sub{font-family:var(--font-serif);font-size:18px;color:var(--cream2);max-width:620px;margin:0 auto;line-height:1.6;opacity:0;animation:cvFadeUp .8s ease-out .34s forwards;}
-.cv-hero-rule{width:64px;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:26px auto 0;opacity:0;animation:cvFadeUp .8s ease-out .42s forwards;}
+/* Üstte kayan okuma ilerleme çubuğu */
+.cv-progress-track{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:1301;}
+.cv-progress-bar{height:100%;width:0%;background:linear-gradient(to right,var(--gold-dark),var(--gold-light));box-shadow:0 0 10px rgba(var(--gold-rgb),.7);transition:width .08s linear;}
 
-/* İstatistik şeridi */
+/* Hero başlık */
+.cv-hero{text-align:center;margin-bottom:56px;position:relative;}
+.cv-hero-eyebrow{position:relative;z-index:1;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:0;animation:cvFadeUp .7s ease-out .1s forwards;}
+.cv-hero-title{position:relative;z-index:1;font-family:var(--font-heading);font-size:clamp(30px,4.2vw,50px);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:14px;opacity:0;animation:cvFadeUp .8s ease-out .22s forwards;}
+.cv-hero-title em{color:var(--gold-light);font-style:italic;}
+.cv-hero-sub{position:relative;z-index:1;font-family:var(--font-serif);font-size:18px;color:var(--cream2);max-width:620px;margin:0 auto;line-height:1.6;opacity:0;animation:cvFadeUp .8s ease-out .34s forwards;}
+.cv-hero-rule{position:relative;z-index:1;width:64px;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:26px auto 0;opacity:0;animation:cvFadeUp .8s ease-out .42s forwards;}
+
+/* Hero arka planında süzülen altın zerrecikler */
+.cv-particles{position:absolute;inset:-20px 0 0;overflow:hidden;pointer-events:none;z-index:0;}
+.cv-particles span{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0;box-shadow:0 0 7px rgba(var(--gold-rgb),.85);animation:cvFloat 8s ease-in infinite;}
+@keyframes cvFloat{0%{opacity:0;transform:translateY(0) scale(.5);}12%{opacity:.65;}88%{opacity:0;}100%{transform:translateY(-180px) scale(1);opacity:0;}}
+
+/* İstatistik şeridi + odometre efekti */
 .cv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:64px;opacity:0;animation:cvFadeUp .8s ease-out .5s forwards;}
-.cv-stat{text-align:center;padding:22px 10px;border-radius:12px;background:rgba(var(--gold-rgb),.04);box-shadow:var(--emboss-sm);}
-.cv-stat-num{font-family:var(--font-heading);font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--gold);line-height:1;}
+.cv-stat{text-align:center;padding:22px 10px;border-radius:12px;background:rgba(var(--gold-rgb),.04);box-shadow:var(--emboss-sm);transition:transform .3s,box-shadow .3s;}
+.cv-stat:hover{transform:translateY(-4px);box-shadow:var(--emboss-sm-hover);}
+.cv-stat-num{font-family:var(--font-heading);font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--gold);line-height:1;perspective:300px;}
+.cv-num{display:inline-block;transform-style:preserve-3d;}
+.cv-num.cv-spin{animation:cvDigitSpin .22s cubic-bezier(.3,0,.4,1);}
+.cv-num-suffix{display:inline-block;color:var(--gold-light);}
 .cv-stat-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:8px;line-height:1.4;}
+@keyframes cvDigitSpin{0%{transform:rotateX(0deg);filter:blur(0);}45%{transform:rotateX(80deg);filter:blur(1.5px);}100%{transform:rotateX(0deg);filter:blur(0);}}
 
 /* Zaman çizelgesi bölüm başlığı */
 .cv-block-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:10px;}
@@ -842,26 +857,30 @@ footer { text-align:center; }
 
 /* Timeline */
 .cv-timeline{position:relative;padding:8px 0 10px;margin-bottom:80px;}
-.cv-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(var(--gold-rgb),.55) 6%,rgba(var(--gold-rgb),.55) 94%,transparent);transform:translateX(-50%);}
+.cv-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(var(--gold-rgb),.28) 6%,rgba(var(--gold-rgb),.28) 94%,transparent);transform:translateX(-50%);}
+.cv-timeline-fill{position:absolute;left:50%;top:0;width:2px;height:0%;background:linear-gradient(to bottom,var(--gold-light),var(--gold));transform:translateX(-50%);box-shadow:0 0 12px rgba(var(--gold-rgb),.65);transition:height .12s linear;z-index:1;}
 .cv-item{position:relative;width:100%;padding:0 0 56px;opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
 .cv-modal.open .cv-item.cv-show{opacity:1;transform:none;}
 .cv-item:last-child{padding-bottom:0;}
 .cv-dot{position:absolute;left:50%;top:2px;width:15px;height:15px;border-radius:50%;background:var(--gold);transform:translateX(-50%);box-shadow:0 0 0 5px rgba(var(--dark2-rgb),1),0 0 0 6px rgba(var(--gold-rgb),.4),0 0 16px rgba(var(--gold-rgb),.6);z-index:2;}
 .cv-item.cv-show .cv-dot{animation:cvPulse 1.8s ease-out .3s 1;}
 .cv-row{display:grid;grid-template-columns:1fr 60px 1fr;align-items:start;gap:0;}
-.cv-card{background:var(--dark3);border-radius:14px;padding:24px 26px;box-shadow:0 14px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(var(--gold-rgb),.14);transition:transform .35s,box-shadow .35s;}
-.cv-item:hover .cv-card{transform:translateY(-3px);box-shadow:0 20px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.07),0 0 0 1px rgba(var(--gold-rgb),.32);}
+.cv-card{position:relative;overflow:hidden;background:var(--dark3);border-radius:14px;padding:24px 26px;box-shadow:0 14px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(var(--gold-rgb),.14);transition:transform .35s,box-shadow .35s;transform-style:preserve-3d;will-change:transform;}
+.cv-card::after{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(var(--gold-rgb),.14),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none;}
+.cv-card:hover::after{opacity:1;}
+.cv-item:hover .cv-card{box-shadow:0 20px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.07),0 0 0 1px rgba(var(--gold-rgb),.32);}
 .cv-year{display:inline-block;font-family:var(--font-heading);font-size:13px;font-weight:800;letter-spacing:1px;color:var(--dark);background:linear-gradient(180deg,var(--gold-light),var(--gold));padding:4px 13px;border-radius:20px;margin-bottom:10px;}
 .cv-card-title{font-family:var(--font-heading);font-size:16.5px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.35;}
 .cv-card p{font-family:var(--font-body);font-size:13.5px;line-height:1.65;color:var(--cream2);}
 .cv-row .cv-card{grid-column:1;}
 .cv-row .cv-card.cv-right{grid-column:3;}
-.cv-item:nth-child(even) .cv-row .cv-card:not(.cv-right){visibility:hidden;}
-.cv-item:nth-child(odd) .cv-row .cv-card.cv-right{visibility:hidden;}
 
 /* İki sütunlu alt bölümler: yazarlık / fotoğraf sanatı */
 .cv-dual{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:70px;}
-.cv-panel{background:var(--dark3);border-radius:16px;padding:32px 28px;box-shadow:0 16px 34px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(var(--gold-rgb),.14);opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.cv-panel{position:relative;overflow:hidden;background:var(--dark3);border-radius:16px;padding:32px 28px;box-shadow:0 16px 34px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(var(--gold-rgb),.14);opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1),box-shadow .35s;transform-style:preserve-3d;will-change:transform;}
+.cv-panel::after{content:'';position:absolute;inset:0;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(var(--gold-rgb),.12),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none;}
+.cv-panel:hover::after{opacity:1;}
+.cv-panel:hover{box-shadow:0 22px 44px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(var(--gold-rgb),.3);}
 .cv-modal.open .cv-panel.cv-show{opacity:1;transform:none;}
 .cv-panel-icon{font-size:26px;margin-bottom:14px;}
 .cv-panel-title{font-family:var(--font-heading);font-size:19px;font-weight:700;color:var(--white);margin-bottom:14px;}
@@ -885,16 +904,16 @@ footer { text-align:center; }
 }
 @media(max-width:768px){
   .cv-modal-inner{padding:64px 20px 70px;}
-  .cv-timeline::before{left:20px;}
+  .cv-timeline::before,.cv-timeline-fill{left:20px;}
   .cv-row{grid-template-columns:1fr;padding-left:44px;}
   .cv-dot{left:20px;}
   .cv-row .cv-card,.cv-row .cv-card.cv-right{grid-column:1;visibility:visible!important;}
-  .cv-item:nth-child(even) .cv-row .cv-card:not(.cv-right){display:none;}
-  .cv-item:nth-child(odd) .cv-row .cv-card.cv-right{display:none;}
 }
 @media(prefers-reduced-motion:reduce){
   .cv-hero-eyebrow,.cv-hero-title,.cv-hero-sub,.cv-hero-rule,.cv-stats{animation:none;opacity:1;}
   .cv-item,.cv-panel,.cv-closing{transition:none;}
+  .cv-particles{display:none;}
+  .cv-num.cv-spin{animation:none;}
 }
 .video-lightbox { display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.97); flex-direction:column; align-items:center; justify-content:center; }
 .video-lightbox.open { display:flex; }
@@ -1279,12 +1298,12 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <p data-ek="hakkimda_body2" data-ek-label="Hakkımda · Metin 2" data-ek-group="Hakkımda">Her adımında öğrenmenin, üretmenin ve paylaşmanın izlerini taşıyan; haber peşinde koşulan günlerden roman sayfalarına, sergi salonlarından ödüllü müzelere uzanan uzun, anlamlı ve heyecan verici bir serüven…</p>
         </div>
         <div class="roles-grid aos">
-          <div class="role-chip"><span>📷</span><span>Fotoğraf Sanatçısı</span></div>
-          <div class="role-chip"><span>✍️</span><span>Yazar & Romancı</span></div>
-          <div class="role-chip"><span>🏛️</span><span>Kültür Yöneticisi</span></div>
-          <div class="role-chip"><span>📰</span><span>Gazeteci</span></div>
-          <div class="role-chip"><span>🎓</span><span>Eğitimci</span></div>
-          <div class="role-chip"><span>📚</span><span>Kütüphaneci</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-fotografsanatcisi')" role="button" tabindex="0"><span>📷</span><span>Fotoğraf Sanatçısı</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-yazarromanci')" role="button" tabindex="0"><span>✍️</span><span>Yazar & Romancı</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-kulturyoneticisi')" role="button" tabindex="0"><span>🏛️</span><span>Kültür Yöneticisi</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-gazeteci')" role="button" tabindex="0"><span>📰</span><span>Gazeteci</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-ogretmenligim')" role="button" tabindex="0"><span>🎓</span><span>Öğretmenliğim</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-sporculugum')" role="button" tabindex="0"><span>📚</span><span>Sporculuğum</span></div>
         </div>
         <button class="btn-gold aos" onclick="openOzgecmis()" type="button">Özgeçmiş →</button>
       </div>
@@ -2563,10 +2582,20 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
   </div>
 </div>
 <div class="cv-modal" id="ozgecmisModal">
+  <div class="cv-progress-track"><div class="cv-progress-bar" id="cvProgressBar"></div></div>
   <button class="cv-close" onclick="closeOzgecmis()">✕</button>
   <div class="cv-modal-inner">
 
     <div class="cv-hero">
+      <div class="cv-particles" aria-hidden="true">
+        <span style="left:6%;animation-delay:.1s;"></span>
+        <span style="left:18%;animation-delay:1.4s;"></span>
+        <span style="left:32%;animation-delay:2.6s;"></span>
+        <span style="left:48%;animation-delay:.8s;"></span>
+        <span style="left:63%;animation-delay:3.2s;"></span>
+        <span style="left:78%;animation-delay:1.9s;"></span>
+        <span style="left:90%;animation-delay:2.3s;"></span>
+      </div>
       <div class="cv-hero-eyebrow">Özgeçmiş</div>
       <h2 class="cv-hero-title">Bitlis'ten Edirne'ye<br><em>Bir Ömrün Kronolojisi</em></h2>
       <p class="cv-hero-sub">Öğretmenlikten gazeteciliğe, fotoğraf sanatından müzeciliğe, kültürel miras çalışmalarından roman yazarlığına uzanan 45 yılı aşkın bir üretim yolculuğu.</p>
@@ -2574,16 +2603,18 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     </div>
 
     <div class="cv-stats">
-      <div class="cv-stat"><div class="cv-stat-num">45+</div><div class="cv-stat-label">Yıllık Meslek Hayatı</div></div>
-      <div class="cv-stat"><div class="cv-stat-num">30+</div><div class="cv-stat-label">Yurt İçi Kişisel Sergi</div></div>
-      <div class="cv-stat"><div class="cv-stat-num">6</div><div class="cv-stat-label">Yurt Dışı Kişisel Sergi</div></div>
-      <div class="cv-stat"><div class="cv-stat-num">10+</div><div class="cv-stat-label">Yayımlanmış Kitap</div></div>
+      <div class="cv-stat"><div class="cv-stat-num"><span class="cv-num" data-target="45">0</span><span class="cv-num-suffix">+</span></div><div class="cv-stat-label">Yıllık Meslek Hayatı</div></div>
+      <div class="cv-stat"><div class="cv-stat-num"><span class="cv-num" data-target="30">0</span><span class="cv-num-suffix">+</span></div><div class="cv-stat-label">Yurt İçi Kişisel Sergi</div></div>
+      <div class="cv-stat"><div class="cv-stat-num"><span class="cv-num" data-target="6">0</span></div><div class="cv-stat-label">Yurt Dışı Kişisel Sergi</div></div>
+      <div class="cv-stat"><div class="cv-stat-num"><span class="cv-num" data-target="10">0</span><span class="cv-num-suffix">+</span></div><div class="cv-stat-label">Yayımlanmış Kitap</div></div>
     </div>
 
     <div class="cv-block-eyebrow">Kronolojik Yolculuk</div>
     <div class="cv-block-title">Bir Ömrün Birikimi</div>
 
     <div class="cv-timeline" id="cvTimeline">
+      <div class="cv-timeline-fill" id="cvTimelineFill"></div>
+
 
       <div class="cv-item"><div class="cv-dot"></div><div class="cv-row">
         <div class="cv-card"><span class="cv-year">1960</span><h3 class="cv-card-title">Bitlis'te Doğum</h3><p>Bitlis'in Ahlat ilçesinde doğdu; dört yaşından itibaren Bitlis merkezde büyüdü, ilk-orta-lise öğrenimini burada tamamladı.</p></div>
@@ -3144,6 +3175,12 @@ function submitPhotoVote(fileId, value){
 }
 
 const GALLERY_CATS = {
+  'hakkimda-fotografsanatcisi': { title:'Fotoğraf Sanatçısı', desc:'Fotoğraf sanatına adanmış yıllardan seçme kareler.', folder:'Fotoğraf Sanatçısı', hakkimda:true },
+  'hakkimda-yazarromanci':      { title:'Yazar & Romancı',    desc:'Kalemin ve satırların izinde geçen yazarlık serüveninden kareler.', folder:'Yazar & Romancı', hakkimda:true },
+  'hakkimda-kulturyoneticisi':  { title:'Kültür Yöneticisi',  desc:'Kültürel miras ve müzecilik alanındaki yöneticilik yıllarından kareler.', folder:'Kültür Yöneticisi', hakkimda:true },
+  'hakkimda-gazeteci':          { title:'Gazeteci',           desc:'Haber peşinde koşulan gazetecilik yıllarından kareler.', folder:'Gazeteci', hakkimda:true },
+  'hakkimda-ogretmenligim':     { title:'Öğretmenliğim',      desc:'Öğretmenlik mesleğinde geçen yıllardan kareler.', folder:'Öğretmenliğim', hakkimda:true },
+  'hakkimda-sporculugum':       { title:'Sporculuğum',        desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
   'edirnenin-taninmis-yuzleri': { title:'Edirnenin Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
@@ -3582,17 +3619,116 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ══════ Özgeçmiş (kronolojik zaman çizelgesi) ══════
+
+// --- Sayaç "tık" sesi (Web Audio, kısa ve yumuşak) ---
+var cvAudioCtx = null;
+function cvTickSound(freq){
+  try{
+    if (!cvAudioCtx) cvAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (cvAudioCtx.state === 'suspended') cvAudioCtx.resume();
+    var t = cvAudioCtx.currentTime;
+    var o = cvAudioCtx.createOscillator();
+    var g = cvAudioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(0.045, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.055);
+    o.connect(g); g.connect(cvAudioCtx.destination);
+    o.start(t); o.stop(t + 0.07);
+  }catch(e){ /* ses desteklenmiyorsa sessizce geç */ }
+}
+
+// --- İstatistik rakamlarını dönerek (odometre) saydırma ---
+function cvResetCounters(modal){
+  modal.querySelectorAll('.cv-num').forEach(function(el){
+    el.textContent = '0';
+    el.classList.remove('cv-spin');
+  });
+}
+function cvAnimateCounters(modal){
+  var nums = modal.querySelectorAll('.cv-num');
+  nums.forEach(function(el, idx){
+    var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+    var duration = 1150;
+    var stepEvery = Math.max(1, Math.round(target / 16));
+    var start = null;
+    var lastShown = -1;
+    function frame(now){
+      if (start === null) start = now;
+      var t = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - t, 3);
+      var value = Math.round(eased * target);
+      if (value !== lastShown){
+        el.textContent = value;
+        if (value % stepEvery === 0 || value === target){
+          el.classList.remove('cv-spin');
+          void el.offsetWidth;
+          el.classList.add('cv-spin');
+          cvTickSound(600 + eased * 300);
+        }
+        lastShown = value;
+      }
+      if (t < 1) requestAnimationFrame(frame);
+      else el.textContent = target;
+    }
+    setTimeout(function(){ requestAnimationFrame(frame); }, 500 + idx * 110);
+  });
+}
+
+// --- Üst okuma ilerleme çubuğu + zaman çizelgesi altın hat dolumu ---
+function cvUpdateProgress(){
+  var modal = document.getElementById('ozgecmisModal');
+  if (!modal || !modal.classList.contains('open')) return;
+  var bar = document.getElementById('cvProgressBar');
+  if (bar){
+    var max = modal.scrollHeight - modal.clientHeight;
+    var pct = max > 0 ? (modal.scrollTop / max) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  var tl = document.getElementById('cvTimeline');
+  var fill = document.getElementById('cvTimelineFill');
+  if (tl && fill){
+    var rect = tl.getBoundingClientRect();
+    var modalRect = modal.getBoundingClientRect();
+    var refY = modalRect.top + modalRect.height * 0.42;
+    var progress = (refY - rect.top) / rect.height;
+    if (progress < 0) progress = 0;
+    if (progress > 1) progress = 1;
+    fill.style.height = (progress * 100) + '%';
+  }
+}
+
+// --- Kartlarda imleci izleyen 3B eğilme + ışık efekti ---
+function cvAttachTilt(el){
+  el.addEventListener('mousemove', function(e){
+    var r = el.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    el.style.setProperty('--mx', (x / r.width) * 100 + '%');
+    el.style.setProperty('--my', (y / r.height) * 100 + '%');
+    var rx = ((y / r.height) - 0.5) * -5;
+    var ry = ((x / r.width) - 0.5) * 5;
+    el.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-3px)';
+  });
+  el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+}
+document.querySelectorAll('.cv-card, .cv-panel').forEach(cvAttachTilt);
+
 function openOzgecmis() {
   const modal = document.getElementById('ozgecmisModal');
   modal.classList.add('open');
   modal.scrollTop = 0;
   document.body.style.overflow = 'hidden';
 
+  cvResetCounters(modal);
+  cvUpdateProgress();
+  cvAnimateCounters(modal);
+
   // Zaman çizelgesi kartlarını ve panelleri sırayla (staggered) belirginleştir
   const items = modal.querySelectorAll('#cvTimeline .cv-item');
   items.forEach(function(el, i){
     el.classList.remove('cv-show');
-    setTimeout(function(){ el.classList.add('cv-show'); }, 55 * i + 60);
+    setTimeout(function(){ el.classList.add('cv-show'); cvUpdateProgress(); }, 55 * i + 60);
   });
   const panels = modal.querySelectorAll('#cvDual .cv-panel');
   panels.forEach(function(el, i){
@@ -3606,9 +3742,20 @@ function openOzgecmis() {
   }
 }
 function closeOzgecmis() {
-  document.getElementById('ozgecmisModal').classList.remove('open');
+  const modal = document.getElementById('ozgecmisModal');
+  modal.classList.remove('open');
   document.body.style.overflow = '';
+  var bar = document.getElementById('cvProgressBar');
+  if (bar) bar.style.width = '0%';
+  var fill = document.getElementById('cvTimelineFill');
+  if (fill) fill.style.height = '0%';
 }
+document.getElementById('ozgecmisModal').addEventListener('scroll', function(){
+  requestAnimationFrame(cvUpdateProgress);
+}, {passive:true});
+window.addEventListener('resize', function(){
+  if (document.getElementById('ozgecmisModal').classList.contains('open')) cvUpdateProgress();
+});
 document.getElementById('ozgecmisModal').addEventListener('click', function(e) {
   if (e.target === this) closeOzgecmis();
 });
@@ -3852,7 +3999,14 @@ function computePerPage(photos, landscapeCount, portraitCount) {
 async function resolveCatFolderId(cat) {
   let folderId = null;
   try {
-    if (cat.root) {
+    if (cat.hakkimda) {
+      // WEB > ANASAYFA > Hakkımda > <cat.folder>
+      const anasayfaId = await getFolderIdByName(DRIVE_ROOT_ID, 'ANASAYFA');
+      if (anasayfaId) {
+        const hakkimdaId = await getFolderIdByName(anasayfaId, 'Hakkımda');
+        if (hakkimdaId) folderId = await getFolderIdByName(hakkimdaId, cat.folder);
+      }
+    } else if (cat.root) {
       // WEB klasörünün doğrudan altındaki bir klasör (portfolyom dışında)
       folderId = await getFolderIdByName(DRIVE_ROOT_ID, cat.folder);
     } else {
