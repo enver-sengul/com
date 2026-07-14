@@ -312,6 +312,18 @@ nav{
 .hero-bio{font-size:14.5px;line-height:1.85;color:var(--muted);max-width:480px;margin-bottom:10px;text-align:justify;}
 .hero-bio + .hero-bio{display:none;}
 .hero-cta{display:flex;gap:14px;margin-bottom:34px;}
+.cform-toast-wrap{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);z-index:3000;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1);max-width:calc(100vw - 32px);}
+.cform-toast-wrap.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+.cform-toast{display:flex;align-items:center;gap:12px;background:var(--dark2);color:var(--white);padding:16px 22px;border-radius:12px;box-shadow:var(--emboss);white-space:normal;font-size:13px;line-height:1.4;}
+.cform-toast-icon{font-size:20px;flex-shrink:0;}
+.cform-toast.is-error{box-shadow:var(--emboss),0 0 0 1px rgba(220,90,80,.5);}
+.cform-toast.is-error .cform-toast-icon{color:#E27060;}
+.cform-toast.is-success .cform-toast-icon{color:var(--gold);}
+.cform input.cform-invalid,.cform textarea.cform-invalid{box-shadow:0 0 0 1px rgba(220,90,80,.6),inset 0 2px 6px rgba(0,0,0,.3);animation:cformShake .4s;}
+@keyframes cformShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.btn-gold.is-sending,.btn-outline.is-sending{opacity:.75;pointer-events:none;}
+.btn-gold .cform-spin,.btn-outline .cform-spin{display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid rgba(0,0,0,.25);border-top-color:currentColor;animation:cformSpin .7s linear infinite;margin-right:2px;}
+@keyframes cformSpin{to{transform:rotate(360deg);}}
 .btn-gold{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:9px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:var(--dark);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .3s;box-shadow:0 8px 20px rgba(0,0,0,.4),0 3px 8px rgba(var(--gold-rgb),.3),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 6px rgba(0,0,0,.15);}
 .btn-gold:hover{background:linear-gradient(180deg,var(--gold-light),var(--gold-light));transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.45),0 6px 16px rgba(var(--gold-rgb),.45),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.12);}
 .btn-gold:active{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.4),inset 0 2px 5px rgba(0,0,0,.3);}
@@ -1075,7 +1087,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
   <a href="#yazarlik" class="side-nav-dot" data-label="Yazarlığım"></a>
   <a href="#kulturel" class="side-nav-dot" data-label="Kültürel Miras"></a>
   <a href="#sergiler" class="side-nav-dot" data-label="Sergiler"></a>
-  <a href="#egitim" class="side-nav-dot" data-label="Eğitim &amp; Atölyeler"></a>
+  <a href="#egitim" class="side-nav-dot" data-label="Eğitim"></a>
   <a href="#gazetecilik" class="side-nav-dot" data-label="Gazetecilik &amp; Yazılar"></a>
   <a href="#iletisim" class="side-nav-dot" data-label="İletişim"></a>
 </nav>
@@ -1143,7 +1155,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <li><a href="#karanlikoda">Karanlık Oda Notları</a></li>
     <li><a href="#yazarlik">Yazarlığım</a></li>
     <li><a href="#kulturel">Kültürel Miras</a></li>
-    <li><a href="#egitim">Eğitim & Atölyeler</a></li>
+    <li><a href="#egitim">Eğitim</a></li>
     <li><a href="#gazetecilik">Gazetecilik & Yazılar</a></li>
     <li><a href="#iletisim">İletişim</a></li>
   </ul>
@@ -1721,7 +1733,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <span class="book-tag">Roman</span>
           <h3 class="book-name" data-ek="book1_title" data-ek-br="1" data-ek-label="Kitap 1 · Başlık" data-ek-group="Yazarlık">Darüşşifa<br>Delilik Mevsimi</h3>
           <p class="book-desc" data-ek="book1_desc" data-ek-label="Kitap 1 · Açıklama" data-ek-group="Yazarlık">Osmanlı tıp tarihinin derinliklerine dalan, Edirne Darüşşifası'nın gizemleriyle örülü tarihi bir roman.</p>
-          <a class="btn-buy" href="https://www.dr.com.tr/kitap/darussifa-delilik-mevsimi/enver-sengul/edebiyat/roman/turkiye-roman/urunno=0000000665997" target="_blank" rel="noopener">🛒 Satın Al</a>
+          <a class="btn-buy" href="https://www.pusluyayincilik.com.tr/urun/darussifa-delilik-mevsimi-enver-sengul-9786055099510" target="_blank" rel="noopener">🛒 Satın Al</a>
         </div>
       </div>
       <div class="book-card aos d1">
@@ -1736,7 +1748,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <span class="book-tag">Roman</span>
           <h3 class="book-name" data-ek="book2_title" data-ek-br="1" data-ek-label="Kitap 2 · Başlık" data-ek-group="Yazarlık">Kayıp Zamanın<br>Bekçisi</h3>
           <p class="book-desc" data-ek="book2_desc" data-ek-label="Kitap 2 · Açıklama" data-ek-group="Yazarlık">Zamana karşı verilen sessiz bir savaşın, hafızanın ve kimliğin derinliklerini araştıran etkileyici bir anlatı.</p>
-          <a class="btn-buy" href="https://www.dr.com.tr/kitap/kayip-zamanin-bekcisi-bir-urartu-romani/enver-sengul/edebiyat/roman/turkiye-roman/urunno=0001909025001" target="_blank" rel="noopener">🛒 Satın Al</a>
+          <a class="btn-buy" href="https://www.pusluyayincilik.com.tr/urun/kayip-zamanin-bekcisi-enver-sengul-9786057869814" target="_blank" rel="noopener">🛒 Satın Al</a>
         </div>
       </div>
       <div class="book-card aos d2">
@@ -1751,7 +1763,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <span class="book-tag">Roman</span>
           <h3 class="book-name" data-ek="book3_title" data-ek-br="1" data-ek-label="Kitap 3 · Başlık" data-ek-group="Yazarlık">Kuşatma<br>Bir Balkan Savaşı Romanı</h3>
           <p class="book-desc" data-ek="book3_desc" data-ek-label="Kitap 3 · Açıklama" data-ek-group="Yazarlık">Tarihin kanlı sayfalarından damıtılmış, insan ruhunun direncini ve aşkınlığını anlatan güçlü bir roman.</p>
-          <a class="btn-buy" href="https://www.dr.com.tr/kitap/kusatma-bir-balkan-savasi-romani/enver-sengul/edebiyat/roman/turk-romani/urunno=0002081168001" target="_blank" rel="noopener">🛒 Satın Al</a>
+          <a class="btn-buy" href="https://www.pusluyayincilik.com.tr/urun/kusatma-enver-sengul-9786258035322" target="_blank" rel="noopener">🛒 Satın Al</a>
         </div>
       </div>
     </div>
@@ -2431,11 +2443,17 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <input type="text" id="cformSubject" placeholder="Konu">
           <textarea id="cformMessage" placeholder="Mesajınız…"></textarea>
           <div style="display:flex;gap:14px;flex-wrap:wrap;">
-            <a href="#" onclick="sendViaWhatsApp();return false;" class="btn-gold" style="flex:1;justify-content:center;min-width:150px;">💬 WhatsApp'tan Gönder</a>
-            <a href="#" onclick="sendViaEmail();return false;" class="btn-outline" style="flex:1;justify-content:center;min-width:150px;">✉ Mail Gönder</a>
+            <a href="#" onclick="sendViaWhatsApp(this);return false;" class="btn-gold" style="flex:1;justify-content:center;min-width:150px;">💬 WhatsApp'tan Gönder</a>
+            <a href="#" onclick="sendViaEmail(this);return false;" class="btn-outline" style="flex:1;justify-content:center;min-width:150px;">✉ Mail Gönder</a>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="cform-toast-wrap" id="cformToastWrap">
+    <div class="cform-toast" id="cformToast">
+      <span class="cform-toast-icon" id="cformToastIcon">✓</span>
+      <span id="cformToastText"></span>
     </div>
   </div>
 </section>
@@ -3063,19 +3081,68 @@ const CONTACT_WHATSAPP = '905325923545';
 const CONTACT_EMAIL    = 'enversengulweb@gmail.com';
 
 function getContactFormData(){
-  const name    = document.getElementById('cformName').value.trim();
-  const email   = document.getElementById('cformEmail').value.trim();
-  const subject = document.getElementById('cformSubject').value.trim();
-  const message = document.getElementById('cformMessage').value.trim();
+  const nameEl    = document.getElementById('cformName');
+  const emailEl   = document.getElementById('cformEmail');
+  const subjectEl = document.getElementById('cformSubject');
+  const msgEl     = document.getElementById('cformMessage');
+
+  const name    = nameEl.value.trim();
+  const email   = emailEl.value.trim();
+  const subject = subjectEl.value.trim();
+  const message = msgEl.value.trim();
+
+  [nameEl, msgEl].forEach(el => el.classList.remove('cform-invalid'));
 
   if (!name || !message) {
-    alert('Lütfen adınızı ve mesajınızı girin.');
+    if (!name) markFieldInvalid(nameEl);
+    if (!message) markFieldInvalid(msgEl);
+    showCformToast('error', '⚠', 'Lütfen adınızı ve mesajınızı girin.');
     return null;
   }
   return { name, email, subject: subject || 'Web Sitesi İletişim Formu', message };
 }
 
-function sendViaWhatsApp(){
+function markFieldInvalid(el){
+  el.classList.remove('cform-invalid');
+  void el.offsetWidth;
+  el.classList.add('cform-invalid');
+  el.addEventListener('animationend', () => {}, { once:true });
+}
+
+let cformToastTimer = null;
+function showCformToast(type, icon, text){
+  const wrap = document.getElementById('cformToastWrap');
+  const toast = document.getElementById('cformToast');
+  const iconEl = document.getElementById('cformToastIcon');
+  const textEl = document.getElementById('cformToastText');
+  if (!wrap || !toast) return;
+
+  toast.classList.remove('is-error','is-success');
+  toast.classList.add(type === 'error' ? 'is-error' : 'is-success');
+  iconEl.textContent = icon;
+  textEl.textContent = text;
+
+  wrap.classList.add('show');
+  clearTimeout(cformToastTimer);
+  cformToastTimer = setTimeout(() => wrap.classList.remove('show'), 3600);
+}
+
+function setButtonSending(btn, sendingLabel){
+  if (!btn) return null;
+  const original = btn.innerHTML;
+  btn.classList.add('is-sending');
+  btn.innerHTML = '<span class="cform-spin"></span> ' + sendingLabel;
+  return original;
+}
+
+function clearContactForm(){
+  ['cformName','cformEmail','cformSubject','cformMessage'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+function sendViaWhatsApp(btn){
   const data = getContactFormData();
   if (!data) return;
 
@@ -3088,10 +3155,16 @@ function sendViaWhatsApp(){
   const waLink = 'https://wa.me/' + CONTACT_WHATSAPP +
     '?text=' + encodeURIComponent(waText);
 
-  window.open(waLink, '_blank');
+  const original = setButtonSending(btn, 'Hazırlanıyor…');
+  setTimeout(() => {
+    window.open(waLink, '_blank');
+    if (btn) { btn.classList.remove('is-sending'); btn.innerHTML = original; }
+    showCformToast('success', '💬', 'Mesajınız hazırlandı, WhatsApp açılıyor…');
+    clearContactForm();
+  }, 500);
 }
 
-function sendViaEmail(){
+function sendViaEmail(btn){
   const data = getContactFormData();
   if (!data) return;
 
@@ -3104,7 +3177,13 @@ function sendViaEmail(){
     '?subject=' + encodeURIComponent(data.subject) +
     '&body=' + encodeURIComponent(mailBody);
 
-  window.location.href = mailtoLink;
+  const original = setButtonSending(btn, 'Hazırlanıyor…');
+  setTimeout(() => {
+    window.location.href = mailtoLink;
+    if (btn) { btn.classList.remove('is-sending'); btn.innerHTML = original; }
+    showCformToast('success', '✉', 'Mail uygulamanız açılıyor…');
+    clearContactForm();
+  }, 500);
 }
 
 window.addEventListener('scroll',()=>{
