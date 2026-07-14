@@ -527,6 +527,23 @@ footer{background:var(--dark);padding:44px 72px;display:flex;align-items:center;
 .footer-links{display:flex;gap:8px;}
 .footer-links a{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:all .3s;padding:8px 12px;border-radius:8px;}
 .footer-links a:hover{color:var(--gold);background:rgba(var(--gold-rgb),.08);box-shadow:inset 0 1px 3px rgba(0,0,0,.25);}
+.dsg-badge{position:relative;width:92px;height:92px;flex-shrink:0;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);transition:color .4s,transform .4s;}
+.dsg-badge-ring{position:absolute;inset:0;width:100%;height:100%;color:currentColor;transition:color .4s,filter .4s;}
+.dsg-badge-flick{transform-origin:50% 50%;}
+.dsg-badge-text{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.1;gap:2px;}
+.dsg-badge-text em{font-family:var(--font-serif);font-style:italic;font-size:11px;color:inherit;}
+.dsg-badge-text b{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:inherit;}
+.dsg-badge:hover{transform:scale(1.06);color:var(--gold);}
+.dsg-badge:hover .dsg-badge-ring{filter:drop-shadow(0 0 6px rgba(var(--gold-rgb),.7));}
+.dsg-badge:hover .dsg-badge-text em,
+.dsg-badge:hover .dsg-badge-text b{
+  background:linear-gradient(90deg,var(--gold-dark) 0%,var(--gold-light) 25%,#fff6d8 50%,var(--gold-light) 75%,var(--gold-dark) 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  animation:dsgShimmer 1.6s linear infinite;
+}
+@keyframes dsgShimmer{0%{background-position:200% 0;}100%{background-position:-20% 0;}}
+@media(max-width:700px){.dsg-badge{width:78px;height:78px;}.dsg-badge-text em{font-size:9.5px;}.dsg-badge-text b{font-size:8px;}}
 .gold-line{height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.25;}
 .aos{opacity:0;transform:translateY(44px);filter:blur(4px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .8s cubic-bezier(.16,1,.3,1);}
 .aos.in{opacity:1;transform:none;filter:blur(0);}
@@ -2425,6 +2442,16 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
 <footer>
   <div class="footer-logo">Enver Şengül</div>
   <div class="footer-copy">© 2024 <strong>Enver Şengül</strong>. Tüm hakları saklıdır.<br>Fotoğraf Sanatçısı · Yazar · Kültür Yöneticisi · Edirne</div>
+  <a href="https://wa.me/905412920822" target="_blank" rel="noopener" class="dsg-badge" aria-label="Designed by ibmkahraman - WhatsApp">
+    <svg class="dsg-badge-ring" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="230 276" stroke-dashoffset="18" transform="rotate(-100 50 50)"/>
+      <path class="dsg-badge-flick" d="M20 26 Q28 14 42 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+    <span class="dsg-badge-text">
+      <em>designed by</em>
+      <b>ibmkahraman</b>
+    </span>
+  </a>
   <div class="footer-links">
     <a href="#hakkimda">Hakkımda</a>
     <a href="#fotografcilik">Fotoğraf</a>
