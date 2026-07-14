@@ -855,6 +855,26 @@ footer { text-align:center; }
 .cv-block-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:10px;}
 .cv-block-title{font-family:var(--font-heading);font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--white);text-align:center;margin-bottom:48px;}
 
+/* Gençlik Yılları — dairesel dönen coverflow slayt gösterisi */
+.cv-youth-carousel{position:relative;height:300px;margin-bottom:64px;display:flex;align-items:center;justify-content:center;perspective:1400px;}
+.cv-youth-loading{text-align:center;color:var(--muted);font-family:var(--font-serif);font-style:italic;font-size:14px;padding:20px 0;}
+.cv-youth-track{position:relative;width:100%;height:100%;}
+.cv-youth-slide{position:absolute;top:50%;left:50%;width:150px;height:200px;margin:-100px 0 0 -75px;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 14px 32px rgba(0,0,0,.4),0 0 0 1px rgba(var(--gold-rgb),.14);will-change:transform,opacity;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .7s cubic-bezier(.16,1,.3,1),box-shadow .4s;}
+.cv-youth-slide img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);display:block;transition:filter .5s;}
+.cv-youth-slide.is-center{box-shadow:0 22px 48px rgba(0,0,0,.5),0 0 0 2px rgba(var(--gold-rgb),.45);}
+.cv-youth-slide.is-center img{filter:grayscale(.15) contrast(1.05);}
+.cv-youth-carousel.ready .cv-youth-loading{display:none;}
+.cv-youth-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:20;width:42px;height:42px;border-radius:50%;border:1px solid rgba(var(--gold-rgb),.35);background:rgba(13,11,8,.5);backdrop-filter:blur(4px);color:var(--gold-light);font-size:20px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .3s,transform .3s;}
+.cv-youth-carousel.ready .cv-youth-nav{display:flex;}
+.cv-youth-nav:hover{background:rgba(var(--gold-rgb),.22);transform:translateY(-50%) scale(1.08);}
+.cv-youth-prev{left:0;}
+.cv-youth-next{right:0;}
+@media(max-width:768px){
+  .cv-youth-carousel{height:220px;}
+  .cv-youth-slide{width:110px;height:150px;margin:-75px 0 0 -55px;}
+  .cv-youth-nav{width:36px;height:36px;font-size:17px;}
+}
+
 /* Timeline */
 .cv-timeline{position:relative;padding:8px 0 10px;margin-bottom:80px;}
 .cv-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(var(--gold-rgb),.28) 6%,rgba(var(--gold-rgb),.28) 94%,transparent);transform:translateX(-50%);}
@@ -1302,8 +1322,8 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="role-chip" onclick="openGallery('hakkimda-yazarromanci')" role="button" tabindex="0"><span>✍️</span><span>Yazar & Romancı</span></div>
           <div class="role-chip" onclick="openGallery('hakkimda-kulturyoneticisi')" role="button" tabindex="0"><span>🏛️</span><span>Kültür Yöneticisi</span></div>
           <div class="role-chip" onclick="openGallery('hakkimda-gazeteci')" role="button" tabindex="0"><span>📰</span><span>Gazeteci</span></div>
-          <div class="role-chip" onclick="openGallery('hakkimda-ogretmenligim')" role="button" tabindex="0"><span>🎓</span><span>Öğretmenliğim</span></div>
-          <div class="role-chip" onclick="openGallery('hakkimda-sporculugum')" role="button" tabindex="0"><span>📚</span><span>Sporculuğum</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-ogretmenligim')" role="button" tabindex="0"><span>🎓</span><span>Öğretmenlik</span></div>
+          <div class="role-chip" onclick="openGallery('hakkimda-sporculugum')" role="button" tabindex="0"><span>📚</span><span>Sporculuk</span></div>
         </div>
         <button class="btn-gold aos" onclick="openOzgecmis()" type="button">Özgeçmiş →</button>
       </div>
@@ -2609,6 +2629,15 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
       <div class="cv-stat"><div class="cv-stat-num"><span class="cv-num" data-target="10">0</span><span class="cv-num-suffix">+</span></div><div class="cv-stat-label">Yayımlanmış Kitap</div></div>
     </div>
 
+    <div class="cv-block-eyebrow">Bitlis'te Geçen Yıllar</div>
+    <div class="cv-block-title">Gençlik Yılları</div>
+    <div class="cv-youth-carousel" id="cvYouthCarousel">
+      <p class="cv-youth-loading" id="cvYouthLoading">Fotoğraflar yükleniyor…</p>
+      <button class="cv-youth-nav cv-youth-prev" onclick="youthCarouselNav(-1)" type="button" aria-label="Önceki">‹</button>
+      <div class="cv-youth-track" id="cvYouthTrack"></div>
+      <button class="cv-youth-nav cv-youth-next" onclick="youthCarouselNav(1)" type="button" aria-label="Sonraki">›</button>
+    </div>
+
     <div class="cv-block-eyebrow">Kronolojik Yolculuk</div>
     <div class="cv-block-title">Bir Ömrün Birikimi</div>
 
@@ -3175,12 +3204,13 @@ function submitPhotoVote(fileId, value){
 }
 
 const GALLERY_CATS = {
+  'gencyillari': { title:'Gençlik Yılları', desc:'Bitlis\'te geçen gençlik yıllarından vesikalık kareler.', folder:'Gençlik Yılları', hakkimda:true },
   'hakkimda-fotografsanatcisi': { title:'Fotoğraf Sanatçısı', desc:'Fotoğraf sanatına adanmış yıllardan seçme kareler.', folder:'Fotoğraf Sanatçısı', hakkimda:true },
   'hakkimda-yazarromanci':      { title:'Yazar & Romancı',    desc:'Kalemin ve satırların izinde geçen yazarlık serüveninden kareler.', folder:'Yazar & Romancı', hakkimda:true },
   'hakkimda-kulturyoneticisi':  { title:'Kültür Yöneticisi',  desc:'Kültürel miras ve müzecilik alanındaki yöneticilik yıllarından kareler.', folder:'Kültür Yöneticisi', hakkimda:true },
   'hakkimda-gazeteci':          { title:'Gazeteci',           desc:'Haber peşinde koşulan gazetecilik yıllarından kareler.', folder:'Gazeteci', hakkimda:true },
-  'hakkimda-ogretmenligim':     { title:'Öğretmenliğim',      desc:'Öğretmenlik mesleğinde geçen yıllardan kareler.', folder:'Öğretmenliğim', hakkimda:true },
-  'hakkimda-sporculugum':       { title:'Sporculuğum',        desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
+  'hakkimda-ogretmenligim':     { title:'Öğretmenlik',        desc:'Öğretmenlik mesleğinde geçen yıllardan kareler.', folder:'Öğretmenliğim', hakkimda:true },
+  'hakkimda-sporculugum':       { title:'Sporculuk',          desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
   'edirnenin-taninmis-yuzleri': { title:'Edirnenin Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
@@ -3714,6 +3744,109 @@ function cvAttachTilt(el){
 }
 document.querySelectorAll('.cv-card, .cv-panel').forEach(cvAttachTilt);
 
+let youthStripLoaded = false;
+let youthPhotos   = [];
+let youthSlideEls = [];
+let youthIndex    = 0;
+let youthAutoTimer = null;
+
+async function loadYouthStrip() {
+  if (youthStripLoaded) { restartYouthAutoplay(); return; }
+  const carousel = document.getElementById('cvYouthCarousel');
+  const loading  = document.getElementById('cvYouthLoading');
+  const track    = document.getElementById('cvYouthTrack');
+  if (!carousel) return;
+  if (DRIVE_API_KEY === 'BURAYA_API_KEY') return;
+
+  const cat = GALLERY_CATS['gencyillari'];
+  const folderId = await resolveCatFolderId(cat);
+  if (!folderId) {
+    loading.textContent = 'Bu klasör bulunamadı. Drive klasör adını kontrol edin.';
+    return;
+  }
+  const photos = await getPhotosInFolder(folderId);
+  if (!photos.length) {
+    loading.textContent = 'Bu klasörde henüz fotoğraf yok.';
+    return;
+  }
+
+  youthStripLoaded = true;
+  youthPhotos = photos;
+  youthIndex = 0;
+  track.innerHTML = '';
+  youthSlideEls = photos.map((photo, i) => {
+    const div = document.createElement('div');
+    div.className = 'cv-youth-slide';
+    div.innerHTML = `<img src="${driveImgUrl(photo.id, 'w600')}" alt="${photo.name}" loading="lazy">`;
+    div.oncontextmenu = e => e.preventDefault();
+    div.onclick = () => youthSlideClick(i);
+    track.appendChild(div);
+    return div;
+  });
+
+  carousel.classList.add('ready');
+  updateYouthCarousel();
+  restartYouthAutoplay();
+  carousel.addEventListener('mouseenter', () => clearInterval(youthAutoTimer));
+  carousel.addEventListener('mouseleave', restartYouthAutoplay);
+}
+
+function youthSlideClick(i) {
+  if (i === youthIndex) {
+    currentPhotos = youthPhotos;
+    currentCatKey = 'gencyillari';
+    openLightbox(i);
+  } else {
+    youthIndex = i;
+    updateYouthCarousel();
+    restartYouthAutoplay();
+  }
+}
+
+function youthCarouselNav(dir) {
+  const n = youthPhotos.length;
+  if (!n) return;
+  youthIndex = (youthIndex + dir + n) % n;
+  updateYouthCarousel();
+  restartYouthAutoplay();
+}
+
+function updateYouthCarousel() {
+  const n = youthPhotos.length;
+  if (!n) return;
+  youthSlideEls.forEach((el, i) => {
+    let offset = i - youthIndex;
+    if (offset > n / 2) offset -= n;
+    if (offset < -n / 2) offset += n;
+    const abs = Math.abs(offset);
+    el.classList.toggle('is-center', offset === 0);
+    if (abs > 3) {
+      const farTx = (offset > 0 ? 1 : -1) * 900;
+      el.style.opacity = '0';
+      el.style.pointerEvents = 'none';
+      el.style.transform = `translateX(${farTx}px) scale(.3)`;
+      el.style.zIndex = '0';
+      return;
+    }
+    const scale = offset === 0 ? 1.25 : Math.max(1 - abs * 0.22, 0.4);
+    const tx = offset * 128;
+    const rotY = offset * -22;
+    el.style.transform = `translateX(${tx}px) scale(${scale}) rotateY(${rotY}deg)`;
+    el.style.opacity = String(Math.max(1 - abs * 0.3, 0.15));
+    el.style.zIndex = String(10 - abs);
+    el.style.pointerEvents = 'auto';
+  });
+}
+
+function restartYouthAutoplay() {
+  clearInterval(youthAutoTimer);
+  if (!youthPhotos.length) return;
+  youthAutoTimer = setInterval(() => {
+    youthIndex = (youthIndex + 1) % youthPhotos.length;
+    updateYouthCarousel();
+  }, 3200);
+}
+
 function openOzgecmis() {
   const modal = document.getElementById('ozgecmisModal');
   modal.classList.add('open');
@@ -3723,6 +3856,7 @@ function openOzgecmis() {
   cvResetCounters(modal);
   cvUpdateProgress();
   cvAnimateCounters(modal);
+  loadYouthStrip();
 
   // Zaman çizelgesi kartlarını ve panelleri sırayla (staggered) belirginleştir
   const items = modal.querySelectorAll('#cvTimeline .cv-item');
@@ -3749,6 +3883,7 @@ function closeOzgecmis() {
   if (bar) bar.style.width = '0%';
   var fill = document.getElementById('cvTimelineFill');
   if (fill) fill.style.height = '0%';
+  clearInterval(youthAutoTimer);
 }
 document.getElementById('ozgecmisModal').addEventListener('scroll', function(){
   requestAnimationFrame(cvUpdateProgress);
