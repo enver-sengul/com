@@ -1329,10 +1329,10 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
 </div>
 <section class="section about-bg" id="hakkimda">
   <div class="section-inner">
-    <div class="section-eyebrow aos"><span>Hakkımda</span></div>
-    <h2 class="section-title aos" data-ek="hakkimda_title" data-ek-br="1" data-ek-label="Hakkımda · Başlık" data-ek-group="Hakkımda">Bitlis'ten Edirne'ye<br><em>Bir Ömrün Birikimi</em></h2>
+    <div class="section-eyebrow"><span>Hakkımda</span></div>
+    <h2 class="section-title" data-ek="hakkimda_title" data-ek-br="1" data-ek-label="Hakkımda · Başlık" data-ek-group="Hakkımda">Bitlis'ten Edirne'ye<br><em>Bir Ömrün Birikimi</em></h2>
     <div class="about-grid">
-      <div class="aos">
+      <div>
         <div class="about-photo-frame">
           <img src="hakkimda.jpg" alt="Enver Şengül" style="width:100%;display:block;position:relative;z-index:1;">
           <div class="award-badge">
@@ -1343,12 +1343,12 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
         </div>
       </div>
       <div>
-        <p class="about-intro aos" data-ek="hakkimda_intro" data-ek-label="Hakkımda · Alıntı" data-ek-group="Hakkımda">"Bu sayfalarda yalnızca bir özgeçmiş değil; tutkuyla yaşanmış, emekle şekillenmiş ve ardında kalıcı izler bırakmış bir hayatın hikâyesini bulacaksınız."</p>
-        <div class="about-body aos">
+        <p class="about-intro" data-ek="hakkimda_intro" data-ek-label="Hakkımda · Alıntı" data-ek-group="Hakkımda">"Bu sayfalarda yalnızca bir özgeçmiş değil; tutkuyla yaşanmış, emekle şekillenmiş ve ardında kalıcı izler bırakmış bir hayatın hikâyesini bulacaksınız."</p>
+        <div class="about-body">
           <p data-ek="hakkimda_body1" data-ek-label="Hakkımda · Metin 1" data-ek-group="Hakkımda">Bitlis'ten Edirne'ye uzanan yaşam yolculuğunda öğretmenlikten gazeteciliğe, fotoğraf sanatından müzeciliğe, kültürel miras çalışmalarından roman yazarlığına uzanan çok yönlü bir üretim hikâyesi.</p>
           <p data-ek="hakkimda_body2" data-ek-label="Hakkımda · Metin 2" data-ek-group="Hakkımda">Her adımında öğrenmenin, üretmenin ve paylaşmanın izlerini taşıyan; haber peşinde koşulan günlerden roman sayfalarına, sergi salonlarından ödüllü müzelere uzanan uzun, anlamlı ve heyecan verici bir serüven…</p>
         </div>
-        <div class="roles-grid aos">
+        <div class="roles-grid">
           <div class="role-chip" onclick="openGallery('hakkimda-fotografsanatcisi')" role="button" tabindex="0"><span>📷</span><span>Fotoğraf Sanatçısı</span></div>
           <div class="role-chip" onclick="openGallery('hakkimda-yazarromanci')" role="button" tabindex="0"><span>✍️</span><span>Yazar & Romancı</span></div>
           <div class="role-chip" onclick="openGallery('hakkimda-kulturyoneticisi')" role="button" tabindex="0"><span>🏛️</span><span>Kültür Yöneticisi</span></div>
@@ -1356,7 +1356,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="role-chip" onclick="openGallery('hakkimda-ogretmenligim')" role="button" tabindex="0"><span>🎓</span><span>Öğretmenlik</span></div>
           <div class="role-chip" onclick="openGallery('hakkimda-sporculugum')" role="button" tabindex="0"><span>📚</span><span>Sporculuk</span></div>
         </div>
-        <button class="btn-gold aos" onclick="openOzgecmis()" type="button">Özgeçmiş →</button>
+        <button class="btn-gold" onclick="openOzgecmis()" type="button">Özgeçmiş →</button>
       </div>
     </div>
   </div>
@@ -3207,6 +3207,9 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
 },{threshold:0.1});
 document.querySelectorAll('.aos').forEach(el=>obs.observe(el));
+// Güvenlik ağı: gözlemci bir öğeyi tetiklemezse (yavaş yükleme, düzen kayması vb.)
+// içerik sonsuza dek görünmez kalmasın diye kısa bir süre sonra tümünü görünür yap.
+setTimeout(()=>{document.querySelectorAll('.aos:not(.in)').forEach(el=>el.classList.add('in'));},1800);
 
 // ═══════════════════════════════════
 // GALERİ SİSTEMİ — Google Drive API
