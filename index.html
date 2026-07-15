@@ -1808,7 +1808,25 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="af-name">Avrupa Müze Ödülü</div>
           <p class="af-desc" data-ek="kulturel_award_desc" data-ek-label="Kültürel Miras · Ödül Kutusu Açıklaması" data-ek-group="Kültürel Miras">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi, bu prestijli ödüle layık görülerek Avrupa'nın en iyi müzesi unvanını kazandı. Türkiye müzeciliği tarihinde bir ilk olan bu başarı, kültürel mirasın korunması ve yaşatılması yolundaki kararlı çabanın meyvesidir.</p>
         </div>
-        <button class="exhibition-explore-btn" style="margin-top:14px;" onclick="openGallery('odul-toreni')">Ödül Töreni →</button>
+        <button class="exhibition-explore-btn" style="margin-top:14px;" onclick="toggleOdulToreniCats()">Ödül Törenleri →</button>
+        <div id="odulToreniCats" class="gallery-cats two-col" style="display:none;margin-top:18px;">
+          <div class="gallery-cat-card" onclick="openGallery('odul-toreni-avrupa')">
+            <img id="cover-odul-toreni-avrupa" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Avrupa Müze Ödülü Ödül Töreni">
+            <div class="gallery-cat-arrow">→</div>
+            <div class="gallery-cat-info">
+              <div class="gallery-cat-title">Avrupa Müze Ödülü Ödül Töreni</div>
+              <div class="gallery-cat-count" id="count-odul-toreni-avrupa">Fotoğrafları Keşfet</div>
+            </div>
+          </div>
+          <div class="gallery-cat-card" onclick="openGallery('odul-toreni-sunum')">
+            <img id="cover-odul-toreni-sunum" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="En İyi Sunum Ödül Töreni">
+            <div class="gallery-cat-arrow">→</div>
+            <div class="gallery-cat-info">
+              <div class="gallery-cat-title">En İyi Sunum Ödül Töreni</div>
+              <div class="gallery-cat-count" id="count-odul-toreni-sunum">Fotoğrafları Keşfet</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3334,7 +3352,8 @@ const GALLERY_CATS = {
   'hakkimda-gazeteci':          { title:'Gazeteci',           desc:'Haber peşinde koşulan gazetecilik yıllarından kareler.', folder:'Gazeteci', hakkimda:true },
   'hakkimda-ogretmenligim':     { title:'Öğretmenlik',        desc:'Öğretmenlik mesleğinde geçen yıllardan kareler.', folder:'Öğretmenliğim', hakkimda:true },
   'hakkimda-sporculugum':       { title:'Sporculuk',          desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
-  'odul-toreni':        { title:'Ödül Töreni',        desc:'Avrupa Müze Ödülü töreninden kareler.', folder:'Ödül Töreni', anasayfa:true },
+  'odul-toreni-avrupa': { title:'Avrupa Müze Ödülü Ödül Töreni', desc:'2004 yılında verilen Avrupa Müze Ödülü törenine dair kareler.', folder:'Avrupa Müze Ödülü', odulToreni:true },
+  'odul-toreni-sunum':  { title:'En İyi Sunum Ödül Töreni',      desc:'En iyi sunum ödülü törenine dair kareler.', folder:'En İyi Sunum Ödül Töreni', odulToreni:true },
   'tfsf-yoneticiligim': { title:'TFSF Yöneticiliğim', desc:'TFSF yöneticiliği kapsamındaki çalışmalar ve organizasyonlardan kareler.', folder:'TFSF Yöneticiliğim' },
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
@@ -4274,6 +4293,13 @@ async function resolveCatFolderId(cat) {
       // WEB > ANASAYFA > <cat.folder>
       const anasayfaId = await getFolderIdByName(DRIVE_ROOT_ID, 'ANASAYFA');
       if (anasayfaId) folderId = await getFolderIdByName(anasayfaId, cat.folder);
+    } else if (cat.odulToreni) {
+      // WEB > PORTFOLYOM > Ödül Törenleri > <cat.folder>
+      const portfolyomId0 = await getFolderIdByName(DRIVE_ROOT_ID, 'PORTFOLYOM');
+      if (portfolyomId0) {
+        const odulToreniId = await getFolderIdByName(portfolyomId0, 'Ödül Törenleri');
+        if (odulToreniId) folderId = await getFolderIdByName(odulToreniId, cat.folder);
+      }
     } else if (cat.root) {
       // WEB klasörünün doğrudan altındaki bir klasör (portfolyom dışında)
       folderId = await getFolderIdByName(DRIVE_ROOT_ID, cat.folder);
@@ -4328,6 +4354,12 @@ function showExhibitionIntro(key){
   const detail = document.getElementById(key + '-detail');
   if (intro)  intro.style.display  = 'block';
   if (detail) detail.style.display = 'none';
+}
+
+function toggleOdulToreniCats(){
+  const el = document.getElementById('odulToreniCats');
+  if (!el) return;
+  el.style.display = (el.style.display === 'none' || !el.style.display) ? 'grid' : 'none';
 }
 
 async function openGallery(catKey) {
