@@ -1592,7 +1592,16 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
       </div>
     </div>
     <div id="pt-tfsf" style="display:none;">
-      <p style="text-align:center;padding:80px 0;font-family:var(--font-serif);font-size:22px;font-style:italic;color:var(--muted);">TFSF yöneticilik çalışmaları ve organizasyonlar yakında…</p>
+      <div class="gallery-cats">
+        <div class="gallery-cat-card" onclick="openGallery('tfsf-yoneticiligim')">
+          <img id="cover-tfsf-yoneticiligim" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="TFSF Yöneticiliğim">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">TFSF Yöneticiliğim</div>
+            <div class="gallery-cat-count" id="count-tfsf-yoneticiligim">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="pt-yazi" style="display:none;">
       <div class="gallery-cats">
@@ -3326,6 +3335,7 @@ const GALLERY_CATS = {
   'hakkimda-ogretmenligim':     { title:'Öğretmenlik',        desc:'Öğretmenlik mesleğinde geçen yıllardan kareler.', folder:'Öğretmenliğim', hakkimda:true },
   'hakkimda-sporculugum':       { title:'Sporculuk',          desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
   'odul-toreni':        { title:'Ödül Töreni',        desc:'Avrupa Müze Ödülü töreninden kareler.', folder:'Ödül Töreni', anasayfa:true },
+  'tfsf-yoneticiligim': { title:'TFSF Yöneticiliğim', desc:'TFSF yöneticiliği kapsamındaki çalışmalar ve organizasyonlardan kareler.', folder:'TFSF Yöneticiliğim' },
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
   'edirnenin-taninmis-yuzleri': { title:'Edirnenin Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
