@@ -1262,7 +1262,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     <div class="card-content">
       <div class="card-top">
         <span class="card-icon">🎓</span>
-        <h3 class="card-title" data-ek="card4_title" data-ek-label="Kart 4 · Başlık" data-ek-group="Ana Kartlar">Eğitim & Atölyeler</h3>
+        <h3 class="card-title" data-ek="card4_title" data-ek-label="Kart 4 · Başlık" data-ek-group="Ana Kartlar">Eğitim, Konferanslar, Söyleşiler</h3>
         <p class="card-desc" data-ek="card4_desc" data-ek-label="Kart 4 · Açıklama" data-ek-group="Ana Kartlar">Eğitmenliğim, atölyelerim, eğitici videolar ve fotoğraf paylaşımlarım.</p>
       </div>
       <div class="card-bottom">
@@ -1799,6 +1799,7 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="af-name">Avrupa Müze Ödülü</div>
           <p class="af-desc" data-ek="kulturel_award_desc" data-ek-label="Kültürel Miras · Ödül Kutusu Açıklaması" data-ek-group="Kültürel Miras">Edirne Sultan II. Bayezid Külliyesi Sağlık Müzesi, bu prestijli ödüle layık görülerek Avrupa'nın en iyi müzesi unvanını kazandı. Türkiye müzeciliği tarihinde bir ilk olan bu başarı, kültürel mirasın korunması ve yaşatılması yolundaki kararlı çabanın meyvesidir.</p>
         </div>
+        <button class="exhibition-explore-btn" style="margin-top:14px;" onclick="openGallery('odul-toreni')">Ödül Töreni →</button>
       </div>
     </div>
   </div>
@@ -3324,6 +3325,7 @@ const GALLERY_CATS = {
   'hakkimda-gazeteci':          { title:'Gazeteci',           desc:'Haber peşinde koşulan gazetecilik yıllarından kareler.', folder:'Gazeteci', hakkimda:true },
   'hakkimda-ogretmenligim':     { title:'Öğretmenlik',        desc:'Öğretmenlik mesleğinde geçen yıllardan kareler.', folder:'Öğretmenliğim', hakkimda:true },
   'hakkimda-sporculugum':       { title:'Sporculuk',          desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
+  'odul-toreni':        { title:'Ödül Töreni',        desc:'Avrupa Müze Ödülü töreninden kareler.', folder:'Ödül Töreni', anasayfa:true },
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
   'edirnenin-taninmis-yuzleri': { title:'Edirnenin Yüzleri', desc:'Edirne\'nin hafızasında iz bırakan, kente değer katan tanınmış simalardan portreler.', folder:'Edirnenin-taninmis-yuzleri' },
@@ -4258,6 +4260,10 @@ async function resolveCatFolderId(cat) {
         const hakkimdaId = await getFolderIdByName(anasayfaId, 'Hakkımda');
         if (hakkimdaId) folderId = await getFolderIdByName(hakkimdaId, cat.folder);
       }
+    } else if (cat.anasayfa) {
+      // WEB > ANASAYFA > <cat.folder>
+      const anasayfaId = await getFolderIdByName(DRIVE_ROOT_ID, 'ANASAYFA');
+      if (anasayfaId) folderId = await getFolderIdByName(anasayfaId, cat.folder);
     } else if (cat.root) {
       // WEB klasörünün doğrudan altındaki bir klasör (portfolyom dışında)
       folderId = await getFolderIdByName(DRIVE_ROOT_ID, cat.folder);
