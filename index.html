@@ -1778,7 +1778,28 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
     </div>
     <div style="text-align:center;" class="aos">
       <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;color:var(--cream2);margin-bottom:22px;">İmza günleri, söyleşiler ve diğer yayınlar için iletişime geçin.</p>
-      <a href="#iletisim" class="btn-gold">İmza Günü Talebi →</a>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="#iletisim" class="btn-gold">İmza Günü Talebi →</a>
+        <button class="btn-gold" style="border:none;cursor:pointer;" onclick="toggleImzaSoylesiCats()">İmza Günleri &amp; Söyleşiler →</button>
+      </div>
+      <div id="imzaSoylesiCats" class="gallery-cats two-col" style="display:none;margin-top:28px;max-width:820px;margin-left:auto;margin-right:auto;">
+        <div class="gallery-cat-card" onclick="openGallery('imza-gunleri')">
+          <img id="cover-imza-gunleri" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="İmza Günleri">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">İmza Günleri</div>
+            <div class="gallery-cat-count" id="count-imza-gunleri">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openGallery('soylesiler')">
+          <img id="cover-soylesiler" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Söyleşiler">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Söyleşiler</div>
+            <div class="gallery-cat-count" id="count-soylesiler">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3354,6 +3375,8 @@ const GALLERY_CATS = {
   'hakkimda-sporculugum':       { title:'Sporculuk',          desc:'Bitlisspor ve Güzeldere Spor\'da geçen sporculuk yıllarından kareler.', folder:'Sporculuğum', hakkimda:true },
   'odul-toreni-avrupa': { title:'Avrupa Müze Ödülü Ödül Töreni', desc:'2004 yılında verilen Avrupa Müze Ödülü törenine dair kareler.', folder:'Avrupa Müze Ödülü', odulToreni:true },
   'odul-toreni-sunum':  { title:'En İyi Sunum Ödül Töreni',      desc:'En iyi sunum ödülü törenine dair kareler.', folder:'En İyi Sunum Ödül Töreni', odulToreni:true },
+  'imza-gunleri': { title:'İmza Günleri', desc:'Kitap imza günlerinden kareler.', folder:'İmza Günleri' },
+  'soylesiler':   { title:'Söyleşiler',   desc:'Söyleşi ve panellerden kareler.', folder:'Söyleşiler' },
   'tfsf-yoneticiligim': { title:'TFSF Yöneticiliğim', desc:'TFSF yöneticiliği kapsamındaki çalışmalar ve organizasyonlardan kareler.', folder:'TFSF Yöneticiliğim' },
   'dunya-inanclar':     { title:'Dünya İnançları',   desc:'İnanç, ritüel ve kutsallık… Dünyanın dört bir yanından inanç mekânlarında yakalanmış anlık kareler.', folder:'Dünya İnançları' },
   'portreler':          { title:'Portreler',          desc:'Yüzlerde okunan hikâyeler. Her bir portre, hayatın izlerini taşıyan özgün bir yaşam kesiti.', folder:'Yüzler' },
@@ -4354,6 +4377,12 @@ function showExhibitionIntro(key){
   const detail = document.getElementById(key + '-detail');
   if (intro)  intro.style.display  = 'block';
   if (detail) detail.style.display = 'none';
+}
+
+function toggleImzaSoylesiCats(){
+  const el = document.getElementById('imzaSoylesiCats');
+  if (!el) return;
+  el.style.display = (el.style.display === 'none' || !el.style.display) ? 'grid' : 'none';
 }
 
 function toggleOdulToreniCats(){
