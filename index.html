@@ -1433,13 +1433,12 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
             <div class="gallery-cat-count" id="count-muzisyenler">Fotoğrafları Keşfet</div>
           </div>
         </div>
-        <div class="gallery-cat-card" onclick="openKirkpinarVideo()">
+        <div class="gallery-cat-card" onclick="openGallery('kirkpinar')">
           <img id="cover-kirkpinar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Er Meydanı-Kırkpınar">
-          <div class="video-play-badge">▶ Video</div>
-          <div class="gallery-cat-arrow">▶</div>
+          <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Er Meydanı-Kırkpınar</div>
-            <div class="gallery-cat-count" id="count-kirkpinar">Videoyu İzle</div>
+            <div class="gallery-cat-count" id="count-kirkpinar">Fotoğrafları Keşfet</div>
           </div>
         </div>
         <div class="gallery-cat-card" onclick="openGallery('nostalji')">
@@ -1523,10 +1522,10 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           </div>
         </div>
         <div class="gallery-cat-card" onclick="openGallery('dunya-italya')">
-          <img id="cover-dunya-italya" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="İtalya">
+          <img id="cover-dunya-italya" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Venedik">
           <div class="gallery-cat-arrow">→</div>
           <div class="gallery-cat-info">
-            <div class="gallery-cat-title">İtalya</div>
+            <div class="gallery-cat-title">Venedik</div>
             <div class="gallery-cat-count" id="count-dunya-italya">Fotoğrafları Keşfet</div>
           </div>
         </div>
@@ -1568,6 +1567,22 @@ a:hover .btn-arrow-left, button:hover .btn-arrow-left{transform:translateX(-5px)
           <div class="gallery-cat-info">
             <div class="gallery-cat-title">Balkanlar</div>
             <div class="gallery-cat-count" id="count-dunya-balkanlar">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openGallery('dunya-koln')">
+          <img id="cover-dunya-koln" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Köln">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Köln</div>
+            <div class="gallery-cat-count" id="count-dunya-koln">Fotoğrafları Keşfet</div>
+          </div>
+        </div>
+        <div class="gallery-cat-card" onclick="openGallery('dunya-dubrovnik')">
+          <img id="cover-dunya-dubrovnik" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ycQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAAQABAAACAUwAOw==" alt="Dubrovnik">
+          <div class="gallery-cat-arrow">→</div>
+          <div class="gallery-cat-info">
+            <div class="gallery-cat-title">Dubrovnik</div>
+            <div class="gallery-cat-count" id="count-dunya-dubrovnik">Fotoğrafları Keşfet</div>
           </div>
         </div>
       </div>
@@ -3395,12 +3410,14 @@ const GALLERY_CATS = {
   'dunya-zambiya':  { title:'Zambiya',    desc:'Afrikadan yasam, renk ve insanlik uzerine kareler.', folder:'dunya-zambiya' },
   'dunya-paris':    { title:'Paris',      desc:'Isin sehri Paristen sokak koseleri, mimari ve anlik yasam.', folder:'dunya-paris' },
   'dunya-endulus':  { title:'Endülüs',    desc:'Islam ve Avrupa medeniyetlerinin bulustugu Endulusten tarihi kareler.', folder:'dunya-endulus' },
-  'dunya-italya':   { title:'İtalya',     desc:'Ronesansin, sanatin ve lezzetin ulkesinden gozlem kareleri.', folder:'dunya-italya' },
+  'dunya-italya':   { title:'Venedik',     desc:'Ronesansin, sanatin ve lezzetin ulkesinden gozlem kareleri.', folder:'dunya-italya' },
   'dunya-prag':     { title:'Prag',       desc:'Orta Avrupanin en buyuleyici sehri Pragdan gotik ve barok kareler.', folder:'dunya-prag' },
   'dunya-riga':     { title:'Riga',       desc:'Baltikin incisi Rigadan mimari ve insan portreleri.', folder:'dunya-riga' },
   'dunya-kudus':    { title:'Kudüs',      desc:'Uc dinin kutsal sehri Kudusten ruhani ve insani kareler.', folder:'dunya-kudus' },
   'dunya-halep':    { title:'Halep',      desc:'Tarihin acisini ve direncini tasıyan Halepten belgesel kareler.', folder:'dunya-halep' },
   'dunya-balkanlar':{ title:'Balkanlar',  desc:'Osmanlı mirasının ve Balkan ruhunun yaşadığı coğrafyadan kareler.', folder:'dunya-balkanlar' },
+  'dunya-koln':     { title:'Köln',       desc:'Katedralin gölgesinde, Ren nehri kıyısında Alman şehir kültüründen kareler.', folder:'dunya-koln' },
+  'dunya-dubrovnik':{ title:'Dubrovnik',  desc:'Adriyatik\'in incisi surlu şehirden tarihi ve deniz manzaralı kareler.', folder:'dunya-dubrovnik' },
   'fotograf-yazilari': { title:'Fotoğraf Yazılarım', desc:'Fotoğraf üzerine kaleme alınmış yazılar, yorumlar ve düşüncelerden görsel kareler.', folder:'FOTOGRAF-YAZILARIM', root:true },
   'sergi-ulusal-1':       { title:'Bitlis Fotoğrafları', desc:'1991 Bitlis, Türkiye\'de açılan \'Bitlis Fotoğrafları\' sergisinden kareler.', folder:'sergi-ulusal-1' },
   'sergi-ulusal-2':       { title:'Doğa ve İnsan', desc:'1991 Tatvan, Türkiye\'de açılan \'Doğa ve İnsan\' sergisinden kareler.', folder:'sergi-ulusal-2' },
@@ -4753,21 +4770,6 @@ async function loadAllGalleryCovers(){
         continue;
       }
       const countEl = document.getElementById('count-' + catKey);
-
-      // Kırkpınar özel durumu: kapak, klasördeki fotoğraf değil videodur.
-      if (catKey === 'kirkpinar') {
-        const video = await getVideoInFolder(folderId);
-        if (!video) {
-          showCoverMissing(img, `"${cat.folder}" klasöründe video bulunamadı.`);
-          continue;
-        }
-        kirkpinarVideoFileId = video.id;
-        if (countEl) countEl.textContent = 'Videoyu İzle';
-        img.src = driveImgUrl(video.id, 'w800');
-        attachCoverFadeIn(img);
-        markCoverOrientation(img, null);
-        continue;
-      }
 
       const photos = await getPhotosInFolder(folderId);
       if (countEl) countEl.textContent = photos.length ? photos.length + ' Fotoğraf' : 'Fotoğrafları Keşfet';
